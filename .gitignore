@@ -1,0 +1,10 @@
+.idea/
+
+/media/
+/static/
+
+
+__pycache__/
+*.pyc
+*.env
+*.env1

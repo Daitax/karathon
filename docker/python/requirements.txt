@@ -1,0 +1,11 @@
+django==4.1
+django-phonenumber-field[phonenumbers]==7.0
+django-static-precompiler==2.1
+celery
+flower
+pillow
+psycopg2
+pymysql
+pytz
+redis
+

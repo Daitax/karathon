@@ -1,0 +1,6 @@
+{% if user.participant.is_authenticated and active_karathon %}
+  <div>
+    <span>Задание дня:</span>
+    <span>{{ task }}</span>
+  </div>
+{% endif %}

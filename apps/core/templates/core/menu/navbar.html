@@ -1,0 +1,41 @@
+{% url 'site-index' as index_url %}
+{% url 'account:account-index' as account_url %}
+{% url 'account:account-messages' as messages_url %}
+{% url 'account:account-results' as results_url %}
+{% url 'account:account-team' as team_url %}
+{% url 'account:account-logout' as logout_url %}
+
+<nav>
+  <li><a href="javascript:void(0)">n-й карафон</a></li>
+  <li><a href="javascript:void(0)">Рекордсмены</a></li>
+  <li><a href="javascript:void(0)">О Карачуне</a></li>
+  <li><a href="javascript:void(0)">Прошедшие карафоны</a></li>
+  <li><a href="javascript:void(0)">Благотворительность</a></li>
+  <li><a href="javascript:void(0)">Telegram</a></li>
+  {% if not user.is_authenticated %}
+    <li><a href="javascript:void(0)" button-action="open-auth-form">Вход</a></li>
+  {% endif %}
+</nav>
+{% if user.is_authenticated %}
+  {% if account_url not in request_url %}
+    <div>
+      <div>{{ user.participant.last_name }} {{ user.participant.first_name }}</div>
+      <div>{{ user.participant.instagram }}</div>
+      <div>
+        <div><a href="{{ account_url }}">Персональные данные</a></div>
+        <div><a href="{{ messages_url }}">Сообщения</a></div>
+        <div><a href="{{ results_url }}">Мои результаты</a></div>
+        <div><a href="{{ team_url }}">Моя команда</a></div>
+        <div><a href="javascript:void(0)">Онлайн</a></div>
+        {% if is_today_report %}
+          <div>Отчёт сдан</div>
+        {% else %}
+          <div><a href="javascript:void(0)" button-action="open-report-form">Сдать отчёт</a></div>
+        {% endif %}
+        <div><a href="{{ logout_url }}">Выйти</a></div>
+        <div>Время клиента: {{ localtime }}</div>
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
+

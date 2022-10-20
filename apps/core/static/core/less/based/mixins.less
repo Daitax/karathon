@@ -1,0 +1,16 @@
+.popup(@max-width: 500px) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 96%;
+    max-width: @max-width;
+    background: #ccc;
+    transform: translate(-50%, -50%);
+    visibility: hidden;
+    opacity: 0;
+
+    &.show {
+        visibility: visible;
+        opacity: 1;
+    }
+}

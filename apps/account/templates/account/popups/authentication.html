@@ -1,0 +1,30 @@
+<div class="close" popup-element="close"></div>
+<h2>Авторизация</h2>
+{% if window == 'phone' or window == 'code' %}
+  <form auth-form-elem="form">
+    <input type="hidden" name="window" value="{{ window }}" auth-form-elem="window">
+    <label auth-form-elem="phone-wrapper">
+      <div>Укажи номер телефона для авторизации:</div>
+      <input type="text" name="phone" value="{{ phone }}" auth-form-elem="phone"
+             {% if window == 'code' %}readonly{% endif %}>
+      <div>{{ errors.phone.as_text }}</div>
+    </label>
+    {% if window == 'code' %}
+      <label auth-form-elem="code-wrapper">
+        <input type="text" name="code" value="" auth-form-elem="code" autocomplete="off">
+        <div>{{ errors.code }}</div>
+        <div>введи код из SMS, которую мы отправили на указанный номер</div>
+      </label>
+    {% endif %}
+    {% if window == 'phone' %}
+      <input type="button" value="Подтвердить" auth-form-elem="button">
+    {% endif %}
+  </form>
+{% endif %}
+{% if window == 'enter' %}
+  <div auth-form-elem="enter" reload="{{ reload_overlay }}">
+  <div>Не забудь заполнить анкету в личном кабинете</div>
+  <a href="{% url 'account:account-index' %}">Заполнить</a>
+  <button auth-form-elem="later">Позже</button>
+{% endif %}
+</div>

@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+  <h1>Карафон - это по любви</h1>
+  <div>Прими участие</div>
+  {% if user.is_authenticated %}
+    <a href="/participate/">Участовать</a>
+  {% else %}
+    <a href="javascript:void(0)">Войти</a>
+  {% endif %}
+
+{% endblock %}

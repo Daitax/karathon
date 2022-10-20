@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+  <h1>Стать участником</h1>
+  <div>Вы уже принимаете участие в карафонах:</div>
+
+  {% for karathon in participant_karathon_list %}
+    <div>
+      <div>{{ karathon.number }} карафон ({{ karathon.get_karathon_type_value }})</div>
+      <div>который пройдёт c {{ karathon.starts_at|date:'d E Y' }} по {{ karathon.finished_at|date:'d E Y' }}</div>
+    </div>
+  {% endfor %}
+
+  <div>Выберите карафон, в котором хотите принять участие</div>
+  <form action="" method="post">
+    {% csrf_token %}
+    {% for karathon in available_karathon_list %}
+      <label>
+        <div>
+          <input type="radio" name="karathon" value="{{ karathon.id }}">
+        <span>{{ karathon.number }}-й карафон ({{ karathon.get_karathon_type_value }})</span>
+        </div>
+        <div>который пройдёт c {{ karathon.starts_at|date:'d E Y' }} по {{ karathon.finished_at|date:'d E Y' }}</div>
+      </label>
+    {% endfor %}
+    <input type="submit" value="Участвовать">
+  </form>
+
+{% endblock %}
