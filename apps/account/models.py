@@ -88,7 +88,7 @@ class Participant(User):
             return today_task
 
         except ObjectDoesNotExist:
-            return "Задания на сегодня нет"
+            return None
 
     def is_today_report(self):
         try:

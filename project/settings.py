@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-()726)0h^0f$_9h3k7*hidl@5pa0h5x*+@r-0ay_g4co8s!_4n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'dyugaev.beget.tech']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'apps.account.apps.AccountConfig',
     'apps.core.apps.CoreConfig',
+    'apps.notifications.apps.NotificationsConfig',
     'apps.steps.apps.StepsConfig',
 ]
 
@@ -84,7 +85,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': os.environ.get('DB_HOST'),
-        # 'PORT': '5432',
+        # 'PORT': os.environ.get('DB_PORT'),
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),

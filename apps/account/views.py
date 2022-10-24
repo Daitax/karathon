@@ -11,6 +11,7 @@ from django.views.decorators.http import require_http_methods
 
 from .forms import AuthPhoneForm, AuthCodeForm, ParticipantForm
 from .models import Participant, Sms
+from apps.notifications.models import Notification
 
 
 @require_http_methods(['POST'])
@@ -163,7 +164,10 @@ def index(request):
 
 
 def messages(request):
-    pass
+    messages_list = Notification.objects.filter(participant=request.user.participant)
+    return render(request, 'account/messages.html', {
+        'messages_list': messages_list,
+    })
 
 
 def results(request):

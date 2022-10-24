@@ -21,3 +21,21 @@ def get_report_image_path(instance, filename):
     check_media_directory_exist(base_dir, user_dir)
 
     return '{0}/{1}/{2}'.format(base_dir, user_dir, filename)
+
+
+def print_month_ru(month):
+    dict_months = {
+        '01': 'января',
+        '02': 'февраля',
+        '03': 'марта',
+        '04': 'апреля',
+        '05': 'мая',
+        '06': 'июня',
+        '07': 'июля',
+        '08': 'августа',
+        '09': 'сентября',
+        '10': 'октября',
+        '11': 'ноября',
+        '12': 'декабря',
+    }
+    return dict_months.get(month)
