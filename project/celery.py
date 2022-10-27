@@ -12,9 +12,9 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
 
-app.conf.beat_schedule = {
-    'send_tasks': {
-        'task': 'apps.core.tasks.send_task_for_participant',
-        'schedule': crontab(minute='*/1'),
-    },
-}
+# app.conf.beat_schedule = {
+#     'send_tasks': {
+#         'task': 'apps.notifications.tasks.send_task_for_participant',
+#         'schedule': crontab(minute=55, hour=12),
+#     },
+# }

@@ -6,7 +6,7 @@
       {% if not message_item.is_viewed %}
         <div>new</div>
       {% endif %}
-      <div>{{ message_item.datetime|date:'d E Y г. | H:i' }}</div>
+      <div>{{ message_item.datetime_creation }}</div>
       <div>{{ message_item.header }}</div>
       <div>{{ message_item.text }}</div>
     </div>
