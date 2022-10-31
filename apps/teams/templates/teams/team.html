@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div>С кем ты хочешь быть в команде на следующем карафоне?</div>
+<div>
+  {% for desire_item in desire_list %}
+    <div>{{ desire_item.desired_participant }}</div>
+  {% endfor %}
+  <div>
+    <button button-action="open-add-desire-form">Добавить друга</button>
+  </div>
+
+</div>
+
+{% endblock %}

@@ -29,6 +29,7 @@
 <div class="overlay" popup-element="overlay">
   {% if user.is_authenticated %}
     <div class="report_form_wrapper" popup-element="popup" form-name="report"></div>
+    <div class="desire_form_wrapper" popup-element="popup" form-name="desire"></div>
   {% else %}
     <div class="authentication_form_wrapper" popup-element="popup" form-name="authentication"></div>
   {% endif %}
@@ -37,5 +38,6 @@
 <script src="{% static 'core/js/base.js' %}"></script>
 <script src="{% static 'account/js/authentication.js' %}"></script>
 <script src="{% static 'steps/js/report.js' %}"></script>
+<script src="{% static 'teams/js/add_desire.js' %}"></script>
 </body>
 </html>

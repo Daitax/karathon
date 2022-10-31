@@ -5,8 +5,10 @@ import pytz
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
+from django.db.models import signals
 from phonenumber_field.modelfields import PhoneNumberField
 
+from apps.account.signals import send_new_participant_notifications
 from apps.core.models import Category, Karathon, Task
 
 
@@ -47,7 +49,7 @@ class Participant(User):
     phone = PhoneNumberField('Номер телефона', unique=True)
     photo = models.ImageField('Аватарка', blank=True)
     instagram = models.URLField('Ссылка на инстаграм', blank=True)
-    timezone = models.CharField(max_length=30, choices=TIMEZONES, default="Etc/GMT-3")
+    timezone = models.CharField(max_length=30, choices=TIMEZONES, default='Europe/Moscow')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     karathon = models.ManyToManyField(Karathon, related_name='participant')
 
@@ -56,7 +58,8 @@ class Participant(User):
         verbose_name_plural = 'Участники'
 
     def __str__(self):
-        return '{last} {first} {middle}'.format(last=self.last_name, first=self.first_name, middle=self.middle_name)
+        return '{last} {first} {middle} ({phone})'.format(last=self.last_name, first=self.first_name,
+                                                     middle=self.middle_name, phone=self.phone)
 
     def get_active_karathon(self):
         try:
@@ -74,7 +77,7 @@ class Participant(User):
 
     def get_participant_time(self):
         participant_timezone = pytz.timezone(self.timezone)
-        # return participant_timezone.localize(datetime.datetime.now())
+        print(participant_timezone)
         return datetime.datetime.now(participant_timezone)
 
     def get_today_task(self):
@@ -88,7 +91,7 @@ class Participant(User):
             return today_task
 
         except ObjectDoesNotExist:
-            return "Задания на сегодня нет"
+            return None
 
     def is_today_report(self):
         try:
@@ -97,6 +100,9 @@ class Participant(User):
             return True
         except ObjectDoesNotExist:
             return False
+
+
+signals.post_save.connect(send_new_participant_notifications, sender=Participant)
 
 
 class Sms(models.Model):

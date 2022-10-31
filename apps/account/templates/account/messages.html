@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+  {% for message_item in messages_list %}
+    <div>
+      {% if not message_item.is_viewed %}
+        <div>new</div>
+      {% endif %}
+      <div>{{ message_item.datetime_creation }}</div>
+      <div>{{ message_item.header }}</div>
+      <div>{{ message_item.text }}</div>
+    </div>
+
+  {% endfor %}
+
+
+{% endblock %}
