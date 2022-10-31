@@ -1,6 +1,6 @@
 {% if user.participant.is_authenticated and active_karathon %}
   <div>
     <span>Задание дня:</span>
-    <span>{{ task }}</span>
+    <span>{{ task|default_if_none:'На сегодня заданий нет' }}</span>
   </div>
 {% endif %}

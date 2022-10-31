@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.core.apps.CoreConfig',
     'apps.notifications.apps.NotificationsConfig',
     'apps.steps.apps.StepsConfig',
+    'apps.teams.apps.TeamsConfig',
 ]
 
 MIDDLEWARE = [
@@ -90,7 +91,7 @@ DATABASES = {
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
         'OPTIONS': {
-            'connect_timeout': 5,
+            'init_command': 'set session wait_timeout=600;'
         }
     }
 }

@@ -58,7 +58,8 @@ class Participant(User):
         verbose_name_plural = 'Участники'
 
     def __str__(self):
-        return '{last} {first} {middle}'.format(last=self.last_name, first=self.first_name, middle=self.middle_name)
+        return '{last} {first} {middle} ({phone})'.format(last=self.last_name, first=self.first_name,
+                                                     middle=self.middle_name, phone=self.phone)
 
     def get_active_karathon(self):
         try:
@@ -76,6 +77,7 @@ class Participant(User):
 
     def get_participant_time(self):
         participant_timezone = pytz.timezone(self.timezone)
+        print(participant_timezone)
         return datetime.datetime.now(participant_timezone)
 
     def get_today_task(self):

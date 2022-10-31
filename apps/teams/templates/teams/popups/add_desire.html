@@ -1,0 +1,19 @@
+<div class="close" popup-element="close"></div>
+<h2>Добавить друга</h2>
+{% if window == 'form' %}
+  <form desire-form-elem="form">
+    <input type="hidden" name="window" value="{{ window }}" desire-form-elem="window">
+    <label>
+      <div>Укажи номер телефона друга:</div>
+      <input type="text" name="phone" value="{{ phone }}" desire-form-elem="phone">
+      <div>{{ errors.phone }}</div>
+    </label>
+    <input type="button" value="Добавить" desire-form-elem="button">
+  </form>
+{% endif %}
+{% if window == 'successful' %}
+  <div reload="{{ reload_overlay }}">
+    Отлично!<br>
+    Твои пожелания будут учтены при формировании команд для следующего командного Карафона
+  </div>
+{% endif %}

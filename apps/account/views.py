@@ -1,12 +1,9 @@
-from urllib import parse
-
 from django.contrib.auth import login, logout
 from django.core.exceptions import ObjectDoesNotExist
 
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-from django.urls import resolve
 from django.views.decorators.http import require_http_methods
 
 from .forms import AuthPhoneForm, AuthCodeForm, ParticipantForm
@@ -173,14 +170,6 @@ def messages(request):
 def results(request):
     context = {}
     return render(request, 'account/results.html', context)
-
-
-def team(request):
-    pass
-
-
-def user_login(request):
-    pass
 
 
 def user_logout(request):
