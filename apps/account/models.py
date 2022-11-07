@@ -59,7 +59,14 @@ class Participant(User):
 
     def __str__(self):
         return '{last} {first} {middle} ({phone})'.format(last=self.last_name, first=self.first_name,
-                                                     middle=self.middle_name, phone=self.phone)
+                                                          middle=self.middle_name, phone=self.phone)
+
+    # TODO Сделать вывод участников желаемой команды в столбик
+    def desirer_team(self):
+        from apps.teams.models import DesiredTeam
+        team = DesiredTeam.objects.filter(desirer=self)
+
+        return [team_item.desired_participant.__str__() for team_item in team]
 
     def get_active_karathon(self):
         try:

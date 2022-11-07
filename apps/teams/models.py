@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.db import models
 
 # Create your models here.
@@ -8,7 +9,6 @@ from apps.core.models import Karathon
 class Team(models.Model):
     name = models.CharField('Название команды', max_length=20)
     karathon = models.ForeignKey(Karathon, verbose_name='Карафон', on_delete=models.CASCADE)
-    # participants = models.ManyToManyField(Participant, verbose_name='Участник', related_name='team')
 
     class Meta:
         verbose_name = 'Команда'
@@ -34,7 +34,31 @@ class DesiredTeam(models.Model):
     desirer = models.ForeignKey(Participant, related_name='desirer', on_delete=models.CASCADE)
     desired_participant = models.ForeignKey(Participant, related_name='desired_participant', on_delete=models.CASCADE)
 
+
+'''
+queryset, manager и модель специально для вывода в админке списка людей с кем он хочет участвовать в отдельной ячейке
+'''
+
+
+class PrintDesiredTeamQuerySet(models.QuerySet):
+    def desirers_list(self):
+        return self.filter(desirer__isnull=False).distinct()
+
+
+class PrintDesiredTeamManager(models.Manager):
+    def get_queryset(self):
+        qs = PrintDesiredTeamQuerySet(model=Participant)
+        return qs
+
+
+class PrintDesiredTeam(models.Model):
     class Meta:
-        verbose_name = 'Желаемый сокомандник'
+        verbose_name = 'Участник'
         verbose_name_plural = 'Желаемые сокомандники'
 
+    desired_team_manager = PrintDesiredTeamManager()
+
+    @admin.display(description="Желаемая команда")
+    def desirer_team(self):
+        pass
+        # return DesiredTeam.desired_team_manager.get_queryset().team_list(self)
