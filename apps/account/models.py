@@ -84,7 +84,6 @@ class Participant(User):
 
     def get_participant_time(self):
         participant_timezone = pytz.timezone(self.timezone)
-        print(participant_timezone)
         return datetime.datetime.now(participant_timezone)
 
     def get_today_task(self):

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db import models
 
 # Create your models here.
@@ -28,6 +29,13 @@ class TeamParticipant(models.Model):
 
     def __str__(self):
         return "Участник команды"
+
+    def clean(self):
+        karathon_teams_participant = Team.objects.filter(karathon=self.team.karathon,
+                                                         teamparticipant__participant=self.participant).exclude(
+                                                            id=self.team.id)
+        if karathon_teams_participant.count() > 0:
+            raise ValidationError({'participant': 'Данный участник уже участвует в другой команде'})
 
 
 class DesiredTeam(models.Model):
