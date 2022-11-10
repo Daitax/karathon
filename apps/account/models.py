@@ -80,7 +80,7 @@ class Participant(User):
             return karathon
 
         except ObjectDoesNotExist:
-            return False
+            return None
 
     def get_participant_time(self):
         participant_timezone = pytz.timezone(self.timezone)
