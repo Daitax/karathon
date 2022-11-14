@@ -26,6 +26,11 @@ function openReportForm() {
     })
 }
 
+function closeReportForm() {
+  reportFormWrapper.classList.remove('show');
+  overlay.classList.remove('show')
+}
+
 function submitReportForm(button) {
   let reportFormWrapper = button.closest('[popup-element="popup"][form-name="report"]')
   let reportForm = button.closest('[report-form-elem="form"]')
@@ -63,6 +68,20 @@ if (reportFormWrapper) {
 
     if (target.getAttribute('report-form-elem') == 'button') {
       submitReportForm(target)
+    }
+    if (target.getAttribute('report-form-elem') == 'custom_input') {
+      let input = document.querySelector("#photo_report")
+      let inputCustom = document.querySelector('[report-form-elem="custom_input"]')
+
+      input.addEventListener('change', function () {
+        if (this.files && this.files.length >= 1) {
+          inputCustom.innerHTML = "Фото выбрано"
+          inputCustom.setAttribute("style", "text-decoration: none;")
+        } else { inputCustom.innerHTML = "Прикрепи фото" }
+      })
+    }
+    if (target.getAttribute('popup-element') == 'close') {
+      closeReportForm()
     }
   })
   reportFormWrapper.addEventListener('submit', function (event) {

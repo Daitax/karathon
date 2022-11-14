@@ -1,10 +1,13 @@
 .popup(@max-width: 500px) {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 50%;
     left: 50%;
     width: 96%;
+    padding: 50px;
     max-width: @max-width;
-    background: #ccc;
+    background: @white;
     transform: translate(-50%, -50%);
     visibility: hidden;
     opacity: 0;
@@ -12,5 +15,101 @@
     &.show {
         visibility: visible;
         opacity: 1;
+    }
+
+    .close {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        width: 50px;
+        height: 50px;
+        background: @white;
+        border: 2px solid @pink;
+        border-radius: 50%;
+        box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+    }
+
+    .close::before,
+    .close::after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 43px;
+        background: @pink;
+        left: 22px;
+        top: 1.3px;
+    }
+
+    .close::before {
+        transform: rotate(-45deg);
+    }
+
+    .close::after {
+        transform: rotate(45deg);
+    }
+
+    // .close:hover {
+    //     transform: rotate(90deg);
+    //     transition: 1s;
+    // }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .label {
+        padding-bottom: 1em;
+    }
+
+    .text {
+        font-size: 20px;
+        line-height: 1.5;
+        letter-spacing: 0.03em;
+        margin-top: 14px;
+    }
+
+    .input {
+        border: 2px solid @pink;
+        width: 100%;
+        font-size: 20px;
+        padding: 29px 0 29px 22px;
+        margin-top: 30px;
+    }
+
+    .input:focus {
+        outline: none;
+    }
+
+    .custom_input {
+        color: @pink;
+        font-weight: 700;
+        text-transform: uppercase;
+        cursor: pointer;
+    }
+
+    .custom_input:hover {
+        text-decoration: underline;
+    }
+
+    .error {
+        font-size: 20px;
+        line-height: 1.5;
+        letter-spacing: 0.03em;
+        margin-top: 14px;
+        position: absolute
+    }
+
+    .button {
+        display: block;
+        padding: 25px 0;
+        align-self: auto;
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    .button:first-child {
+        margin-top: 20px;
     }
 }

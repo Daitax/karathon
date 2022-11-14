@@ -1,12 +1,77 @@
 {% extends 'core/base.html' %}
-
+{% load static %}
 {% block content %}
-  <h1>Карафон - это по любви</h1>
-  <div>Прими участие</div>
-  {% if user.is_authenticated %}
-    <a href="/participate/">Участовать</a>
-  {% else %}
-    <a href="javascript:void(0)">Войти</a>
-  {% endif %}
-
+<div class="content_wrapper">
+  <div class="first-screen_wrapper">
+    <div class="first-screen container">
+      <div class="first-screen_text">
+        <h1>Карафон &mdash;<br>это по<br>любви</h1>
+        <div class="first-screen_text_collab">Прими участие!</div>
+        <div class="first-screen_button_wrapper">
+          {% if user.is_authenticated %}
+          <a class="blue_button" href="/participate/">Участовать</a>
+          {% else %}
+          <a class="blue_button" href="javascript:void(0)">Войти</a>
+          {% endif %}
+          <div class="button_text_cost">Стоимость участия &mdash; 500₽</div>
+        </div>
+      </div>
+      <div class="first-screen_photo">
+        <img src="{% static 'core/img/photo_anna.svg' %}" alt="Anna_Karachunskaya">
+      </div>
+    </div>
+  </div>
+  <div class="about_karathon container">
+    <h2>что такое<br>карафон?</h2>
+    <div class="about_karathon_description">
+      Kарафон — это интерактивный марафон по шагам, с целью повысить свою активность и сделать мир чуточку лучше. Часть
+      средств, собранных в ходе карафона, будет переведена в благотворительные организации, выбранные победителями.
+    </div>
+    <div class="about_karathon_list">
+      <ol class="about_karathon_list_wrapper">
+        <li>карафон длится<br>13 дней</li>
+        <li>каждый день участник выполняет задание </li>
+        <li>задания даются ежедневно в прямом эфире в <a href="javascript:void(0)"><span>Instagram</span></a></li>
+        <li>каждый участник сдает отчёт до 12 ночи в личном <a href="javascript:void(0)"><span>кабинете</span></a></li>
+      </ol>
+    </div>
+    <div class="about_karathon_description">
+      Шаги можно нахаживать на улице или дорожке, ходить или бегать. Участвовать может каждый, у кого есть ноги.<br><br>
+      Если ты заинтересовался, хочешь попробовать свои силы, повысить активность и установить новые рекорды, то я рада
+      тебя приветствовать в тринадцатом карафоне.<br><br>
+      Если готов проверить себя, регистрируйся прямо сейчас!
+    </div>
+    <div class="about_karathon_description_button_wrapper">
+      {% include 'core/includes/pink_button.html' %}
+    </div>
+  </div>
+  <div class="about_karathon container">
+    <h2>зачем вам<br>карафон?</h2>
+    <dl class="about_karathon_wrapper">
+      <dt>
+        <h3>Повысь активность</h3>
+      </dt>
+      <dd>Твоя недельная активность возрастёт до невиданных цифр. Ты, на собственном примере, увидишь, как повышение
+        активности прямо пропорционально твоим результатам.</dd>
+      <dt>
+        <h3>Найди друзей</h3>
+      </dt>
+      <dd>Ты встретишь единомышленников, людей, которые прошли все карафоны, или, так же как и ты, тут впервые.
+        Карафонцы - очень дружелюбный народ, готовый принять, понять и поддержать новобранцев.</dd>
+      <dt>
+        <h3>Установи рекорд</h3>
+      </dt>
+      <dd>В течении карафона ты будешь ходить больше обычного. Ты установишь личный рекорд и поймёшь, что можешь больше,
+        чем тебе кажется!</dd>
+      <dt>
+        <h3>Твори добро</h3>
+      </dt>
+      <dd>Часть средств, собранных в ходе карафона, будет переведена в благотворительные организации, выбранные
+        победителями.</dd>
+    </dl>
+    <div class="about_karathon_button_wrapper">
+      {% include 'core/includes/pink_button.html' %}
+    </div>
+  </div>
+</div>
 {% endblock %}

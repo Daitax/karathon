@@ -7,7 +7,8 @@ from phonenumber_field.formfields import PhoneNumberField
 class AuthPhoneForm(forms.Form):
     phone = PhoneNumberField(
         error_messages={
-            'invalid': 'Введите корректный номер телефона',
+            # 'invalid': 'Введите корректный номер телефона',
+            'invalid': 'Введен неверный номер',
             'required': 'Введите номер телефона'
         })
 

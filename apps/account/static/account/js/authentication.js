@@ -5,7 +5,6 @@ function openAuthenticationForm() {
   overlay.classList.add('show')
   authenticationFormWrapper.classList.add('show')
 
-
   let csrfToken = getCookie('csrftoken')
   let data = new FormData()
   data.append('window', 'open')
@@ -25,6 +24,11 @@ function openAuthenticationForm() {
         }
       }
     })
+}
+
+function closeAuthenticationForm() {
+  authenticationFormWrapper.classList.remove('show');
+  overlay.classList.remove('show')
 }
 
 function submitAuthenticationForm(button) {
@@ -73,7 +77,17 @@ if (authenticationFormWrapper) {
       submitAuthenticationForm(target)
     }
     if (target.getAttribute('auth-form-elem') == 'later') {
-    //  TODO Написать функцию закрытия overlay
+      //  TODO Написать функцию закрытия overlay
+    }
+    if (target.getAttribute('popup-element') == 'close') {
+      closeAuthenticationForm()
+    }
+    if (target.getAttribute('auth-form-elem') == 'phone') {
+      let phoneField = document.querySelector('[auth-form-elem="phone"]')
+      let maskOptions = {
+        mask: '+{7}(000) 000-00-00'
+      };
+      IMask(phoneField, maskOptions);
     }
   })
 
@@ -83,7 +97,6 @@ if (authenticationFormWrapper) {
       if (target.value.length == 4) {
         submitAuthenticationForm(target)
       }
-
     }
   })
 }

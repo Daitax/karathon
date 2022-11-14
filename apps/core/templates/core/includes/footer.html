@@ -1,0 +1,38 @@
+{% load static %}
+<div class="container">
+    <div class="footer_nav">
+        <div class="footer_nav_logo">
+            <img class="footer_nav_logo_img" src="{% static 'core/img/logo_kara.svg' %}" alt="karathon_logo">
+            <div>© {% now "Y" %} Анна Карачунская</div>
+        </div>
+        <div class="footer_nav_menu">
+            <nav class="footer_nav_menu_items">
+                <li><a href="javascript:void(0)">n-й карафон</a></li>
+                <li><a href="javascript:void(0)">Рекордсмены</a></li>
+                <li><a href="javascript:void(0)">Прошедшие карафоны</a></li>
+            </nav>
+        </div>
+        <div class="footer_nav_menu">
+            <nav class="footer_nav_menu_items">
+                <li><a href="javascript:void(0)">О Карачуне</a></li>
+                <li><a href="javascript:void(0)">Благотворительность</a></li>
+                <li><a href="javascript:void(0)">Личный кабинет</a></li>
+                <li><a href="javascript:void(0)">Политика конфиденциальности</a></li>
+            </nav>
+        </div>
+        <div>
+            <nav class="footer_nav_menu_items">
+                <li>Telegram <a href="javascript:void(0)"><span>allaboutkarafon</span></a></li>
+                <li>Instagram <a href="javascript:void(0)"><span>Karachunia</span></a></li>
+                <li>Вконтакте <a href="javascript:void(0)"><span>Карачуня Трансформация</span></a></li>
+                <li>Youtube <a href="javascript:void(0)"><span>Anna Karachunskaya</span></a></li>
+            </nav>
+        </div>
+    </div>
+    <div class="footer_lemur">
+        <img src="{% static 'core/img/logo_lemur.svg' %}" alt="lemur_logo">
+        <div class="footer_lemur_text">Разработка и техническая поддержка сайта<br>
+            <a href="https://lemurteam.ru/" target="_blank"><span>Lemur Media</span></a>
+        </div>
+    </div>
+</div>

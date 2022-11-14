@@ -134,7 +134,7 @@ def auth_code(request):
                 'phone': phone,
                 'code': code,
                 'errors': {
-                    'code': 'Введён неправильный СМС код'
+                    'code': '* Введён неправильный СМС код'
                 }
             }
     else:
