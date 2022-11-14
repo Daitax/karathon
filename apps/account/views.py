@@ -155,9 +155,15 @@ def auth_code(request):
 
 
 def index(request):
-    form = ParticipantForm(instance=request.user.participant)
+    participant_form = ParticipantForm(instance=request.user.participant)
+    if request.method == 'POST':
+        participant_form = ParticipantForm(request.POST, request.FILES, instance=request.user.participant)
 
-    return render(request, 'account/index.html', {'form': form})
+        if participant_form.is_valid():
+            participant_form.save()
+            participant_form = ParticipantForm(instance=request.user.participant)
+
+    return render(request, 'account/index.html', {'participant_form': participant_form})
 
 
 def messages(request):

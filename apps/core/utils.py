@@ -33,6 +33,15 @@ def get_choice_value(choices, choice_key):
             return choice[1]
 
 
+def get_participant_photo_path(instance, filename):
+    base_dir = 'photo'
+
+    user_dir = create_name_participant_path(instance.participant)
+    check_media_directory_exist(base_dir, user_dir)
+
+    return '{0}/{1}/{2}'.format(base_dir, user_dir, filename)
+
+
 def get_report_image_path(instance, filename):
     base_dir = 'reports'
 
