@@ -16,9 +16,9 @@
 
 <body>
   <div class="global-wrapper">
-    <header class="header">{% navbar %}</header>
+    <header class="header" window-elem="header">{% navbar %}</header>
     <div class="content">{% block content %}{% endblock %}</div>
-    <footer class="footer">{% include 'core/includes/footer.html' %}</footer>
+    <footer class="footer" window-elem="footer">{% include 'core/includes/footer.html' %}</footer>
   </div>
   {% task_today %}
   <div class="overlay" popup-element="overlay">
@@ -38,41 +38,3 @@
 </body>
 
 </html>
-
-{% comment %} <html>
-<head>
-  <style type="text/css">
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html,
-    body {
-      height: 100%;
-    }
-    .wrapper {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-    .content {
-      flex: 1 0 auto;
-    }
-    .footer {
-      flex: 0 0 auto;
-    }
-  </style>
-</head>
-<body>
-
-<div class="wrapper">
-
-  <div class="content">контент</div>
-
-  <div class="footer">футер</div>
-
-</div>
-
-</body>
-</html> {% endcomment %}

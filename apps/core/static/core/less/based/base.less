@@ -21,6 +21,7 @@
 
 html {
     height: 100%;
+    // background: @pink;
 }
 
 body {
@@ -90,15 +91,12 @@ a span:hover {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
     -webkit-appearance: none;
     margin: 0;
-    /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 input[type=number] {
     -moz-appearance: textfield;
-    /* Firefox */
 }
 
 .global-wrapper {
@@ -115,6 +113,7 @@ input[type=number] {
 
 .content {
     flex: 1 0 auto;
+    // background: @white;
 }
 
 .blue_button {
@@ -192,24 +191,22 @@ input[type=number] {
 
 .header_navbar_menu {
     position: relative;
-    display: flex;
-    font-size: 15px;
-    letter-spacing: 0.03em;
-    font-weight: 500;
-    text-transform: uppercase;
     margin-top: 20px;
+    .navbar();
 }
 
-.header_navbar_menu li {
-    margin-left: 50px;
+.sticky_navbar_menu {
+    position: fixed;
+    top: -50px;
+    margin-top: 10px;
+    background: @pink;
+    transition: top 0.8s;
+    .navbar();
 }
 
-.header_navbar_menu li:first-child {
-    margin-left: 0;
-}
-
-.header_navbar_menu li a {
-    color: @white;
+.sticky_navbar_menu .participants_account_menu {
+    top: 84px;
+    display: none;
 }
 
 .participants_account_menu {
