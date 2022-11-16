@@ -1,15 +1,31 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<div>С кем ты хочешь быть в команде на следующем карафоне?</div>
-<div>
-  {% for desire_item in desire_list %}
-    <div>{{ desire_item.desired_participant }}</div>
-  {% endfor %}
   <div>
-    <button button-action="open-add-desire-form">Добавить друга</button>
+    {% if current_karathon_team %}
+      <div>Твоя команда {{ current_karathon_team.name }}</div>
+      <div>Результаты твоей команды в {{ current_karathon_team.karathon.number }}-ом карафоне</div>
+      <div>
+        {% for team_participant in current_karathon_team.team_participants %}
+          <div>{{ team_participant.participant }}</div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div>Вы не участвуете не в одной команде</div>
+    {% endif %}
   </div>
+  <div>
+  <button button-action="open-report-form">Сдать отчёт</button>
+  </div>
+  <div>С кем ты хочешь быть в команде на следующем карафоне?</div>
+  <div>
+    {% for desire_item in desire_list %}
+      <div>{{ desire_item.desired_participant }}</div>
+    {% endfor %}
+    <div>
+      <button button-action="open-add-desire-form">Добавить друга</button>
+    </div>
 
-</div>
+  </div>
 
 {% endblock %}

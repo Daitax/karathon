@@ -10,6 +10,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.account.signals import send_new_participant_notifications
 from apps.core.models import Category, Karathon, Task
+from apps.core.utils import get_participant_photo_path
 
 
 class User(AbstractUser):
@@ -47,7 +48,7 @@ class Participant(User):
     user = models.OneToOneField(User, parent_link=True, on_delete=models.CASCADE)
     middle_name = models.CharField('Отчество', max_length=20, blank=True)
     phone = PhoneNumberField('Номер телефона', unique=True)
-    photo = models.ImageField('Аватарка', blank=True)
+    photo = models.ImageField('Аватарка', blank=True, upload_to=get_participant_photo_path)
     instagram = models.URLField('Ссылка на инстаграм', blank=True)
     timezone = models.CharField(max_length=30, choices=TIMEZONES, default='Europe/Moscow')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
@@ -59,7 +60,14 @@ class Participant(User):
 
     def __str__(self):
         return '{last} {first} {middle} ({phone})'.format(last=self.last_name, first=self.first_name,
-                                                     middle=self.middle_name, phone=self.phone)
+                                                          middle=self.middle_name, phone=self.phone)
+
+    # TODO Сделать вывод участников желаемой команды в столбик
+    def desirer_team(self):
+        from apps.teams.models import DesiredTeam
+        team = DesiredTeam.objects.filter(desirer=self)
+
+        return [team_item.desired_participant.__str__() for team_item in team]
 
     def get_active_karathon(self):
         try:
@@ -73,11 +81,10 @@ class Participant(User):
             return karathon
 
         except ObjectDoesNotExist:
-            return False
+            return None
 
     def get_participant_time(self):
         participant_timezone = pytz.timezone(self.timezone)
-        print(participant_timezone)
         return datetime.datetime.now(participant_timezone)
 
     def get_today_task(self):
