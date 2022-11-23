@@ -1,10 +1,14 @@
 from django.contrib import admin
 
 # Register your models here.
-from apps.core.models import Category, Karathon, Task
+from apps.core.models import Category, CharityCategory, Karathon, Task
 
 
 class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
+class CharityCategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 
@@ -17,5 +21,6 @@ class TaskAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(CharityCategory, CharityCategoryAdmin)
 admin.site.register(Karathon, KarathonAdmin)
 admin.site.register(Task, TaskAdmin)

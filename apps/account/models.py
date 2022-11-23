@@ -9,7 +9,7 @@ from django.db.models import signals
 from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.account.signals import send_new_participant_notifications
-from apps.core.models import Category, Karathon, Task
+from apps.core.models import Category, Karathon, Task, CharityCategory
 from apps.core.utils import get_participant_photo_path
 
 
@@ -36,7 +36,7 @@ class Participant(User):
         ('Atlantic/South_Georgia', 'Мск-05'),
         ('America/Buenos_Aires', 'Мск-06'),
         ('America/New_York', 'Мск-07'),
-        ('America/Panama', 'Мск-08'),
+        ('America/Winnipeg', 'Мск-08'),
         ('America/Edmonton', 'Мск-09'),
         ('America/Los_Angeles', 'Мск-10'),
         ('America/Anchorage', 'Мск-11'),
@@ -135,3 +135,62 @@ class Sms(models.Model):
         code_hash = hashlib.md5(bytes(code))
         response.set_cookie('code', code_hash.hexdigest(), expires=expires)
         return response
+
+
+class Winner(models.Model):
+    karathon = models.ForeignKey(Karathon, verbose_name="Карафон", on_delete=models.SET_NULL, null=True, blank=False)
+    participant = participant = models.ForeignKey(Participant, verbose_name="Участник", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Победитель'
+        verbose_name_plural = 'Победители'
+
+    def __str__(self):
+        return self.participant
+
+    def is_winner_participant(self):
+        return Winner.objects.filter(participant=self.participant).exists()
+
+    @staticmethod
+    def set_individual_karathon_winner(karathon):
+        print(1)
+        print('Устанавливаем победителя индивидуального карафона:')
+        print(karathon)
+        print(2)
+
+    @staticmethod
+    def set_team_karathon_winners(karathon):
+        print(1)
+        print('Устанавливаем победителей командного карафона:')
+        print(karathon)
+        print(2)
+
+
+class WinnerQuestionnaire(models.Model):
+    SIZES = (
+        ('xxs', 'xxs'),
+        ('xs', 'xs'),
+        ('s', 's'),
+        ('m', 'm'),
+        ('l', 'l'),
+        ('xl', 'xl'),
+        ('xxl', 'xxl'),
+        ('3xl', '3xl'),
+        ('4xl', '4xl'),
+    )
+
+    participant = models.ForeignKey(Participant, verbose_name="Участник", on_delete=models.CASCADE)
+    postcode = models.CharField('Почтовый индекс', max_length=10)
+    country = models.CharField('Страна', max_length=100)
+    city = models.CharField('Населенный пункт', max_length=100)
+    address = models.CharField('Населенный пункт', max_length=200)
+    shirt_size = models.CharField('размер футболки', max_length=5, choices=SIZES, default='Europe/Moscow')
+    сharity_сategory = models.ForeignKey(CharityCategory, verbose_name='Категория благотворительности',
+                                         on_delete=models.SET_NULL, null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+
+    def __str__(self):
+        return self.name

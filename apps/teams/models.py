@@ -18,6 +18,9 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
+    def team_steps(self):
+        pass
+
 
 class TeamParticipant(models.Model):
     team = models.ForeignKey(Team, verbose_name='Команда', on_delete=models.CASCADE)
