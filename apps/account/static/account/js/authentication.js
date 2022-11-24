@@ -50,6 +50,10 @@ function submitAuthenticationForm(button) {
       if (data.status == 'ok') {
         if (data.action == 'window') {
           authenticationFormWrapper.innerHTML = data.window
+          let smsCode = document.querySelector('[auth-form-elem="code"]')
+          if (smsCode) {
+            smsCode.focus()
+          }
         }
         if (data.action == 'reload') {
           window.location.reload()
@@ -58,10 +62,12 @@ function submitAuthenticationForm(button) {
     })
 }
 
-let openFormAuthenticationButton = document.querySelector('[button-action="open-auth-form"]')
-if (openFormAuthenticationButton) {
-  openFormAuthenticationButton.addEventListener('click', openAuthenticationForm)
-}
+let openFormAuthenticationButtons = document.querySelectorAll('[button-action="open-auth-form"]')
+openFormAuthenticationButtons.forEach(element => element.addEventListener('click', openAuthenticationForm)
+)
+// if (openFormAuthenticationButton) {
+//   openFormAuthenticationButton.addEventListener('click', openAuthenticationForm)
+// }
 
 
 let authenticationFormWrapper = document.querySelector('[popup-element="popup"][form-name="authentication"]')

@@ -14,12 +14,12 @@ def task_today(context):
         task = context.request.user.participant.get_today_task()
 
         return {
-            'user': context.request.user,
+            'user': 'context.request.user',
             'active_karathon': active_karathon,
             'task': task,
         }
 
     else:
         return {
-            'user': context.request.user
+            'user': 'context.request.user'
         }

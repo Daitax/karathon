@@ -6,35 +6,35 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Title</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" viewport-fit="cover" />
-  <link rel="stylesheet" href="{% static 'core/less/style.less'|compile %}?v{% now 'u' %}" />
-  {% csrf_token %}
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" viewport-fit="cover" />
+    <link rel="stylesheet" href="{% static 'core/less/style.less'|compile %}?v{% now 'u' %}" />
+    {% csrf_token %}
+  </head>
 
-<body>
-  <div class="global-wrapper">
-    <header class="header" window-elem="header">{% navbar %}</header>
-    <div class="content">{% block content %}{% endblock %}</div>
-    <footer class="footer" window-elem="footer">{% include 'core/includes/footer.html' %}</footer>
-  </div>
-  {% task_today %}
-  <div class="overlay" popup-element="overlay">
-    {% if user.is_authenticated %}
-    <div class="report_form_wrapper" popup-element="popup" form-name="report"></div>
-    <div class="desire_form_wrapper" popup-element="popup" form-name="desire"></div>
-    {% else %}
-    <div class="authentication_form_wrapper" popup-element="popup" form-name="authentication"></div>
-    {% endif %}
-  </div>
-  <script src="{% static 'core/js/functions.js' %}"></script>
-  <script src="{% static 'core/js/base.js' %}"></script>
-  <script src="{% static 'account/js/authentication.js' %}"></script>
-  <script src="{% static 'account/js/imask.js' %}"></script>
-  <script src="{% static 'steps/js/report.js' %}"></script>
-  <script src="{% static 'teams/js/add_desire.js' %}"></script>
-</body>
+  <body>
+    <div class="global-wrapper">
+      <header class="header" window-elem="header">{% navbar %}</header>
+      <div class="content" window-elem="content">{% block content %}{% endblock %}</div>
+      <footer class="footer" window-elem="footer">{% include 'core/includes/footer.html' %}</footer>
+    </div>
+    {% comment %} {% task_today %} {% endcomment %}
+    <div class="overlay" popup-element="overlay">
+      {% if user.is_authenticated %}
+        <div class="report_form_wrapper" popup-element="popup" form-name="report"></div>
+        <div class="desire_form_wrapper" popup-element="popup" form-name="desire"></div>
+      {% else %}
+        <div class="authentication_form_wrapper" popup-element="popup" form-name="authentication"></div>
+      {% endif %}
+    <div>
+    <script src="{% static 'core/js/functions.js' %}"></script>
+    <script src="{% static 'core/js/base.js' %}"></script>
+    <script src="{% static 'account/js/authentication.js' %}"></script>
+    <script src="{% static 'account/js/imask.js' %}"></script>
+    <script src="{% static 'steps/js/report.js' %}"></script>
+    <script src="{% static 'teams/js/add_desire.js' %}"></script>
+  </body>
 
 </html>

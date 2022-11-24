@@ -49,11 +49,6 @@
         transform: rotate(45deg);
     }
 
-    // .close:hover {
-    //     transform: rotate(90deg);
-    //     transition: 1s;
-    // }
-
     .form {
         display: flex;
         flex-direction: column;
@@ -116,20 +111,56 @@
 
 .navbar {
     display: flex;
+    justify-content: space-between;
     font-size: 15px;
     letter-spacing: 0.03em;
     font-weight: 500;
     text-transform: uppercase;
 
-    li {
-        margin-left: 50px;
-    }
-
-    li:first-child {
-        margin-left: 0;
-    }
-
     li a {
         color: @white;
+    }
+
+    img {
+        position: absolute;
+        right: -50px;
+        top: -10px;
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        cursor: pointer;
+        background: @white;
+        z-index: 2;
+    }
+
+    button {
+        width: 400px;
+    }
+}
+
+.account_input {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+
+    p {
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 1.5;
+        letter-spacing: 0.03em;
+        margin-left: 20px;
+    }
+
+    button {
+        flex: 0 400px;
+    }
+
+    p {
+        flex: 1;
+    }
+
+    a {
+        color: @pink;
     }
 }

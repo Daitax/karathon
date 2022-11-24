@@ -1,6 +1,7 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
+{% include 'account/includes/first_screen.html' %}
   <div>
     {% if current_karathon_team %}
       <div>Твоя команда {{ current_karathon_team.name }}</div>

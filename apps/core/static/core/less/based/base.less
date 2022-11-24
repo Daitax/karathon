@@ -116,6 +116,10 @@ input[type=number] {
     // background: @white;
 }
 
+.content_wrapper {
+    overflow: hidden;
+}
+
 .blue_button {
     appearance: button;
     display: inline-block;
@@ -197,28 +201,81 @@ input[type=number] {
 
 .sticky_navbar_menu {
     position: fixed;
-    top: -50px;
+    top: -150px;
+    left: calc(50% - 660px); // половина разности ширины экрана и контейнера
+    // right: calc(50% - 660px);
+    padding: 15px 0;
     margin-top: 10px;
     background: @pink;
     transition: top 0.8s;
+    z-index: 2;
     .navbar();
 }
 
-.sticky_navbar_menu .participants_account_menu {
-    top: 84px;
-    display: none;
+.sticky_navbar_menu li:first-child::before {
+    content: "";
+    background: @pink;
+    position: absolute;
+    top: 0;
+    left: -30px;
+    width: 30px;
+    height: 100%;
+
+}
+
+.sticky_navbar_menu li:last-child::after {
+    content: "";
+    background: @pink;
+    position: absolute;
+    top: 0;
+    right: -30px;
+    width: 30px;
+    height: 100%;
+
+}
+
+.sticky_navbar_menu img {
+    top: 0px;
+}
+
+.no_avatar {
+    border: 2px solid @pink;
 }
 
 .participants_account_menu {
     position: absolute;
-    right: -45px;
-    top: 420px;
+    right: -10px;
+    top: 70px;
     background: @white;
-    max-width: 370px;
-    padding: 30px 28px 24px 30px;
+    width: 370px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(.46, .03, .52, .96);
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
     z-index: 1;
+
+    &.show {
+        max-height: 570px;
+    }
+
+    // &.fix {
+    //     position: fixed;
+    //     top: 99px;
+    //     right: calc(50% - 670px);
+    //     bottom: auto;
+    // }
 }
+
+.sticky_navbar_menu .participants_account_menu {
+    right: -10px;
+    top: 80px;
+}
+
+.participants_account_menu_wrapper {
+    padding: 30px 28px 24px 30px;
+}
+
+
 
 .participants_account_menu_name {
     font-weight: 600;
@@ -276,12 +333,31 @@ input[type=number] {
     position: inherit;
 }
 
-.participants_account_menu_info li a {
-    color: @black;
+.participants_account_menu_info li[localtime]::after {
+    content: attr(localtime);
+    font-weight: 700;
+    font-size: 40px;
+    color: @blue;
+    position: absolute;
+    top: -15px;
+    right: 30px;
 }
 
-.content_wrapper {
-    overflow: hidden;
+.participants_account_menu_info li[localtime] {
+    position: relative;
+}
+
+.participants_account_menu_info li[localtime] a {
+    z-index: 2;
+    position: inherit;
+}
+
+.participants_account_menu_info li a {
+    color: @black;
+
+    &.active {
+        color: @pink;
+    }
 }
 
 .first-screen_wrapper {
@@ -314,6 +390,48 @@ input[type=number] {
     width: 750px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.first-screen>.participants_account_menu {
+    max-height: none;
+    top: auto;
+    bottom: -140px;
+}
+
+
+
+.first-screen_avatar img {
+    height: 550px;
+    width: 550px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.first-screen_account_time {
+    margin-top: 80px;
+    font-weight: 700;
+    font-size: 80px;
+    letter-spacing: 0.05em;
+    color: @white
+}
+
+.first-screen_account_button_wrapper {
+    margin-top: 25px;
+    margin-bottom: 50px;
+}
+
+.first-screen_no_avatar p {
+    height: 550px;
+    width: 550px;
+    border-radius: 50%;
+    background: @white;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding-top: calc(50% - 0.5rem);
+    text-align: center;
+    color: @pink;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
 .about_karathon {
@@ -383,14 +501,164 @@ input[type=number] {
     margin-bottom: 160px;
 }
 
-.account_header {
+.account_content_header {
     margin-top: 100px;
+}
+
+.account_content_wrapper {
+    width: 65%;
+
+    input {
+        border: 2px solid @pink;
+        width: 400px;
+        padding: 26px 22px;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 20px;
+        width: 400px;
+        letter-spacing: 0.05em;
+    }
+
+    input[name="instagram"],
+    [name="email"] {
+        padding: 26px 0 26px 22px;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    input::placeholder {
+        font-weight: 400;
+        opacity: 1;
+    }
+
+    input::-webkit-input-placeholder {
+        font-weight: 400;
+        opacity: 1;
+        color: @black;
+    }
+
+    select {
+        border: 2px solid @pink;
+        width: 400px;
+        padding: 26px 22px;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 20px;
+        width: 400px;
+        letter-spacing: 0.05em;
+        -webkit-appearance: none;
+        border-radius: unset;
+        background: none;
+    }
+}
+
+.account_content_form_wrapper {
+    margin-top: 30px;
+}
+
+.account_content_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.account_content_full_name {
+    display: flex;
+}
+
+.account_content_avatar {
+    margin-left: 20px;
+}
+
+.account_content_avatar_ex {
+    position: relative;
+    height: 250px;
+}
+
+.account_content_avatar_ex img {
+    position: absolute;
+    top: 0;
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.account_content_avatar_custom_input {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border: 2px solid #F648A5;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 43px;
+        left: 122px;
+        background: @pink;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        width: 43px;
+        height: 2px;
+        left: 100.5px;
+        background: @pink;
+    }
+}
+
+.account_content_avatar_text {
+    padding: 12px 40px 12px 20px;
+    position: absolute;
+    background: @pink;
+    color: @white;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    bottom: 20px;
+    left: 90px;
+    width: max-content;
+    cursor: pointer;
+}
+
+.account_content_full_name label,
+.account_content_info_phone,
+.account_content_info_instagram,
+.account_content_info_mail,
+.account_content_info_timezone,
+.account_content_info_category,
+.account_content_info_button {
+    .account_input()
+}
+
+.account_content_full_name label:first-child {
+    margin-top: 0;
+}
+
+.blur_input {
+    position: relative;
+
+    ::after {
+        content: "";
+        position: absolute;
+        width: 87px;
+        height: 75px;
+        top: 2px;
+        left: 311px;
+        background: linear-gradient(270deg, #FFFFFF 15.44%, rgba(255, 255, 255, 0) 66.09%);
+    }
 }
 
 .message_item {
     margin-top: 80px;
     position: relative;
-    width: 65%;
 }
 
 .message_item_new {
