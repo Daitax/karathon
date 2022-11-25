@@ -9,7 +9,7 @@ from django.db.models import signals
 from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.account.signals import send_new_participant_notifications
-from apps.core.models import Category, Karathon, Task, CharityCategory
+from apps.core.models import Category, Karathon, CharityCategory
 from apps.core.utils import get_participant_photo_path
 
 
@@ -87,19 +87,6 @@ class Participant(User):
         participant_timezone = pytz.timezone(self.timezone)
         return datetime.datetime.now(participant_timezone)
 
-    def get_today_task(self):
-        try:
-            today_task = Task.objects.get(
-                karathon=self.get_active_karathon(),
-                category=self.category,
-                date=self.get_participant_time()
-            )
-
-            return today_task
-
-        except ObjectDoesNotExist:
-            return None
-
     def is_today_report(self):
         try:
             from apps.steps.models import Step
@@ -107,6 +94,21 @@ class Participant(User):
             return True
         except ObjectDoesNotExist:
             return False
+
+    def today_task(self):
+        karathon = self.get_active_karathon()
+        if karathon.type == "individual":
+            try:
+                from apps.tasks.models import IndividualTask
+                today_task = IndividualTask.objects.get(karathon=karathon, category=self.category,
+                                                           date=self.get_participant_time())
+                return today_task
+            except ObjectDoesNotExist:
+                return None
+
+        elif karathon.type == "team":
+            pass
+        return None
 
 
 signals.post_save.connect(send_new_participant_notifications, sender=Participant)

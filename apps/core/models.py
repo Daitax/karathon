@@ -85,35 +85,35 @@ class Karathon(models.Model):
         return False
 
 
-class Task(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
-    karathon = models.ForeignKey(Karathon, on_delete=models.SET_NULL, null=True, blank=True)
-    date = models.DateField('Дата', blank=False, validators=[not_earlier_today])
-    task = models.CharField('Задание', max_length=200, blank=False)
-    addition = models.CharField('Дополнение к заданию', max_length=200, null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Задание'
-        verbose_name_plural = 'Задания'
-
-    def __str__(self):
-        return self.task
-
-    def clean(self):
-        karathons = Karathon.objects.filter(starts_at__lte=self.date, finished_at__gte=self.date)
-        if karathons.count() == 0:
-            raise ValidationError({'date': 'На указанную дату карафонов нет'})
-
-        try:
-            karathons.get(number=self.karathon.number)
-        except ObjectDoesNotExist:
-            raise ValidationError({'karathon': 'На указанную дату карафона с таким номером нет'})
-
-        # TODO Подумать реализацию проверки наличия задания на текущую дату в этой категории, и что бы не выбивало
-        #  ошибку при редактировании
-
-        # try:
-        #     Task.objects.get(date=self.date, category=self.category)
-        #     raise ValidationError({'category': 'На указанную дату карафона в этой категории уже есть задание'})
-        # except ObjectDoesNotExist:
-        #     pass
+# class Task(models.Model):
+#     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+#     karathon = models.ForeignKey(Karathon, on_delete=models.SET_NULL, null=True, blank=True)
+#     date = models.DateField('Дата', blank=False, validators=[not_earlier_today])
+#     task = models.CharField('Задание', max_length=200, blank=False)
+#     addition = models.CharField('Дополнение к заданию', max_length=200, null=True, blank=True)
+#
+#     class Meta:
+#         verbose_name = 'Задание'
+#         verbose_name_plural = 'Задания'
+#
+#     def __str__(self):
+#         return self.task
+#
+#     def clean(self):
+#         karathons = Karathon.objects.filter(starts_at__lte=self.date, finished_at__gte=self.date)
+#         if karathons.count() == 0:
+#             raise ValidationError({'date': 'На указанную дату карафонов нет'})
+#
+#         try:
+#             karathons.get(number=self.karathon.number)
+#         except ObjectDoesNotExist:
+#             raise ValidationError({'karathon': 'На указанную дату карафона с таким номером нет'})
+#
+#         # TODO Подумать реализацию проверки наличия задания на текущую дату в этой категории, и что бы не выбивало
+#         #  ошибку при редактировании
+#
+#         # try:
+#         #     Task.objects.get(date=self.date, category=self.category)
+#         #     raise ValidationError({'category': 'На указанную дату карафона в этой категории уже есть задание'})
+#         # except ObjectDoesNotExist:
+#         #     pass
