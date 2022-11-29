@@ -27,6 +27,19 @@ def create_name_participant_path(participant):
     return name_path
 
 
+def ending_numbers(number, words_list):
+    num = number % 100
+    if num > 19:
+        num = num % 10
+
+    if num == 1:
+        return words_list[0]
+    elif num == 2 or num == 3 or num == 4:
+        return words_list[1]
+    else:
+        return words_list[2]
+
+
 def get_choice_value(choices, choice_key):
     for choice in choices:
         if choice[0] == choice_key:

@@ -62,6 +62,18 @@ class Participant(User):
         return '{last} {first} {middle} ({phone})'.format(last=self.last_name, first=self.first_name,
                                                           middle=self.middle_name, phone=self.phone)
 
+    def best_steps_all(self):
+        from apps.steps.models import Step
+        return Step.objects.filter(participant=self).order_by('-steps').first().steps
+
+    def best_steps_karathon(self):
+        from apps.steps.models import Step
+        return Step.objects.filter(
+            participant=self,
+            date__gte=self.get_active_karathon().starts_at,
+            date__lte=self.get_active_karathon().finished_at
+        ).order_by('-steps').first().steps
+
     # TODO Сделать вывод участников желаемой команды в столбик
     def desirer_team(self):
         from apps.teams.models import DesiredTeam
@@ -102,7 +114,7 @@ class Participant(User):
                 from apps.tasks.models import IndividualTask
                 today_task = IndividualTask.objects.get(karathon=karathon, category=self.category,
                                                            date=self.get_participant_time())
-                return today_task
+                return today_task.text_individual_task(self)
             except ObjectDoesNotExist:
                 return None
 

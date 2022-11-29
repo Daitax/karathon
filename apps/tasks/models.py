@@ -1,10 +1,12 @@
 import datetime
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
 # Create your models here.
 from apps.account.models import Participant
 from apps.core.models import Category, Karathon
+from apps.core.utils import ending_numbers
 from apps.core.validators import not_earlier_today
 
 
@@ -24,7 +26,7 @@ class IndividualTask(models.Model):
     )
 
     category = models.ForeignKey(Category, verbose_name="Категория участника", on_delete=models.SET_NULL, null=True,
-                                                                                                        blank=True)
+                                 blank=True)
     karathon = models.ForeignKey(Karathon, verbose_name="Карафон", on_delete=models.CASCADE)
     date = models.DateField('Дата', blank=False, validators=[not_earlier_today])
     type = models.CharField('Тип', max_length=100, choices=TYPE)
@@ -48,29 +50,119 @@ class IndividualTask(models.Model):
     def text_individual_task(self, participant):
         match self.type:
             case "walk_steps":
-                text = "Пройдите {steps} шагов".format(steps=self.steps)
-                return text
+                text = "Пройдите {} {}".format(
+                    self.steps,
+                    ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                )
+
             case "double_best":
-                text = "Удвойте Ваш лучший результат или пройдите {steps} шагов. (Ваш лучший результат: {" \
-                       "best})".format(steps=self.steps, best=15131)
-                return text
+                double_best = participant.best_steps_karathon() * 2
+
+                text = "Пройдите {} {} или {} {}".format(
+                    double_best,
+                    ending_numbers(double_best, ['шаг', 'шага', 'шагов']),
+                    self.steps,
+                    ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                )
+
             case "double_result_day":
-                pass
+                from apps.steps.models import Step
+                try:
+                    day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
+                    double_steps = day_steps.steps * 2
+
+                    text = "Пройдите {} {} или {} {}".format(
+                        double_steps,
+                        ending_numbers(double_steps, ['шаг', 'шага', 'шагов']),
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                    )
+
+                except ObjectDoesNotExist:
+                    text = "Пройдите {} {}".format(
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                    )
+
             case "improve_best":
-                pass
+                best = participant.best_steps_karathon()
+
+                text = "Пройдите больше {} {} или {} {}".format(
+                    best,
+                    ending_numbers(best, ['шага', 'шагов', 'шагов']),
+                    self.steps,
+                    ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                )
+
             case "improve_result_day":
-                pass
+                from apps.steps.models import Step
+                try:
+                    day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
+                    steps = day_steps.steps
+
+                    text = "Пройдите больше {} {} или {} {}".format(
+                        steps,
+                        ending_numbers(steps, ['шаг', 'шага', 'шагов']),
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                    )
+
+                except ObjectDoesNotExist:
+                    text = "Пройдите {} {}".format(
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                    )
+
             case "add_steps_to_day":
-                pass
+                from apps.steps.models import Step
+                day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
+                steps = day_steps.steps
+
+                text = "Пройдите {} {}".format(
+                    steps + self.steps,
+                    ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                )
+
             case "palindrome":
-                pass
+                text = "Пройдите зеркальное количество шагов (например 12321)"
+
             case "steps_of_consecutive_digits":
-                pass
+                text = "Пройдите количество шагов, состоящее из последовательных цифр (например 12543)"
+
             case "steps_multiple_number":
-                pass
+                text = "Пройдите число шагов, кратное {}".format(self.multiple_number)
+
             case "add_steps_to_report_digit":
-                pass
+                from apps.steps.models import Step
+                day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
+                digit_list = [int(a) for a in str(day_steps.steps)]
+
+                if self.position > len(digit_list):
+                    position = self.position % len(digit_list)
+                else:
+                    position = self.position
+
+                digit = int(digit_list[position - 1])
+                digit = 5 if digit == 0 else digit
+
+                steps = digit * 1000
+
+                text = "Пройдите {} {}".format(
+                    steps,
+                    ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                )
+
             case "best_personal_record":
-                pass
+                best = participant.best_steps_all()
+
+                text = "Пройдите больше {} {} или {} {}".format(
+                    best,
+                    ending_numbers(best, ['шага', 'шагов', 'шагов']),
+                    self.steps,
+                    ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                )
+
             case _:
                 return None
+
+        return text

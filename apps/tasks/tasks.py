@@ -77,7 +77,16 @@ def is_individual_task_completed(report):
         case "add_steps_to_report_digit":
             day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
             digit_list = [int(a) for a in str(day_steps.steps)]
-            steps = int(digit_list[task.position - 1]) * 1000
+
+            if task.position > len(digit_list):
+                position = task.position % len(digit_list)
+            else:
+                position = task.position
+
+            digit = int(digit_list[position - 1])
+            digit = 5 if digit == 0 else digit
+
+            steps = digit * 1000
 
             if report.steps == steps:
                 return True
