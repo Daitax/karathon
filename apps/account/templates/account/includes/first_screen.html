@@ -1,8 +1,10 @@
+{% load account_menu %}
+
 <div class="first-screen_wrapper">
     <div class="first-screen container" window-elem="first-screen">
         <div class="first-screen_text">
             <h1>Личный кабинет</h1>
-            <div class="first-screen_account_time">Время клиента: {{ localtime }}</div>
+            <div class="first-screen_account_time" window-elem="first-screen-countdown">Countdown</div>
             <div class="first-screen_text_collab">до подачи отчета</div>
             <div class="first-screen_account_button_wrapper">
             <a class="blue_button" href="/participate/">Сдать отчет</a>
@@ -14,11 +16,11 @@
         </div>
         {% else %}
         <div class="first-screen_avatar" window-elem="account_avatar">
-            <label class="first-screen_no_avatar" for="account_photo">
-                <p>добавить фото</p>
+            <label class="first-screen_no_avatar">
+                <p>добавьте фото</p>
             </label>
         </div>
         {% endif %}
-        {% include 'core/menu/account_menu.html' %}
+        {% account_menu %}
     </div>
 </div>

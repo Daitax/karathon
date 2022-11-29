@@ -203,7 +203,6 @@ input[type=number] {
     position: fixed;
     top: -150px;
     left: calc(50% - 660px); // половина разности ширины экрана и контейнера
-    // right: calc(50% - 660px);
     padding: 15px 0;
     margin-top: 10px;
     background: @pink;
@@ -257,13 +256,6 @@ input[type=number] {
     &.show {
         max-height: 570px;
     }
-
-    // &.fix {
-    //     position: fixed;
-    //     top: 99px;
-    //     right: calc(50% - 670px);
-    //     bottom: auto;
-    // }
 }
 
 .sticky_navbar_menu .participants_account_menu {
@@ -275,20 +267,31 @@ input[type=number] {
     padding: 30px 28px 24px 30px;
 }
 
-
-
 .participants_account_menu_name {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 20px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     line-height: 1.5;
 }
 
+img[window-elem="avatar_preview"] {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    border-color: @pink;
+    object-fit: cover;
+    cursor: pointer;
+    display: none;
+}
+
 .participants_account_menu_inst {
     margin-top: 6px;
     color: @pink;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 16px;
     line-height: 20px;
     letter-spacing: 0.05em;
@@ -296,7 +299,7 @@ input[type=number] {
 }
 
 .participants_account_menu_info {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 15px;
     line-height: 1.2;
     letter-spacing: 0.03em;
@@ -333,21 +336,21 @@ input[type=number] {
     position: inherit;
 }
 
-.participants_account_menu_info li[localtime]::after {
-    content: attr(localtime);
+.participants_account_menu_info li[countdown]::after {
+    content: attr(countdown);
     font-weight: 700;
     font-size: 40px;
     color: @blue;
     position: absolute;
     top: -15px;
-    right: 30px;
+    left: 100px;
 }
 
-.participants_account_menu_info li[localtime] {
+.participants_account_menu_info li[countdown] {
     position: relative;
 }
 
-.participants_account_menu_info li[localtime] a {
+.participants_account_menu_info li[countdown] a {
     z-index: 2;
     position: inherit;
 }
@@ -398,8 +401,6 @@ input[type=number] {
     bottom: -140px;
 }
 
-
-
 .first-screen_avatar img {
     height: 550px;
     width: 550px;
@@ -431,7 +432,6 @@ input[type=number] {
     text-align: center;
     color: @pink;
     text-transform: uppercase;
-    cursor: pointer;
 }
 
 .about_karathon {
@@ -610,6 +610,7 @@ input[type=number] {
         height: 2px;
         left: 100.5px;
         background: @pink;
+        z-index: -1;
     }
 }
 
@@ -626,6 +627,10 @@ input[type=number] {
     left: 90px;
     width: max-content;
     cursor: pointer;
+
+    &:hover {
+        background: linear-gradient(97.04deg, #F648A5 -4.24%, #00AFEB 49.4%, #F648A5 88.96%);
+    }
 }
 
 .account_content_full_name label,

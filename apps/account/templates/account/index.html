@@ -27,14 +27,16 @@
           {% if user.participant.photo %}
           <label class="account_content_avatar_ex" for="account_photo">
             <img src="{{user.participant.photo.url}}">
+            <img src="" window-elem="avatar_preview">
             <div class="account_content_avatar_text">сменить фото</div>
           </label>
           {% else %}
           <label class="account_content_avatar_custom_input" for="account_photo">
+            <img src="" window-elem="avatar_preview">
             <div class="account_content_avatar_text">добавить фото</div>
           </label>
           {% endif %}
-          <input id="account_photo" type="file" name="photo" accept="image/jpeg,image/png" style="display: none;">
+          <input id="account_photo" type="file" name="photo" accept="image/jpeg,image/png" style="display: none;" window-elem="input_avatar">
           <div>{{ participant_form.errors.photo.as_text }}</div>
         </div>
       </div>

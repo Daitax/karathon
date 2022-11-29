@@ -14,7 +14,6 @@ def navbar(context):
             'user': context.request.user,
             'localtime': localtime,
             'is_today_report': is_today_report,
-            'val': 'ok',
         }
     else:
         return {
