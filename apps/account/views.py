@@ -6,8 +6,8 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_http_methods
 
-from .forms import AuthPhoneForm, AuthCodeForm, ParticipantForm
-from .models import Participant, Sms
+from .forms import AuthPhoneForm, AuthCodeForm, ParticipantForm, WinnerQuestionnaireForm
+from .models import Participant, Sms, Winner
 from apps.notifications.models import Notification
 
 
@@ -156,14 +156,32 @@ def auth_code(request):
 
 def index(request):
     participant_form = ParticipantForm(instance=request.user.participant)
-    if request.method == 'POST':
+    if request.method == 'POST' and 'personal' in request.POST:
         participant_form = ParticipantForm(request.POST, request.FILES, instance=request.user.participant)
 
         if participant_form.is_valid():
             participant_form.save()
             participant_form = ParticipantForm(instance=request.user.participant)
 
-    return render(request, 'account/index.html', {'participant_form': participant_form})
+    context = {
+        'participant_form': participant_form,
+    }
+
+    if Winner.is_winner_participant(request.user.participant):
+        winner_questionnaire_form = WinnerQuestionnaireForm()
+
+        if request.method == 'POST' and 'winner' in request.POST:
+            winner_questionnaire_form = WinnerQuestionnaireForm(request.POST)
+
+            if winner_questionnaire_form.is_valid():
+                pass
+
+        context = {
+            'participant_form': participant_form,
+            'winner_questionnaire_form': winner_questionnaire_form
+        }
+
+    return render(request, 'account/index.html', context)
 
 
 def messages(request):

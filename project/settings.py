@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.core.apps.CoreConfig',
     'apps.notifications.apps.NotificationsConfig',
     'apps.steps.apps.StepsConfig',
+    'apps.tasks.apps.TasksConfig',
     'apps.teams.apps.TeamsConfig',
 ]
 

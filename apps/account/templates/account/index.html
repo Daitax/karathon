@@ -6,98 +6,11 @@
 <div class="container">
   <div class="account_content_wrapper">
     <div class="account_content_header"><h2>Персональные данные</h2></div>
-    <form class="account_content_form_wrapper" method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="account_content_full_name">
-        <div>
-          <label>
-            <input type="text" name="last_name" value="{{ participant_form.last_name.value }}" placeholder="Фамилия">
-            <div>{{ participant_form.last_name.errors }}</div>
-          </label>
-          <label>
-            <input type="text" name="first_name" value="{{ participant_form.first_name.value }}" placeholder="Имя">
-            <div>{{ participant_form.first_name.errors }}</div>
-          </label>
-          <label>
-            <input type="text" name="middle_name" value="{{ participant_form.middle_name.value }}" placeholder="Отчество">
-            <div>{{ participant_form.middle_name.errors }}</div>
-          </label>
-        </div>
-        <div class="account_content_avatar">
-          {% if user.participant.photo %}
-          <label class="account_content_avatar_ex" for="account_photo">
-            <img src="{{user.participant.photo.url}}">
-            <img src="" window-elem="avatar_preview">
-            <div class="account_content_avatar_text">сменить фото</div>
-          </label>
-          {% else %}
-          <label class="account_content_avatar_custom_input" for="account_photo">
-            <img src="" window-elem="avatar_preview">
-            <div class="account_content_avatar_text">добавить фото</div>
-          </label>
-          {% endif %}
-          <input id="account_photo" type="file" name="photo" accept="image/jpeg,image/png" style="display: none;" window-elem="input_avatar">
-          <div>{{ participant_form.errors.photo.as_text }}</div>
-        </div>
-      </div>
-      <div class="account_content_info">
-        <label class="account_content_info_phone">
-          <div>
-            <input type="text" name="phone" value="{{ participant_form.phone.value }}" placeholder="Телефон">
-            <div>{{ participant_form.phone.errors }}</div>
-          </div>
-          <p>твой номер телефона для авторизации на сайте</p>
-        </label>
-        <label class="account_content_info_instagram blur_input">
-          <div >
-            <input type="text" name="instagram" value="{{ participant_form.instagram.value }}" placeholder="https://">
-            <div>{{ participant_form.instagram.errors }}</div>
-          </div>
-          <p>просто укажи ссылку на свой инстаграм</p>
-        </label>
-        <label class="account_content_info_mail blur_input">
-          <div>
-            <input type="email" name="email" value="{{ participant_form.email.value }}" placeholder="E-mail">
-            <div>{{ participant_form.email.errors }}</div>
-          </div>
-          <p>твой email для наших оповещений</p>
-        </label>
-        <label class="account_content_info_timezone">
-          <div>
-            <select name="timezone">
-              {% for value,name in participant_form.fields.timezone.choices %}
-                <option value="{{ value }}"{% if participant_form.timezone.value == value %}
-                        selected{% endif %}>{{ name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <p>время, к которому будут привязаны твои задания</p>
-        </label>
-        <label class="account_content_info_category">
-          <div>
-            <select name="category">
-              {% for value,name in participant_form.fields.category.choices %}
-                <option value="{{ value }}"
-                    {% if participant_form.category.value == value %} selected{% endif %}
-                    {% if value == "" %} disabled{% endif %}
-                >{% if value == "" %}
-                  Выбрать категорию
-                {% else %}
-                  {{ name }}
-                {% endif %}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <p>категория, по которой ты будешь получать задания</p>
-        </label>
-        <div class="account_content_info_button">
-          <button class="pink_button" type="submit" value="account">Сохранить</button>
-          <p>нажимая на кнопку, ты даешь согласие на <a href="javascript:void(0)">обработку и хранение персональных
-            данных</a>
-          </p>
-        </div>
-      </div>
-    </form>
+    {% include 'account/forms/personal_form.html' %}
+    {% comment %} {% if winner_questionnaire_form %} {% endcomment %}
+      <div>Анкета победителя</div>
+      {% include 'account/forms/winner_questionnaire_form.html' %}
+    {% comment %} {% endif %} {% endcomment %}
   </div>
 </div>
 {% endblock %}

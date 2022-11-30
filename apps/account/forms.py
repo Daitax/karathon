@@ -1,5 +1,5 @@
 from django import forms
-from .models import Participant
+from .models import Participant, WinnerQuestionnaire
 
 from phonenumber_field.formfields import PhoneNumberField
 
@@ -23,3 +23,9 @@ class ParticipantForm(forms.ModelForm):
         model = Participant
         fields = ['first_name', 'last_name', 'middle_name', 'phone', 'instagram', 'email', 'timezone', 'category',
                   'photo']
+
+
+class WinnerQuestionnaireForm(forms.ModelForm):
+    class Meta:
+        model = WinnerQuestionnaire
+        fields = ['postcode', 'country', 'city', 'address', 'shirt_size', 'сharity_сategory']
