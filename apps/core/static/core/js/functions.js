@@ -51,10 +51,18 @@ if (inputAvatar) {
     // Показывает превью аватарки перед загрузкой на сервер
     if (this.files[0]) {
       let fileReader = new FileReader();
+      let customInputAvatar = document.querySelector('[window-elem="custom_input_avatar"]')
 
       fileReader.addEventListener("load", function () {
-        avatarPreview.setAttribute("src", fileReader.result)
-        avatarPreview.setAttribute("style", "display:block")
+        if (customInputAvatar) {
+          customInputAvatar.setAttribute("style", "border:none")
+        }
+        avatarPreview.setAttribute("style", "\
+        display:block;\
+        background-image:url(" + fileReader.result + ");\
+        background-repeat: no-repeat;\
+        background-position: center center;\
+        background-size: cover;")
       }, false);
 
       fileReader.readAsDataURL(this.files[0]);

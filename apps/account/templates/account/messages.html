@@ -3,7 +3,7 @@
 {% block content %}
 {% include 'account/includes/first_screen.html' %}
 <div class="container">
-<div class="account_content_header"><h2>Сообщения</h2></div>
+<div class="account_content_header"><h2>Сообщения{{mes_cnt}}</h2></div>
   {% for message_item in messages_list %}
   <div class="account_content_wrapper">
     <div class="message_item">
@@ -11,7 +11,7 @@
       <div class="message_item_new">new</div>
       {% endif %}
       <div class="message_item_date">{{ message_item.datetime_creation }}</div>
-      <div><h4>{{ message_item.header }}</h4></div>
+      <div class="message_item_header"><h4>{{ message_item.header }}</h4></div>
       <div class="message_item_text">{{ message_item.text }}</div>
     </div>
   </div>

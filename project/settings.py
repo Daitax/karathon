@@ -73,6 +73,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.account.context_processors.user_time.time',
+                'apps.account.context_processors.not_viewed_notifications.not_viewed_notifications',
             ],
         },
     },

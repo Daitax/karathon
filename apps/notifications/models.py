@@ -88,3 +88,7 @@ class Notification(models.Model):
             header=header,
             text=text,
         )
+        
+    def not_viewed_amount(self):
+        not_viewed_notification_list = Notification.objects.filter(participant=self.participant, is_viewed=False)
+        return not_viewed_notification_list.count()
