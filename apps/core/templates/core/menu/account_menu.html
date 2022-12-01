@@ -12,6 +12,13 @@
         <div class="participants_account_menu_inst">{{ user.participant.instagram|truncatechars:25 }}</div>
         {% endif %}
         <nav class="participants_account_menu_info">
+
+            <li>
+                <a href="/">
+                    Главная(для удобства)
+                </a>
+            </li>
+
             <li>
                 <a class="{% if view_name  == 'account:account-index' %}active{% endif %}" href="{{ account_url }}">
                     Персональные данные
@@ -36,7 +43,12 @@
             {% if is_today_report %}
             <li>Отчёт сдан</li>
             {% else %}
-            <li localtime="{{ localtime|date:"H i s" }}" countdown="" menu-elem="participant_localtime">
+            {% comment %} <li localtime="{{user_time|date:"H i s" }}{{localtime|date:"H i s" }}" countdown="" menu-elem="participant_localtime"> {% endcomment %}
+                {% comment %} {% if user_time%} {% endcomment %}
+                    <li localtime="{% if user_time%}{{user_time|date:"H i s" }}{% else %}{{localtime|date:"H i s" }}{% endif %}" countdown="" menu-elem="participant_localtime">
+                {% comment %} {% else %} {% endcomment %}
+                    {% comment %} <li localtime="{{localtime|date:"H i s" }}" countdown="" menu-elem="participant_localtime"> {% endcomment %}
+                {% comment %} {% endif %} {% endcomment %}
                 <a href="javascript:void(0)" button-action="open-report-form">
                     Сдать отчёт
                 </a>

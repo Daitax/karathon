@@ -63,22 +63,24 @@ if (inputAvatar) {
 }
 
 let accountMenu = document.querySelector('[window-elem="account_avatar"] ~ [window-elem="account_menu"]')
-let accountMenuTop = accountMenu.getBoundingClientRect().top
-let accountMenuAbsoluteBottom = firstScreen.getBoundingClientRect().bottom - footer.getBoundingClientRect().top
-let accountMenuFixedOffset = 90
+if (accountMenu) {
+  let accountMenuTop = accountMenu.getBoundingClientRect().top
+  let accountMenuAbsoluteBottom = firstScreen.getBoundingClientRect().bottom - footer.getBoundingClientRect().top
+  let accountMenuFixedOffset = 90
 
-window.addEventListener("scroll", function () {
-  // двигает меню пользователя от первого экрана до подвала
-  if ((window.pageYOffset > accountMenuTop - accountMenuFixedOffset) && (window.pageYOffset < (footerTop - accountMenu.clientHeight))) {
-    accountMenu.setAttribute("style", "position: fixed; top: 97px; right: calc(50% - 670px); bottom: auto;")
-  }
-  else {
-    accountMenu.setAttribute("style", "position: absolute; top: auto; right: -10px; bottom: -140px;")
-  }
-  if (window.pageYOffset > (footerTop - accountMenu.clientHeight - accountMenuFixedOffset)) {
-    accountMenu.setAttribute("style", "bottom:" + accountMenuAbsoluteBottom + "px")
-  }
-})
+  window.addEventListener("scroll", function () {
+    // двигает меню пользователя от первого экрана до подвала
+    if ((window.pageYOffset > accountMenuTop - accountMenuFixedOffset) && (window.pageYOffset < (footerTop - accountMenu.clientHeight))) {
+      accountMenu.setAttribute("style", "position: fixed; top: 97px; right: calc(50% - 670px); bottom: auto;")
+    }
+    else {
+      accountMenu.setAttribute("style", "position: absolute; top: auto; right: -10px; bottom: -140px;")
+    }
+    if (window.pageYOffset > (footerTop - accountMenu.clientHeight - accountMenuFixedOffset)) {
+      accountMenu.setAttribute("style", "bottom:" + accountMenuAbsoluteBottom + "px")
+    }
+  })
+}
 
 let deadline = 86400 // количество секунд в сутках
 let localtime = document.querySelectorAll('[menu-elem="participant_localtime"]')
