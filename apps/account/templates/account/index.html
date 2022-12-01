@@ -8,7 +8,7 @@
     <div class="account_content_header"><h2>Персональные данные</h2></div>
     {% include 'account/forms/personal_form.html' %}
     {% comment %} {% if winner_questionnaire_form %} {% endcomment %}
-      <div>Анкета победителя</div>
+      <div class="account_content_header"><h2>Анкета победителя</h2></div>
       {% include 'account/forms/winner_questionnaire_form.html' %}
     {% comment %} {% endif %} {% endcomment %}
   </div>

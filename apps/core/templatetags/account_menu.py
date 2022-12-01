@@ -9,13 +9,11 @@ def account_menu(context):
         localtime = context.request.user.participant.get_participant_time()
 
         return {
-            # 'request_url': context.request.path,
             'user': context.request.user,
             'localtime': localtime,
             'view_name': context.request.resolver_match.view_name,
         }
     else:
         return {
-            # 'request_url': context.request.path,
             'user': context.request.user,
         }

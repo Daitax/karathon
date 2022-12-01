@@ -64,7 +64,7 @@ if (inputAvatar) {
 
 let accountMenu = document.querySelector('[window-elem="account_avatar"] ~ [window-elem="account_menu"]')
 let accountMenuTop = accountMenu.getBoundingClientRect().top
-let accountMenuAbsoluteBottom = firstScreen.getBoundingClientRect().bottom - footer.getBoundingClientRect().top - 4
+let accountMenuAbsoluteBottom = firstScreen.getBoundingClientRect().bottom - footer.getBoundingClientRect().top
 let accountMenuFixedOffset = 90
 
 window.addEventListener("scroll", function () {
@@ -75,7 +75,7 @@ window.addEventListener("scroll", function () {
   else {
     accountMenu.setAttribute("style", "position: absolute; top: auto; right: -10px; bottom: -140px;")
   }
-  if (window.pageYOffset > (footerTop - accountMenu.clientHeight - accountMenuFixedOffset + 4)) {
+  if (window.pageYOffset > (footerTop - accountMenu.clientHeight - accountMenuFixedOffset)) {
     accountMenu.setAttribute("style", "bottom:" + accountMenuAbsoluteBottom + "px")
   }
 })
