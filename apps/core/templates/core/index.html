@@ -1,6 +1,8 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% block content %}
+{% load navbar %}
+{% load steps_block %}
 <div class="content_wrapper">
   <div class="first-screen_wrapper">
     <div class="first-screen container" window-elem="first-screen">
@@ -44,6 +46,9 @@
     <div class="about_karathon_description_button_wrapper">
       {% include 'core/includes/pink_button.html' %}
     </div>
+{% endblock %}
+    {% steps_block %}
+{% block content_second %}
   </div>
   <div class="about_karathon container">
     <h2>зачем вам<br>карафон?</h2>

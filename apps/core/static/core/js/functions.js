@@ -93,12 +93,6 @@ if (accountMenu) {
 let deadline = 86400 // количество секунд в сутках
 let localtime = document.querySelectorAll('[menu-elem="participant_localtime"]')
 let timerId;
-let localHours = Number(localtime[0].getAttribute("localtime").split(" ")[0])
-let localMinutes = Number(localtime[0].getAttribute("localtime").split(" ")[1])
-let localSeconds = Number(localtime[0].getAttribute("localtime").split(" ")[2])
-let odds = deadline - (localHours * 60 * 60 + localMinutes * 60 + localSeconds)
-let firstScreenCountdown = document.querySelector('[window-elem="first-screen-countdown"]')
-let lateText = "опоздали:("
 
 function getTime(value) {
   // Из переданнаго количества секунд возвращает время в нужном формате
@@ -118,39 +112,48 @@ function getTime(value) {
   return hours + ":" + minutes + ":" + seconds
 }
 
-function printTime(value) {
-  // Показывает оставшееся до сдачи время или сообщение
-  if (value >= 0) {
-    localtime.forEach(element => element.setAttribute("countdown", getTime(value)));
-    if (firstScreenCountdown) {
-      firstScreenCountdown.innerHTML = getTime(value)
-    }
-    value--;
-  } else {
-    localtime.forEach(element => element.setAttribute("countdown", lateText));
-    if (firstScreenCountdown) {
-      firstScreenCountdown.innerHTML = lateText
-    }
-  }
-}
+if (localtime[0]) {
+  let localHours = Number(localtime[0].getAttribute("localtime").split(" ")[0])
+  let localMinutes = Number(localtime[0].getAttribute("localtime").split(" ")[1])
+  let localSeconds = Number(localtime[0].getAttribute("localtime").split(" ")[2])
+  let odds = deadline - (localHours * 60 * 60 + localMinutes * 60 + localSeconds)
+  let firstScreenCountdown = document.querySelector('[window-elem="first-screen-countdown"]')
+  let lateText = "опоздали:("
 
-function startCountdown() {
-  // Каждую секунду запускает функцию определения времени
-  timerId = setInterval(() => {
-    if (odds >= 0) {
-      localtime.forEach(element => element.setAttribute("countdown", getTime(odds)));
+  function printTime(value) {
+    // Показывает оставшееся до сдачи время или сообщение
+    if (value >= 0) {
+      localtime.forEach(element => element.setAttribute("countdown", getTime(value)));
       if (firstScreenCountdown) {
-        firstScreenCountdown.innerHTML = getTime(odds)
+        firstScreenCountdown.innerHTML = getTime(value)
       }
-      odds--;
+      value--;
     } else {
       localtime.forEach(element => element.setAttribute("countdown", lateText));
       if (firstScreenCountdown) {
         firstScreenCountdown.innerHTML = lateText
       }
     }
-  }, 1000);
-}
+  }
 
-printTime(odds)
-startCountdown()
+  function startCountdown() {
+    // Каждую секунду запускает функцию определения времени
+    timerId = setInterval(() => {
+      if (odds >= 0) {
+        localtime.forEach(element => element.setAttribute("countdown", getTime(odds)));
+        if (firstScreenCountdown) {
+          firstScreenCountdown.innerHTML = getTime(odds)
+        }
+        odds--;
+      } else {
+        localtime.forEach(element => element.setAttribute("countdown", lateText));
+        if (firstScreenCountdown) {
+          firstScreenCountdown.innerHTML = lateText
+        }
+      }
+    }, 1000);
+  }
+
+  printTime(odds)
+  startCountdown()
+}

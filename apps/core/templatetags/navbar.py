@@ -12,8 +12,8 @@ def navbar(context):
         return {
             'request_url': context.request.path,
             'user': context.request.user,
-            'localtime': localtime,
-            'is_today_report': is_today_report,
+            # 'localtime': localtime,
+            # 'is_today_report': is_today_report,
         }
     else:
         return {

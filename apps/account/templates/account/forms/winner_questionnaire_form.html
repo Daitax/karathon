@@ -1,27 +1,27 @@
-<form method="post">
+<form class="account_content_winner_form" method="post">
   {% csrf_token %}
 
-  <label>
+  <label class="account_input">
     <input type="text" name="postcode" value="{{ winner_questionnaire_form.postcode.value|default_if_none:'' }}"
            placeholder="Почтовый индекс">
     <div>{{ winner_questionnaire_form.postcode.errors }}</div>
   </label>
-  <label>
+  <label class="account_input">
     <input type="text" name="country" value="{{ winner_questionnaire_form.country.value|default_if_none:'' }}"
            placeholder="Страна">
     <div>{{ winner_questionnaire_form.country.errors }}</div>
   </label>
-  <label>
+  <label class="account_input">
     <input type="text" name="city"
            value="{{ winner_questionnaire_form.city.value|default_if_none:'' }}" placeholder="Город">
     <div>{{ winner_questionnaire_form.city.errors }}</div>
   </label>
-  <label>
+  <label class="account_input blur_input">
     <input type="text" name="address" value="{{ winner_questionnaire_form.address.value|default_if_none:'' }}"
            placeholder="Адрес">
     <div>{{ winner_questionnaire_form.address.errors }}</div>
   </label>
-  <label>
+  <label class="account_input">
     <select name="shirt_size">
       {% for value,name in winner_questionnaire_form.fields.shirt_size.choices %}
         <option value="{{ value }}"{% if winner_questionnaire_form.shirt_size.value == value %} selected{% endif %}
@@ -29,11 +29,11 @@
       {% endfor %}
     </select>
   </label>
-  <label>
+  <label class="account_input blur_input">
     <select name="shirt_size">
-      {% for value,name in winner_questionnaire_form.fields.сharity_сategory.choices %}
+      {% for value,name in winner_questionnaire_form.fields.charity_category.choices %}
         <option value="{{ value }}"
-            {% if winner_questionnaire_form.сharity_сategory.value == value %} selected{% endif %}
+            {% if winner_questionnaire_form.charity_category.value == value %} selected{% endif %}
             {% if value == "" %} disabled{% endif %}
         >{% if value == "" %}
           Выбери категорию

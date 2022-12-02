@@ -1,5 +1,6 @@
+import datetime
 from django.db import models
-from django.db.models import signals
+from django.db.models import signals, Sum
 from django.utils.safestring import mark_safe
 
 from apps.account.models import Participant
@@ -32,6 +33,13 @@ class Step(models.Model):
         if self.photo:
             return mark_safe('<img src="{}" height="100" />'.format(self.photo.url))
         return ""
+    
+    def total(self):
+        return Step.objects.aggregate(Sum('steps'))
+    
+    def total_today(self):
+        return Step.objects.filter(date=datetime.date.today()).aggregate(Sum('steps'))
+        
 
     photo_preview.short_description = 'Фотоотчёт'
     photo_preview_in_list.short_description = 'Фотоотчёт'

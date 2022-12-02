@@ -2,6 +2,7 @@
 {% load static %}
 {% load navbar %}
 {% load task_today %}
+{% load steps_block %}
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -18,6 +19,8 @@
     <div class="global-wrapper">
       <header class="header" window-elem="header">{% navbar %}</header>
       <div class="content" window-elem="content">{% block content %}{% endblock %}</div>
+      {% steps_block %}
+      <div class="content" window-elem="content">{% block content_second %}{% endblock %}</div>
       <footer class="footer" window-elem="footer">{% include 'core/includes/footer.html' %}</footer>
     </div>
     {% comment %} {% task_today %} {% endcomment %}

@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load account_menu %}
 <li><a href="javascript:void(0)">n-й карафон</a></li>
 <li><a href="javascript:void(0)">Рекордсмены</a></li>
 <li><a href="javascript:void(0)">О Карачуне</a></li>
@@ -19,6 +19,7 @@
         <img class="no_avatar" src="{% static 'core/img/no_avatar.png' %}">
         {% endif %}
     </div>
-    {% include 'core/menu/account_menu.html' %}
+    {% comment %} {% include 'core/menu/account_menu.html' %} {% endcomment %}
+    {% account_menu %}
   {% endif %}
 {% endif %}

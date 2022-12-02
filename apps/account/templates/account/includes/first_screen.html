@@ -1,13 +1,13 @@
-{% comment %} {% load account_menu %} {% endcomment %}
+{% load account_menu %}
 
 <div class="first-screen_wrapper">
     <div class="first-screen container" window-elem="first-screen">
         <div class="first-screen_text">
             <h1>Личный кабинет</h1>
-            <div class="first-screen_account_time" window-elem="first-screen-countdown">Countdown</div>
+            <div class="first-screen_account_time" window-elem="first-screen-countdown"></div>
             <div class="first-screen_text_collab">до подачи отчета</div>
             <div class="first-screen_account_button_wrapper">
-            <div class="blue_button" button-action="open-report-form">Сдать отчет</div>
+                <div class="blue_button" button-action="open-report-form">Сдать отчет</div>
             </div>
         </div>
         {% if user.participant.photo %}
@@ -21,7 +21,7 @@
             </label>
         </div>
         {% endif %}
-        {% comment %} {% account_menu %} {% endcomment %}
-        {%include 'core/menu/account_menu.html'%}
+        {% account_menu %}
+        {% comment %} {%include 'core/menu/account_menu.html'%} {% endcomment %}
     </div>
 </div>
