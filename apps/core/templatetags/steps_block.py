@@ -1,7 +1,6 @@
 from django import template
 from apps.steps.models import Step
 
-
 register = template.Library()
 
 @register.inclusion_tag('core/includes/steps_block.html', takes_context=True)

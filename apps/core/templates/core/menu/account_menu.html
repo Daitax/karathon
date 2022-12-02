@@ -41,14 +41,9 @@
             </li>
             <li><a href="javascript:void(0)">Онлайн</a></li>
             {% if is_today_report %}
-            <li>Отчёт сдан</li>
+                <li>Отчёт сдан</li>
             {% else %}
-            {% comment %} <li localtime="{{user_time|date:"H i s" }}{{localtime|date:"H i s" }}" countdown="" menu-elem="participant_localtime"> {% endcomment %}
-                {% comment %} {% if user_time%} {% endcomment %}
-                    <li localtime="{% if user_time%}{{user_time|date:"H i s" }}{% else %}{{localtime|date:"H i s" }}{% endif %}" countdown="" menu-elem="participant_localtime">
-                {% comment %} {% else %} {% endcomment %}
-                    {% comment %} <li localtime="{{localtime|date:"H i s" }}" countdown="" menu-elem="participant_localtime"> {% endcomment %}
-                {% comment %} {% endif %} {% endcomment %}
+            <li localtime="{{ localtime|date:"H i s" }}" countdown="" menu-elem="participant_localtime">
                 <a href="javascript:void(0)" button-action="open-report-form">
                     Сдать отчёт
                 </a>

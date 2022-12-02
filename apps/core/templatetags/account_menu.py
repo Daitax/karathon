@@ -9,12 +9,9 @@ def account_menu(context):
     if context.request.user.is_authenticated:
         localtime = context.request.user.participant.get_participant_time()
         is_today_report = context.request.user.participant.is_today_report()
-        not_viewed = Notification(participant=context.request.user.participant).not_viewed_amount()
-        if not_viewed != 0:
-            not_viewed_notifications_amount = not_viewed
-        else:
+        not_viewed_notifications_amount = Notification(participant=context.request.user.participant).not_viewed_amount()
+        if not_viewed_notifications_amount == 0:
             not_viewed_notifications_amount = ""
-
         return {
             'user': context.request.user,
             'localtime': localtime,
