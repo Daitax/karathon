@@ -7,9 +7,15 @@ register = template.Library()
 def steps_block(context):
     steps = Step().total()
     total_steps = [value for value in steps.values()][0]
+    if not total_steps:
+        total_steps = 0
     steps_today = Step().total_today()
     total_steps_today = [value for value in steps_today.values()][0]
+    if not total_steps_today:
+        total_steps_today = 0
     return {
         "total_steps": '{0:,}'.format(total_steps).replace(',', ' '),
+        "total_steps_word": Step().plural(total_steps),
         "total_steps_today": '{0:,}'.format(total_steps_today).replace(',', ' '),
+        "total_steps_today_word": Step().plural(total_steps_today),
         }
