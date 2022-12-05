@@ -15,7 +15,7 @@ def steps_block(context):
         total_steps_today = 0
     return {
         "total_steps": '{0:,}'.format(total_steps).replace(',', ' '),
-        "total_steps_word": Step().plural(total_steps),
+        "total_steps_word": Step().plural_name(total_steps),
         "total_steps_today": '{0:,}'.format(total_steps_today).replace(',', ' '),
-        "total_steps_today_word": Step().plural(total_steps_today),
+        "total_steps_today_word": Step().plural_name(total_steps_today),
         }

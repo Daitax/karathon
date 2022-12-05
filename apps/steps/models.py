@@ -33,7 +33,7 @@ class Step(models.Model):
             return mark_safe('<img src="{}" height="100" />'.format(self.photo.url))
         return ""
     
-    def plural(self, value):
+    def plural_name(self, value):
         words = ["шаг", "шага", "шагов"]
         if 2 <= value % 10 <= 4 and not 12 <= value % 100 <= 14:
             return words[1]
