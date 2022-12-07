@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -46,7 +46,33 @@ def send_add_desire_form(request):
 
         try:
             desired_participant = Participant.objects.get(phone=phone)
-
+            if request.user.participant == desired_participant:
+                context = {
+                    'window': 'form',
+                    'errors': '* Вы не можете добавить себя в команду',
+                }
+                add_desire_window = render_to_string('teams/popups/add_desire.html', context, request)
+                out = {
+                    'status': 'ok',
+                    'action': 'window',
+                    'window': add_desire_window,
+                }
+                return JsonResponse(out)
+            if DesiredTeam.objects.filter(desirer=request.user.participant, desired_participant=desired_participant).exists():
+                error_text = '* {} уже в твоей команде, выбери кого-то ещё'.format(desired_participant.first_name)
+                context = {
+                    'window': 'form',
+                    'errors': error_text,
+                }
+                add_desire_window = render_to_string('teams/popups/add_desire.html', context, request)
+                out = {
+                    'status': 'ok',
+                    'action': 'window',
+                    'window': add_desire_window,
+                }
+                return JsonResponse(out)
+            
+            
             DesiredTeam.objects.create(desirer=request.user.participant, desired_participant=desired_participant)
 
             context = {
@@ -88,7 +114,8 @@ def index(request):
 
     context = {
         'desire_list': desire_list,
-        'current_karathon_team': current_karathon_team(request)
+        'current_karathon_team': current_karathon_team(request),
+        # 'list': desire_list[5].delete(),
     }
 
     return render(request, 'teams/team.html', context)

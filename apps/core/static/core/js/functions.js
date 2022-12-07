@@ -121,7 +121,7 @@ if (localtime[0]) {
   let lateText = "опоздали:("
 
   function printTime(value) {
-    // Показывает оставшееся до сдачи время или сообщение
+    // Показывает оставшееся до сдачи отчета время или сообщение
     if (value >= 0) {
       localtime.forEach(element => element.setAttribute("countdown", getTime(value)));
       if (firstScreenCountdown) {

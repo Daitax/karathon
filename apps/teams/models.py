@@ -44,6 +44,14 @@ class TeamParticipant(models.Model):
 class DesiredTeam(models.Model):
     desirer = models.ForeignKey(Participant, related_name='desirer', on_delete=models.CASCADE)
     desired_participant = models.ForeignKey(Participant, related_name='desired_participant', on_delete=models.CASCADE)
+    
+    # class Meta:
+    #     constraints = [
+    #         models.UniqueConstraint(
+    #             fields=["desirer", "desired_participant"],
+    #             name="unique_wish",
+    #         )
+    #     ]
 
 
 '''

@@ -27,7 +27,12 @@ function openAddDesireForm() {
     })
 }
 
-function submitAddDesireForm(button){
+function closeAddDesireForm() {
+  overlay.classList.remove('show')
+  addDesireFormWrapper.classList.remove('show')
+}
+
+function submitAddDesireForm(button) {
   let addDesireFormWrapper = button.closest('[popup-element="popup"][form-name="desire"]')
   let addDesireForm = button.closest('[desire-form-elem="form"]')
 
@@ -64,9 +69,26 @@ if (addDesireFormWrapper) {
     if (target.getAttribute('desire-form-elem') == 'button') {
       submitAddDesireForm(target)
     }
+
+    if (target.getAttribute('popup-element') == 'close') {
+      closeAddDesireForm()
+    }
+
+    if (target.getAttribute('desire-form-elem') == 'phone') {
+      let phoneField = document.querySelector('[desire-form-elem="phone"]')
+      let maskOptions = {
+        mask: '+{7}(000) 000-00-00'
+      };
+      IMask(phoneField, maskOptions);
+    }
   })
   addDesireFormWrapper.addEventListener('submit', function (event) {
     event.preventDefault()
     submitAddDesireForm(event.target)
   })
 }
+
+let userToDelete = document.querySelectorAll('[window-elem="delete"]')
+userToDelete.forEach(element => element.addEventListener("click", function () {
+  console.log(element.getAttribute("user-to-delete"))
+}))
