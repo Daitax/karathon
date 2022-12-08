@@ -73,6 +73,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.account.context_processors.report_sent.report_sent',
+                'apps.account.context_processors.report_sent.active_karathon',
             ],
         },
     },

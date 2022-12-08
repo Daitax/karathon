@@ -4,14 +4,16 @@
     <div class="first-screen container" window-elem="first-screen">
         <div class="first-screen_text">
             <h1>Личный кабинет</h1>
-            {% if report_sent %}
-            <div class="first-screen_text_collab">отчёт сдан</div>
-            {% else %}
-            <div class="first-screen_account_time" window-elem="first-screen-countdown"></div>
-            <div class="first-screen_text_collab">до подачи отчета</div>
-            <div class="first-screen_account_button_wrapper">
-                <div class="blue_button" button-action="open-report-form">Сдать отчет</div>
-            </div>
+            {% if active_karathon %}
+              {% if report_sent %}
+                <div class="first-screen_text_collab">отчёт сдан</div>
+              {% else %}
+                <div class="first-screen_account_time" window-elem="first-screen-countdown"></div>
+                <div class="first-screen_text_collab">до подачи отчета</div>
+                <div class="first-screen_account_button_wrapper">
+                    <div class="blue_button" button-action="open-report-form">Сдать отчет</div>
+                </div>
+              {% endif %}
             {% endif %}
         </div>
         {% if user.participant.photo %}
