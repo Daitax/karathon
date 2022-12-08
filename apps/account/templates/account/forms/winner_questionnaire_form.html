@@ -1,0 +1,52 @@
+<form method="post">
+  {% csrf_token %}
+
+  <label>
+    <input type="text" name="postcode" value="{{ winner_questionnaire_form.postcode.value|default_if_none:'' }}"
+           placeholder="Почтовый индекс">
+    <div>{{ winner_questionnaire_form.postcode.errors }}</div>
+  </label>
+  <label>
+    <input type="text" name="country" value="{{ winner_questionnaire_form.country.value|default_if_none:'' }}"
+           placeholder="Страна">
+    <div>{{ winner_questionnaire_form.country.errors }}</div>
+  </label>
+  <label>
+    <input type="text" name="city"
+           value="{{ winner_questionnaire_form.city.value|default_if_none:'' }}" placeholder="Город">
+    <div>{{ winner_questionnaire_form.city.errors }}</div>
+  </label>
+  <label>
+    <input type="text" name="address" value="{{ winner_questionnaire_form.address.value|default_if_none:'' }}"
+           placeholder="Адрес">
+    <div>{{ winner_questionnaire_form.address.errors }}</div>
+  </label>
+  <label>
+    <select name="shirt_size">
+      {% for value,name in winner_questionnaire_form.fields.shirt_size.choices %}
+        <option value="{{ value }}"{% if winner_questionnaire_form.shirt_size.value == value %} selected{% endif %}
+        >{{ name }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>
+    <select name="shirt_size">
+      {% for value,name in winner_questionnaire_form.fields.сharity_сategory.choices %}
+        <option value="{{ value }}"
+            {% if winner_questionnaire_form.сharity_сategory.value == value %} selected{% endif %}
+            {% if value == "" %} disabled{% endif %}
+        >{% if value == "" %}
+          Выбери категорию
+        {% else %}
+          {{ name }}
+        {% endif %}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <div>
+    <button type="submit" name="winner">Сохранить</button>
+  </div>
+  <div>нажимая на кнопку, ты даешь согласие на <a href="javascript:void(0)">обработку и хранение персональных
+    данных</a>
+  </div>
+</form>

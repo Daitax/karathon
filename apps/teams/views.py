@@ -9,7 +9,7 @@ from django.views.decorators.http import require_http_methods
 
 from apps.account.models import Participant
 from apps.teams.forms import AddDesireForm
-from apps.teams.models import DesiredTeam
+from apps.teams.models import DesiredTeam, Team, TeamParticipant
 
 
 @login_required
@@ -87,10 +87,20 @@ def index(request):
     desire_list = DesiredTeam.objects.filter(desirer=request.user.participant)
 
     context = {
-        'desire_list': desire_list
+        'desire_list': desire_list,
+        'current_karathon_team': current_karathon_team(request)
     }
 
     return render(request, 'teams/team.html', context)
 
+
+def current_karathon_team(request):
+    active_karathon = request.user.participant.get_active_karathon()
+    try:
+        team = Team.objects.get(karathon=active_karathon, teamparticipant__participant=request.user.participant)
+        team.team_participants = TeamParticipant.objects.filter(team=team).exclude(participant=request.user.participant)
+        return team
+    except ObjectDoesNotExist:
+        return None
 
 

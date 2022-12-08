@@ -1,0 +1,83 @@
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div>
+    <div>
+      <label>
+        <input type="text" name="last_name" value="{{ participant_form.last_name.value }}" placeholder="Фамилия">
+        <div>{{ participant_form.last_name.errors }}</div>
+      </label>
+      <label>
+        <input type="text" name="first_name" value="{{ participant_form.first_name.value }}" placeholder="Имя">
+        <div>{{ participant_form.first_name.errors }}</div>
+      </label>
+      <label>
+        <input type="text" name="middle_name" value="{{ participant_form.middle_name.value|default_if_none:'' }}"
+               placeholder="Отчество">
+        <div>{{ participant_form.middle_name.errors }}</div>
+      </label>
+    </div>
+    <div>
+      <input type="file" name="photo" accept="image/jpeg,image/png">
+      <div>{{ participant_form.errors.photo.as_text }}</div>
+    </div>
+  </div>
+  <div>
+    <label>
+      <div>
+        <input type="text" name="phone" value="{{ participant_form.phone.value }}" placeholder="Телефон">
+        <div>{{ participant_form.phone.errors }}</div>
+      </div>
+      <div>твой номер телефона для авторизации на сайте</div>
+    </label>
+    <label>
+      <div>
+        <input type="text" name="instagram" value="{{ participant_form.instagram.value|default_if_none:'' }}"
+               placeholder="Инстаграм">
+        <div>{{ participant_form.instagram.errors }}</div>
+      </div>
+      <div>просто укажи ссылку на свой инстаграм</div>
+    </label>
+    <label>
+      <div>
+        <input type="email" name="email" value="{{ participant_form.email.value|default_if_none:'' }}"
+               placeholder="E-mail">
+        <div>{{ participant_form.email.errors }}</div>
+      </div>
+      <div>твой email для наших оповещений</div>
+    </label>
+    <label>
+      <div>
+        <select name="timezone">
+          {% for value,name in participant_form.fields.timezone.choices %}
+            <option value="{{ value }}"{% if participant_form.timezone.value == value %}
+                    selected{% endif %}>{{ name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>время, к которому будут привязаны твои задания</div>
+    </label>
+    <label>
+      <div>
+        <select name="category">
+          {% for value,name in participant_form.fields.category.choices %}
+            <option value="{{ value }}"
+                {% if participant_form.category.value == value %} selected{% endif %}
+                {% if value == "" %} disabled{% endif %}
+            >{% if value == "" %}
+              Выбери категорию
+            {% else %}
+              {{ name }}
+            {% endif %}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>категория, по которой ты будешь получать задания</div>
+    </label>
+    <div>
+      <button type="submit" name="personal">Сохранить</button>
+    </div>
+    <div>нажимая на кнопку, ты даешь согласие на <a href="javascript:void(0)">обработку и хранение персональных
+      данных</a>
+    </div>
+  </div>
+</form>

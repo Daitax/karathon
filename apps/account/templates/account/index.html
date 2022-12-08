@@ -1,5 +1,13 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-  {{ form.as_p }}
+
+  <div>Персональные данные</div>
+  {% include 'account/forms/personal_form.html' %}
+
+  {% if winner_questionnaire_form %}
+    <div>Анкета победителя</div>
+    {% include 'account/forms/winner_questionnaire_form.html' %}
+  {% endif %}
+
 {% endblock %}
