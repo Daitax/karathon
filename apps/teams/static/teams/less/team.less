@@ -1,0 +1,131 @@
+.team_content_button {
+    margin-top: 75px;
+}
+
+.team_wishlist_wrapper {
+    margin-top: 150px;
+}
+
+.team_wishlist_items {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.delete {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    background: @white;
+    border: 2px solid @pink;
+    border-radius: 50%;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+    visibility: hidden;
+    cursor: pointer;
+}
+
+.team_wishlist_items_item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 50%;
+    margin-top: 50px;
+
+    &:last-child {
+        height: 150px;
+        width: 150px;
+        border-radius: 50%;
+        border: 2px solid @pink;
+        cursor: pointer;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            width: 2px;
+            height: 43px;
+            background: @pink;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: calc(50% - 21.5px);
+            width: 43px;
+            height: 2px;
+            background: @pink;
+        }
+    }
+
+    .team_wishlist_items_item_delete {
+        .delete();
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 2px;
+            height: 33px;
+            background: @pink;
+            left: 17px;
+            top: 1.5px;
+            transform: rotate(-45deg);
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 2px;
+            height: 33px;
+            background: @pink;
+            left: 17px;
+            top: 1.5px;
+            transform: rotate(45deg);
+        }
+    }
+
+    img {
+        height: 150px;
+        width: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    div {
+        flex: 1;
+        margin-left: 20px;
+    }
+
+    button {
+        .custom_button();
+        position: absolute;
+        bottom: 12px;
+        left: 88px;
+        border: none;
+        appearance: button;
+    }
+
+    span {
+        font-size: 16px;
+        color: @pink
+    }
+
+    p {
+        margin-bottom: 3px;
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+    }
+
+    p:last-child {
+        font-weight: 400;
+        font-size: 16px;
+    }
+
+    &:hover>.team_wishlist_items_item_delete {
+        visibility: visible;
+        margin-left: 0;
+    }
+}

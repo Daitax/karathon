@@ -1,6 +1,6 @@
-<form method="post" enctype="multipart/form-data">
+<form class="account_content_form_wrapper" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-  <div>
+  <div class="account_content_full_name">
     <div>
       <label>
         <input type="text" name="last_name" value="{{ participant_form.last_name.value }}" placeholder="Фамилия">
@@ -11,41 +11,50 @@
         <div>{{ participant_form.first_name.errors }}</div>
       </label>
       <label>
-        <input type="text" name="middle_name" value="{{ participant_form.middle_name.value|default_if_none:'' }}"
-               placeholder="Отчество">
+        <input type="text" name="middle_name" value="{{ participant_form.middle_name.value|default_if_none:'' }}" placeholder="Отчество">
         <div>{{ participant_form.middle_name.errors }}</div>
       </label>
     </div>
-    <div>
-      <input type="file" name="photo" accept="image/jpeg,image/png">
+    <div class="account_content_avatar">
+      {% if user.participant.photo %}
+      <label class="account_content_avatar_ex" for="account_photo">
+        <img src="{{user.participant.photo.url}}">
+        <div src="" window-elem="avatar_preview"></div>
+        <div class="account_content_avatar_text">сменить фото</div>
+      </label>
+      {% else %}
+      <label class="account_content_avatar_custom_input" for="account_photo" window-elem="custom_input_avatar">
+        <div window-elem="avatar_preview"></div>
+        <div class="account_content_avatar_text">добавить фото</div>
+      </label>
+      {% endif %}
+      <input id="account_photo" type="file" name="photo" accept="image/jpeg,image/png" style="display: none;" window-elem="input_avatar">
       <div>{{ participant_form.errors.photo.as_text }}</div>
     </div>
   </div>
-  <div>
-    <label>
+  <div class="account_content_info">
+    <label class="account_content_info_phone">
       <div>
         <input type="text" name="phone" value="{{ participant_form.phone.value }}" placeholder="Телефон">
         <div>{{ participant_form.phone.errors }}</div>
       </div>
-      <div>твой номер телефона для авторизации на сайте</div>
+      <p>твой номер телефона для авторизации на сайте</p>
     </label>
-    <label>
-      <div>
-        <input type="text" name="instagram" value="{{ participant_form.instagram.value|default_if_none:'' }}"
-               placeholder="Инстаграм">
+    <label class="account_content_info_instagram blur_input">
+      <div >
+        <input type="text" name="instagram" value="{{ participant_form.instagram.value|default_if_none:'' }}" placeholder="https://">
         <div>{{ participant_form.instagram.errors }}</div>
       </div>
-      <div>просто укажи ссылку на свой инстаграм</div>
+      <p>просто укажи ссылку на свой инстаграм</p>
     </label>
-    <label>
+    <label class="account_content_info_mail blur_input">
       <div>
-        <input type="email" name="email" value="{{ participant_form.email.value|default_if_none:'' }}"
-               placeholder="E-mail">
+        <input type="email" name="email" value="{{ participant_form.email.value|default_if_none:'' }}" placeholder="E-mail">
         <div>{{ participant_form.email.errors }}</div>
       </div>
-      <div>твой email для наших оповещений</div>
+      <p>твой email для наших оповещений</p>
     </label>
-    <label>
+    <label class="account_content_info_timezone">
       <div>
         <select name="timezone">
           {% for value,name in participant_form.fields.timezone.choices %}
@@ -54,9 +63,9 @@
           {% endfor %}
         </select>
       </div>
-      <div>время, к которому будут привязаны твои задания</div>
+      <p>время, к которому будут привязаны твои задания</p>
     </label>
-    <label>
+    <label class="account_content_info_category">
       <div>
         <select name="category">
           {% for value,name in participant_form.fields.category.choices %}
@@ -64,20 +73,20 @@
                 {% if participant_form.category.value == value %} selected{% endif %}
                 {% if value == "" %} disabled{% endif %}
             >{% if value == "" %}
-              Выбери категорию
+              Выбрать категорию
             {% else %}
               {{ name }}
             {% endif %}</option>
           {% endfor %}
         </select>
       </div>
-      <div>категория, по которой ты будешь получать задания</div>
+      <p>категория, по которой ты будешь получать задания</p>
     </label>
-    <div>
-      <button type="submit" name="personal">Сохранить</button>
-    </div>
-    <div>нажимая на кнопку, ты даешь согласие на <a href="javascript:void(0)">обработку и хранение персональных
-      данных</a>
+    <div class="account_content_info_button">
+      <button class="pink_button" type="submit" value="account" name="personal">Сохранить</button>
+      <p>нажимая на кнопку, ты даешь согласие на <a href="javascript:void(0)">обработку и хранение персональных
+        данных</a>
+      </p>
     </div>
   </div>
 </form>

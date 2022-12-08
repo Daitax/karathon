@@ -5,12 +5,12 @@ from apps.account.models import Participant, User
 
 
 class ParticipantAdmin(admin.ModelAdmin):
-    list_display = ('username', 'first_name', 'last_name', 'middle_name', 'phone',)
+    list_display = ('username', 'first_name', 'last_name', 'middle_name', 'phone', 'photo',)
 
     fieldsets = (
         ('Персональная информация', {'fields': ('username', 'first_name', 'last_name', 'middle_name', 'phone',
                                                    'instagram',
-                                                   'timezone', 'category')}),
+                                                   'timezone', 'category', 'photo',)}),
     )
 
 

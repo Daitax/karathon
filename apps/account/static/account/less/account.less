@@ -1,0 +1,177 @@
+.account_content_wrapper {
+    margin-top: 100px;
+    width: 65%;
+
+    input {
+        border: 2px solid @pink;
+        width: 400px;
+        padding: 26px 22px;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 20px;
+        width: 400px;
+        letter-spacing: 0.05em;
+    }
+
+    input[name="instagram"],
+    [name="email"] {
+        padding: 26px 0 26px 22px;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    input::placeholder {
+        font-weight: 400;
+        opacity: 1;
+    }
+
+    input::-webkit-input-placeholder {
+        font-weight: 400;
+        opacity: 1;
+        color: @black;
+    }
+
+    select {
+        border: 2px solid @pink;
+        width: 400px;
+        padding: 26px 22px;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 20px;
+        width: 400px;
+        letter-spacing: 0.05em;
+        -webkit-appearance: none;
+        border-radius: unset;
+        background: none;
+    }
+}
+
+.account_content_form_wrapper {
+    margin-top: 30px;
+}
+
+.account_content_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.account_content_full_name {
+    display: flex;
+}
+
+.account_content_avatar {
+    margin-left: 20px;
+}
+
+.account_content_avatar_ex {
+    position: relative;
+    height: 250px;
+}
+
+.account_content_avatar_ex img {
+    position: absolute;
+    top: 0;
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.account_content_avatar_custom_input {
+    position: relative;
+    width: 246px;
+    height: 246px;
+    border: 2px solid #F648A5;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 43px;
+        left: 122px;
+        background: @pink;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        width: 43px;
+        height: 2px;
+        left: 100.5px;
+        background: @pink;
+        z-index: -1;
+    }
+}
+
+div[window-elem="avatar_preview"] {
+    position: absolute;
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    border-color: @pink;
+    object-fit: cover;
+    cursor: pointer;
+    display: none;
+}
+
+.account_content_avatar_text {
+    padding: 12px 40px 12px 20px;
+    position: absolute;
+    background: @pink;
+    color: @white;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    bottom: 20px;
+    left: 90px;
+    width: max-content;
+    cursor: pointer;
+
+    &:hover {
+        background: linear-gradient(97.04deg, #F648A5 -4.24%, #00AFEB 49.4%, #F648A5 88.96%);
+    }
+}
+
+.account_content_full_name label,
+.account_content_info_phone,
+.account_content_info_instagram,
+.account_content_info_mail,
+.account_content_info_timezone,
+.account_content_info_category,
+.account_content_info_button,
+.account_content_winner_button {
+    .account_input()
+}
+
+.account_content_full_name label:first-child {
+    margin-top: 0;
+}
+
+.blur_input {
+    position: relative;
+
+    ::after {
+        content: "";
+        position: absolute;
+        width: 87px;
+        height: 75px;
+        top: 2px;
+        left: 311px;
+        background: linear-gradient(270deg, #FFFFFF 15.44%, rgba(255, 255, 255, 0) 66.09%);
+    }
+}
+
+.account_content_winner_form {
+    display: flex;
+    flex-wrap: wrap;
+
+    label:nth-child(2n+1) {
+        margin-left: 20px;
+    }
+}

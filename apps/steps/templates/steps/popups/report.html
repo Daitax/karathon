@@ -1,18 +1,19 @@
 <div class="close" popup-element="close"></div>
-<h2>Сдать отчёт</h2>
+<h4>Сдать отчёт</h4>
 {% if window == 'form' %}
   <form enctype="multipart/form-data" report-form-elem="form">
     <input type="hidden" name="window" value="{{ window }}" report-form-elem="window">
     <label>
-      <div>Сколько прошел сегодня?</div>
-      <input type="number" name="steps" min="1">
-      <div>{{ errors.steps.as_text }}</div>
+      <div class="text">Сколько прошел сегодня?</div>
+      <input class="input" type="number" name="steps" min="1">
+      <div class="text">{{ errors.steps.as_text }}</div>
     </label>
-    <input type="file" name="photo" accept="image/jpeg,image/png">
-    <div>{{ errors.photo.as_text }}</div>
-    <div>фото часов или скрин телефона для выборочной проверки результатов</div>
-    <input type="button" value="Сдать отчёт" report-form-elem="button">
-    <div>{{ errors.report }}</div>
+    <label class="custom_input" for="photo_report" report-form-elem="custom_input">Прикрепи фото</label>
+    <input type="file" class="my" name="photo" id="photo_report" accept="image/jpeg,image/png" style="display: none;">
+    <div class="text">{{ errors.photo.as_text }}</div>
+    <div class="text">фото часов или скрин телефона для выборочной проверки результатов</div>
+    <input class="button pink_button" type="button" value="Сдать отчёт" report-form-elem="button">
+    <div class="text">{{ errors.report }}</div>
   </form>
 {% endif %}
 {% if window == 'successful' %}

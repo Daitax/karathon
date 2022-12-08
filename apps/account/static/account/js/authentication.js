@@ -5,7 +5,6 @@ function openAuthenticationForm() {
   overlay.classList.add('show')
   authenticationFormWrapper.classList.add('show')
 
-
   let csrfToken = getCookie('csrftoken')
   let data = new FormData()
   data.append('window', 'open')
@@ -27,6 +26,11 @@ function openAuthenticationForm() {
     })
 }
 
+function closeAuthenticationForm() {
+  authenticationFormWrapper.classList.remove('show');
+  overlay.classList.remove('show')
+}
+
 function submitAuthenticationForm(button) {
   let authenticationFormWrapper = button.closest('[popup-element="popup"][form-name="authentication"]')
   let authenticationForm = button.closest('[auth-form-elem="form"]')
@@ -46,6 +50,10 @@ function submitAuthenticationForm(button) {
       if (data.status == 'ok') {
         if (data.action == 'window') {
           authenticationFormWrapper.innerHTML = data.window
+          let smsCode = document.querySelector('[auth-form-elem="code"]')
+          if (smsCode) {
+            smsCode.focus()
+          }
         }
         if (data.action == 'reload') {
           window.location.reload()
@@ -54,10 +62,12 @@ function submitAuthenticationForm(button) {
     })
 }
 
-let openFormAuthenticationButton = document.querySelector('[button-action="open-auth-form"]')
-if (openFormAuthenticationButton) {
-  openFormAuthenticationButton.addEventListener('click', openAuthenticationForm)
-}
+let openFormAuthenticationButtons = document.querySelectorAll('[button-action="open-auth-form"]')
+openFormAuthenticationButtons.forEach(element => element.addEventListener('click', openAuthenticationForm)
+)
+// if (openFormAuthenticationButton) {
+//   openFormAuthenticationButton.addEventListener('click', openAuthenticationForm)
+// }
 
 
 let authenticationFormWrapper = document.querySelector('[popup-element="popup"][form-name="authentication"]')
@@ -73,7 +83,17 @@ if (authenticationFormWrapper) {
       submitAuthenticationForm(target)
     }
     if (target.getAttribute('auth-form-elem') == 'later') {
-    //  TODO Написать функцию закрытия overlay
+      //  TODO Написать функцию закрытия overlay
+    }
+    if (target.getAttribute('popup-element') == 'close') {
+      closeAuthenticationForm()
+    }
+    if (target.getAttribute('auth-form-elem') == 'phone') {
+      let phoneField = document.querySelector('[auth-form-elem="phone"]')
+      let maskOptions = {
+        mask: '+{7}(000) 000-00-00'
+      };
+      IMask(phoneField, maskOptions);
     }
   })
 
@@ -83,7 +103,6 @@ if (authenticationFormWrapper) {
       if (target.value.length == 4) {
         submitAuthenticationForm(target)
       }
-
     }
   })
 }

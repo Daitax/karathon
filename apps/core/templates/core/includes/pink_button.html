@@ -1,0 +1,6 @@
+{% if user.is_authenticated %}
+<a class="pink_button" href="/participate/">Участовать</a>
+{% else %}
+<a class="pink_button" href="javascript:void(0)">Войти</a>
+{% endif %}
+<div class="button_text_cost">Стоимость участия &mdash; 500₽</div>

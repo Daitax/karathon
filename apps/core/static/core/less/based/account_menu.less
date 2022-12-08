@@ -1,0 +1,108 @@
+.participants_account_menu {
+    position: absolute;
+    right: -10px;
+    top: 70px;
+    background: @white;
+    width: 370px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(.46, .03, .52, .96);
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+
+    &.show {
+        max-height: 570px;
+    }
+}
+
+.sticky_navbar_menu .participants_account_menu {
+    right: -10px;
+    top: 80px;
+}
+
+.participants_account_menu_wrapper {
+    padding: 30px 28px 24px 30px;
+}
+
+.participants_account_menu_name {
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.5;
+}
+
+.participants_account_menu_inst {
+    margin-top: 6px;
+    color: @pink;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.participants_account_menu_info {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.2;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin-top: 17px;
+}
+
+.participants_account_menu_info li {
+    margin-top: 15px;
+    margin-left: 0;
+}
+
+.participants_account_menu_info li a:hover {
+    color: @pink;
+    text-decoration: none;
+}
+
+.participants_account_menu_info li[unread-mes]::before {
+    content: attr(unread-mes);
+    font-weight: 700;
+    font-size: 40px;
+    color: @blue;
+    position: absolute;
+    top: -15px;
+    left: -10px;
+}
+
+.participants_account_menu_info li[unread-mes] {
+    position: relative;
+}
+
+.participants_account_menu_info li[unread-mes] a {
+    z-index: 2;
+    position: inherit;
+}
+
+.participants_account_menu_info li[countdown]::after {
+    content: attr(countdown);
+    font-weight: 700;
+    font-size: 40px;
+    color: @blue;
+    position: absolute;
+    top: -15px;
+    left: 100px;
+}
+
+.participants_account_menu_info li[countdown] {
+    position: relative;
+}
+
+.participants_account_menu_info li[countdown] a {
+    z-index: 2;
+    position: inherit;
+}
+
+.participants_account_menu_info li a {
+    color: @black;
+
+    &.active {
+        color: @pink;
+    }
+}

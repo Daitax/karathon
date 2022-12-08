@@ -4,14 +4,99 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: "Montserrat";
+    src: url(/static/core/less/fonts/Montserrat-VariableFont_wght.ttf)
+}
+
+@font-face {
+    font-family: "MontserratAlternates-Bold";
+    src: url(/static/core/less/fonts/MontserratAlternates-Bold.ttf)
+}
+
+@font-face {
+    font-family: "RussoOne-Regular";
+    src: url(/static/core/less/fonts/RussoOne-Regular.ttf)
+}
+
 html {
     height: 100%;
+    // background: @pink;
 }
 
 body {
-    font-size: 24px;
+    font-size: 30px;
+    font-family: "Montserrat";
+    letter-spacing: 0.03em;
     color: @black;
     height: 100%;
+}
+
+h1 {
+    font-weight: 800;
+    font-size: 100px;
+    line-height: 1.25;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-weight: 700;
+    font-size: 80px;
+    line-height: 1.25;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+h3 {
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 1.25;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+h4 {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1.25;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+nav li {
+    list-style: none;
+}
+
+ol {
+    list-style-type: none;
+    counter-reset: num;
+}
+
+a span {
+    color: @pink;
+}
+
+a span:hover {
+    text-decoration: underline;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
 }
 
 .global-wrapper {
@@ -20,12 +105,280 @@ body {
     height: 100%;
 }
 
-.content {
-    flex: 1 0 auto;
+.container {
+    width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.footer {
-    flex: 0 0 auto;
+.content {
+    flex: 1 0 auto;
+    // background: @white;
+}
+
+.content_wrapper {
+    overflow: hidden;
+}
+
+.blue_button {
+    appearance: button;
+    display: inline-block;
+    align-self: baseline;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: @white;
+    text-decoration: none;
+    text-align: center;
+    background: @blue;
+    padding: 25px 90px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.blue_button:hover {
+    text-decoration: none;
+    background: linear-gradient(97.04deg, #00ABE6 -4.24%, #5AC82D 49.4%, #00ABE6 88.96%);
+}
+
+.pink_button {
+    appearance: button;
+    display: inline-block;
+    align-self: baseline;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: @white;
+    text-decoration: none;
+    text-align: center;
+    background: @pink;
+    padding: 25px 90px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+}
+
+.pink_button:hover {
+    text-decoration: none;
+    background: linear-gradient(97.04deg, #F648A5 -4.24%, #00AFEB 49.4%, #F648A5 88.96%);
+}
+
+.white_button {
+    appearance: button;
+    display: inline-block;
+    align-self: baseline;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: @pink;
+    text-decoration: none;
+    text-align: center;
+    background: @white;
+    padding: 25px 90px;
+    text-transform: uppercase;
+    border: 2px solid @pink;
+    cursor: pointer;
+}
+
+.white_button:hover {
+    background: linear-gradient(97.04deg, #F648A5 -4.24%, #00AFEB 49.4%, #F648A5 88.96%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border: 2px solid transparent;
+    border-image: linear-gradient(97.04deg, #F648A5 -4.24%, #00AFEB 49.4%, #F648A5 88.96%);
+    border-image-slice: 1;
+}
+
+.header {
+    background: @pink;
+}
+
+.header_navbar_menu {
+    position: relative;
+    margin-top: 20px;
+    .navbar();
+}
+
+.sticky_navbar_menu {
+    position: fixed;
+    top: -150px;
+    left: calc(50% - 660px); // половина разности ширины экрана и контейнера
+    padding: 15px 0;
+    margin-top: 10px;
+    background: @pink;
+    transition: top 0.8s;
+    z-index: 2;
+    .navbar();
+}
+
+.sticky_navbar_menu li:first-child::before {
+    content: "";
+    background: @pink;
+    position: absolute;
+    top: 0;
+    left: -30px;
+    width: 30px;
+    height: 100%;
+
+}
+
+.sticky_navbar_menu li:last-child::after {
+    content: "";
+    background: @pink;
+    position: absolute;
+    top: 0;
+    right: -30px;
+    width: 30px;
+    height: 100%;
+
+}
+
+.sticky_navbar_menu img {
+    top: 0px;
+}
+
+.no_avatar {
+    border: 2px solid @pink;
+}
+
+.first-screen_wrapper {
+    background: @pink;
+    padding-top: 40px;
+}
+
+.first-screen {
+    display: flex;
+    position: relative
+}
+
+.first-screen_text_collab {
+    font-size: 40px;
+}
+
+.first-screen_button_wrapper {
+    margin-top: 45px;
+    margin-bottom: 100px;
+}
+
+.button_text_cost {
+    font-size: 25px;
+    margin-top: 20px;
+}
+
+.first-screen_photo img {
+    position: absolute;
+    height: 750px;
+    width: 750px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.first-screen>.participants_account_menu {
+    max-height: none;
+    top: auto;
+    bottom: -140px;
+}
+
+.first-screen_avatar img {
+    height: 550px;
+    width: 550px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.first-screen_account_time {
+    margin-top: 80px;
+    min-height: 1em;
+    font-weight: 700;
+    font-size: 80px;
+    letter-spacing: 0.05em;
+    color: @white
+}
+
+.first-screen_account_button_wrapper {
+    margin-top: 25px;
+    margin-bottom: 50px;
+}
+
+.first-screen_no_avatar p {
+    height: 550px;
+    width: 550px;
+    border-radius: 50%;
+    background: @white;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding-top: calc(50% - 0.5rem);
+    text-align: center;
+    color: @pink;
+    text-transform: uppercase;
+}
+
+.about_karathon {
+    margin-top: 200px;
+}
+
+.about_karathon_description {
+    margin-top: 50px;
+    max-width: 70%;
+    line-height: 1.4;
+}
+
+.about_karathon_list {
+    max-width: 70%;
+}
+
+.about_karathon_list_wrapper {
+    margin-top: 100px;
+}
+
+.about_karathon_list_wrapper li {
+    position: relative;
+    font-size: 40px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-bottom: 100px;
+}
+
+.about_karathon_list_wrapper li::before {
+    content: counter(num);
+    counter-increment: num;
+    position: absolute;
+    bottom: 30px;
+    left: -50px;
+    font-family: "MontserratAlternates-Bold";
+    font-size: 200px;
+    font-weight: normal;
+    color: transparent;
+    -webkit-text-stroke: 1px @pink;
+    z-index: -1;
+}
+
+.about_karathon_description_button_wrapper {
+    margin-top: 100px;
+}
+
+.about_karathon_wrapper {
+    margin-top: 80px;
+    max-width: 70%;
+}
+
+.about_karathon_wrapper dt {
+    color: @pink;
+    margin-top: 100px;
+}
+
+.about_karathon_wrapper dt h3 {
+    letter-spacing: 0;
+}
+
+.about_karathon_wrapper dt:first-child {
+    margin-top: 0;
+}
+
+.about_karathon_button_wrapper {
+    margin-top: 100px;
+    margin-bottom: 160px;
 }
 
 .overlay {

@@ -1,14 +1,20 @@
 <div class="close" popup-element="close"></div>
-<h2>Добавить друга</h2>
+<h4>Добавить друга</h4>
 {% if window == 'form' %}
-  <form desire-form-elem="form">
-    <input type="hidden" name="window" value="{{ window }}" desire-form-elem="window">
-    <label>
-      <div>Укажи номер телефона друга:</div>
-      <input type="text" name="phone" value="{{ phone }}" desire-form-elem="phone">
-      <div>{{ errors.phone }}</div>
+  <form class="form" desire-form-elem="form">
+    <input class="input" type="hidden" name="window" value="{{ window }}" desire-form-elem="window">
+    <label class="label">
+      <div class="text">Укажи номер телефона друга:</div>
+      <input class="input" type="text" name="phone" value="{{ phone }}" desire-form-elem="phone">
+      <div class="text" desire-form-elem="error">
+         {% if errors.phone %}
+         {{ errors.phone.as_text }}
+         {% else %}
+         {{ errors }}
+         {% endif %}
+      </div>
     </label>
-    <input type="button" value="Добавить" desire-form-elem="button">
+    <input class="button pink_button" type="button" value="Добавить" desire-form-elem="button">
   </form>
 {% endif %}
 {% if window == 'successful' %}

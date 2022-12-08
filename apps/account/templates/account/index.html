@@ -1,13 +1,18 @@
 {% extends 'core/base.html' %}
-
+{% load static %}
 {% block content %}
-
-  <div>Персональные данные</div>
-  {% include 'account/forms/personal_form.html' %}
-
+  
+{% include 'account/includes/first_screen.html' %}
+<div class="container">
+  <div class="account_content_wrapper">
+    <h2>Персональные данные</h2>
+    {% include 'account/forms/personal_form.html' %}
+  </div>
   {% if winner_questionnaire_form %}
-    <div>Анкета победителя</div>
+  <div class="account_content_wrapper">
+    <h2>Анкета победителя</h2>
     {% include 'account/forms/winner_questionnaire_form.html' %}
+  </div>
   {% endif %}
-
+</div>
 {% endblock %}

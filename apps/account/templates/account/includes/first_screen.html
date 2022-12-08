@@ -1,0 +1,30 @@
+{% load account_menu %}
+
+<div class="first-screen_wrapper">
+    <div class="first-screen container" window-elem="first-screen">
+        <div class="first-screen_text">
+            <h1>Личный кабинет</h1>
+            {% if report_sent %}
+            <div class="first-screen_text_collab">отчёт сдан</div>
+            {% else %}
+            <div class="first-screen_account_time" window-elem="first-screen-countdown"></div>
+            <div class="first-screen_text_collab">до подачи отчета</div>
+            <div class="first-screen_account_button_wrapper">
+                <div class="blue_button" button-action="open-report-form">Сдать отчет</div>
+            </div>
+            {% endif %}
+        </div>
+        {% if user.participant.photo %}
+        <div class="first-screen_avatar" window-elem="account_avatar">
+            <img src="{{user.participant.photo.url}}">
+        </div>
+        {% else %}
+        <div class="first-screen_avatar" window-elem="account_avatar">
+            <label class="first-screen_no_avatar">
+                <p>добавьте фото</p>
+            </label>
+        </div>
+        {% endif %}
+        {% account_menu %}
+    </div>
+</div>
