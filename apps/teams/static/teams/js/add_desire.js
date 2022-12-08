@@ -27,6 +27,37 @@ function openAddDesireForm() {
     })
 }
 
+let userToDelete = document.querySelectorAll('[window-elem="delete"]')
+
+userToDelete.forEach(element => element.addEventListener("click", function () {
+  // Удаляет пользователя из команды при клике на крестик
+  let userId = element.getAttribute("user-to-delete")
+  let csrfToken = getCookie('csrftoken')
+  let data = {
+    'user_id': userId
+  }
+
+  fetch('/account/team/', {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      'X-CSRFToken': csrfToken,
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((response) => response.json())
+    .then(function (data) {
+      if (data.status == 'ok') {
+        window.location.reload()
+      }
+    })
+}))
+
+// let player = document.querySelector(".team_wishlist_items_item")
+// player.addEventListener("mouseover", function () {
+//   document.querySelector('[window-elem="delete"]').setAttribute("style", "visibility: visible; margin-left: 0;")
+// })
+
 function closeAddDesireForm() {
   overlay.classList.remove('show')
   addDesireFormWrapper.classList.remove('show')
@@ -88,7 +119,4 @@ if (addDesireFormWrapper) {
   })
 }
 
-let userToDelete = document.querySelectorAll('[window-elem="delete"]')
-userToDelete.forEach(element => element.addEventListener("click", function () {
-  console.log(element.getAttribute("user-to-delete"))
-}))
+
