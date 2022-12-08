@@ -8,7 +8,6 @@ function openAddDesireForm() {
   let csrfToken = getCookie('csrftoken')
   let data = new FormData()
   data.append('window', 'open')
-
   fetch('/account/team/add-desire/', {
     method: "POST",
     body: data,
@@ -18,7 +17,7 @@ function openAddDesireForm() {
   })
     .then((response) => response.json())
     .then(function (data) {
-      console.log(data)
+      // console.log(data)
       if (data.status == 'ok') {
         if (data.action == 'window') {
           addDesireFormWrapper.innerHTML = data.window
@@ -28,29 +27,66 @@ function openAddDesireForm() {
 }
 
 let userToDelete = document.querySelectorAll('[window-elem="delete"]')
+let confirmationPopup = document.querySelector('[popup-name="confirmation"]')
+
+function confirmationClose() {
+  // Закрывает поп-ап подтверждения удаления друга из команды
+  overlay.classList.remove('show')
+  confirmationPopup.classList.remove('show')
+}
+
+let closeConfirmationButton = document.querySelector('[popup-element="close"]')
+
+if (closeConfirmationButton) {
+  closeConfirmationButton.addEventListener("click", function () {
+    confirmationClose()
+  })
+}
 
 userToDelete.forEach(element => element.addEventListener("click", function () {
-  // Удаляет пользователя из команды при клике на крестик
-  let userId = element.getAttribute("user-to-delete")
+  // Удаляет друга из команды при клике на крестик с поп-апом
+  let userId = element.getAttribute('user-to-delete')
   let csrfToken = getCookie('csrftoken')
   let data = {
-    'user_id': userId
+    'user_id': userId,
+    'is_delete': true
   }
 
-  fetch('/account/team/', {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      'X-CSRFToken': csrfToken,
-      'Content-Type': 'application/json'
+  overlay.classList.add('show')
+  confirmationPopup.classList.add('show')
+
+  let popupButtons = document.querySelectorAll('[popup-element]')
+
+  popupButtons.forEach(el => el.addEventListener("click", function () {
+    // Подтверждение удаления друга из команды
+    let confirm = el.getAttribute("popup-element")
+
+    if (confirm == "confirm") {
+      confirmationClose()
+
+      if (data.is_delete) {
+        fetch('/account/team/', {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            'X-CSRFToken': csrfToken,
+            'Content-Type': 'application/json'
+          }
+        })
+          .then((response) => response.json())
+          .then(function (data) {
+            if (data.status == 'ok') {
+              window.location.reload()
+            }
+          })
+      }
+    }
+    if (confirm == "deny") {
+      confirmationClose()
+      data.is_delete = false
     }
   })
-    .then((response) => response.json())
-    .then(function (data) {
-      if (data.status == 'ok') {
-        window.location.reload()
-      }
-    })
+  )
 }))
 
 // let player = document.querySelector(".team_wishlist_items_item")
@@ -79,7 +115,7 @@ function submitAddDesireForm(button) {
   })
     .then((response) => response.json())
     .then(function (data) {
-      console.log(data)
+      // console.log(data)
       if (data.status == 'ok') {
         if (data.action == 'window') {
           addDesireFormWrapper.innerHTML = data.window

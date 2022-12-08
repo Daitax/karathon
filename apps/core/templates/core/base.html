@@ -28,6 +28,9 @@
       {% if user.is_authenticated %}
         <div class="report_form_wrapper" popup-element="popup" form-name="report"></div>
         <div class="desire_form_wrapper" popup-element="popup" form-name="desire"></div>
+        <div class="confirmation_wrapper" popup-element="popup" popup-name="confirmation">
+          {% include 'teams/popups/confirmation.html' %}
+        </div>
       {% else %}
         <div class="authentication_form_wrapper" popup-element="popup" form-name="authentication"></div>
       {% endif %}
