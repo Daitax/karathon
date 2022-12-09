@@ -16,7 +16,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(os.path.join(BASE_DIR, 'project/.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, 'docker/.env'))
 
 
 # Quick-start development settings - unsuitable for production

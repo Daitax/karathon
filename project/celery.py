@@ -15,7 +15,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'send_tasks': {
         'task': 'apps.notifications.tasks.send_task_for_participant',
-        'schedule': crontab(minute=55, hour=12),
+        'schedule': crontab(),
     },
     # 'check_ending_karathons': {
     #     'task': 'apps.core.tasks.ended_karathon',
