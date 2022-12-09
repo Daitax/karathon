@@ -10,10 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+environ.Env.read_env(os.path.join(BASE_DIR, 'project/.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +28,7 @@ SECRET_KEY = 'django-insecure-()726)0h^0f$_9h3k7*hidl@5pa0h5x*+@r-0ay_g4co8s!_4n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'dyugaev.beget.tech']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'dyugaev.beget.tech', '213.139.208.116']
 
 
 # Application definition
@@ -73,6 +76,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.account.context_processors.report_sent.report_sent',
+                'apps.account.context_processors.report_sent.active_karathon',
             ],
         },
     },
@@ -86,7 +90,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': os.environ.get('DB_ENGINE'),
         'HOST': os.environ.get('DB_HOST'),
         # 'PORT': os.environ.get('DB_PORT'),
         'NAME': os.environ.get('DB_NAME'),

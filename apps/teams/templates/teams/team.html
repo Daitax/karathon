@@ -18,9 +18,15 @@
         <div>Вы пока не состоите ни в одной команде</div>
       {% endif %}
     </div>
-    <div class="team_content_button">
-      <div class="pink_button" button-action="open-report-form">Сдать отчёт</div>
-    </div>
+    {% if active_karathon %}
+      <div class="team_content_button">
+        {% if report_sent %}
+          <div>Отчёт сдан</div>
+        {% else %}
+          <div class="pink_button" button-action="open-report-form">Сдать отчёт</div>
+        {% endif %}
+      </div>
+    {% endif %}
     <div class="team_wishlist_wrapper">
       <h4>С кем ты хочешь быть в команде на следующем карафоне?</h4>
       <div class="team_wishlist_items">

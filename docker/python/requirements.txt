@@ -1,4 +1,5 @@
 django==4.1
+django-environ
 django-phonenumber-field[phonenumbers]==7.0
 django-static-precompiler==2.1
 celery

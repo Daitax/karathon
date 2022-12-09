@@ -114,7 +114,7 @@ class Participant(User):
                 from apps.tasks.models import IndividualTask
                 today_task = IndividualTask.objects.get(karathon=karathon, category=self.category,
                                                            date=self.get_participant_time())
-                return today_task.text_individual_task(self)
+                return today_task
             except ObjectDoesNotExist:
                 return None
 
