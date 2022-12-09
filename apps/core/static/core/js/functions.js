@@ -116,9 +116,9 @@ if (localtime[0]) {
   let localHours = Number(localtime[0].getAttribute("localtime").split(" ")[0])
   let localMinutes = Number(localtime[0].getAttribute("localtime").split(" ")[1])
   let localSeconds = Number(localtime[0].getAttribute("localtime").split(" ")[2])
-  let odds = deadline - (localHours * 60 * 60 + localMinutes * 60 + localSeconds)
-  let firstScreenCountdown = document.querySelector('[window-elem="first-screen-countdown"]')
-  let lateText = "опоздали:("
+  var odds = deadline - (localHours * 60 * 60 + localMinutes * 60 + localSeconds)
+  var firstScreenCountdown = document.querySelector('[window-elem="first-screen-countdown"]')
+  var lateText = "опоздали:("
 
   function printTime(value) {
     // Показывает оставшееся до сдачи отчета время или сообщение
