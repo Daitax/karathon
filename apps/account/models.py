@@ -109,17 +109,18 @@ class Participant(User):
 
     def today_task(self):
         karathon = self.get_active_karathon()
-        if karathon.type == "individual":
-            try:
-                from apps.tasks.models import IndividualTask
-                today_task = IndividualTask.objects.get(karathon=karathon, category=self.category,
-                                                           date=self.get_participant_time())
-                return today_task
-            except ObjectDoesNotExist:
-                return None
+        if karathon:
+            if karathon.type == "individual":
+                try:
+                    from apps.tasks.models import IndividualTask
+                    today_task = IndividualTask.objects.get(karathon=karathon, category=self.category,
+                                                               date=self.get_participant_time())
+                    return today_task
+                except ObjectDoesNotExist:
+                    return None
 
-        elif karathon.type == "team":
-            pass
+            elif karathon.type == "team":
+                pass
         return None
 
 

@@ -50,9 +50,10 @@ class Notification(models.Model):
                       date.strftime('%Y') + ' г.'
 
         header = template.header.format(format_date=format_date)
+        text_task = task.text_individual_task(participant)
 
         addition = task.addition if task.addition else ''
-        text = template.text.format(task=task.task, addition=addition)
+        text = template.text.format(task=text_task, addition=addition)
 
         Notification.objects.create(
             participant=participant,

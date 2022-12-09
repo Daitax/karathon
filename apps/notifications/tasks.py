@@ -8,7 +8,7 @@ def send_task_for_participant():
 
     for participant in participants:
         date_time = participant.get_participant_time()
-        task = participant.get_today_task()
+        task = participant.task_today()
         if task:
             from apps.notifications.models import Notification
             Notification.task_today(participant, date_time, task)
