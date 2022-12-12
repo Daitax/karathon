@@ -1,0 +1,76 @@
+.task_today_wrapper {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    text-transform: uppercase;
+    line-height: 1.3;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    max-width: 700px;
+    background: @green;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+    transition: 0.8s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+    cursor: pointer;
+
+    .close {
+        position: absolute;
+        display: none;
+        top: -15px;
+        right: -15px;
+        width: 50px;
+        height: 50px;
+        background: @green;
+        border: 2px solid @white;
+        border-radius: 50%;
+        box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: 0.8s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+
+
+        &:hover {
+            transform: rotate(90deg);
+        }
+
+        &.show {
+            content: ":";
+            display: block;
+        }
+    }
+
+    .close::before,
+    .close::after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 43px;
+        background: @white;
+        left: 22px;
+        top: 1.3px;
+    }
+
+    .close::before {
+        transform: rotate(-45deg);
+    }
+
+    .close::after {
+        transform: rotate(45deg);
+    }
+
+    .task_today {
+        padding: 25px;
+
+        span:nth-child(2) {
+            color: @white;
+            display: none;
+
+            &.show {
+                display: inline;
+            }
+
+            p {
+                display: contents;
+                color: @black;
+            }
+        }
+    }
+}

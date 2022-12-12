@@ -61,6 +61,12 @@
 
     .team_wishlist_items_item_delete {
         .delete();
+        margin-left: 0;
+        transition: 0.8s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+
+        &:hover {
+            transform: rotate(90deg);
+        }
 
         &::before {
             content: "";
@@ -126,6 +132,5 @@
 
     &:hover>.team_wishlist_items_item_delete {
         visibility: visible;
-        margin-left: 0;
     }
 }

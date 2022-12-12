@@ -1,4 +1,6 @@
 {% load static %}
+{% load get_outlink %}
+
 <div class="container">
     <div class="footer_nav">
         <div class="footer_nav_logo">
@@ -16,23 +18,23 @@
             <nav class="footer_nav_menu_items">
                 <li><a href="javascript:void(0)">О Карачуне</a></li>
                 <li><a href="javascript:void(0)">Благотворительность</a></li>
-                <li><a href="javascript:void(0)">Личный кабинет</a></li>
+                <li><a href="{% url 'account:account-index' %}">Личный кабинет</a></li>
                 <li><a href="javascript:void(0)">Политика конфиденциальности</a></li>
             </nav>
         </div>
         <div>
             <nav class="footer_nav_menu_items">
-                <li>Telegram <a href="javascript:void(0)"><span>allaboutkarafon</span></a></li>
-                <li>Instagram <a href="javascript:void(0)"><span>Karachunia</span></a></li>
-                <li>Вконтакте <a href="javascript:void(0)"><span>Карачуня Трансформация</span></a></li>
-                <li>Youtube <a href="javascript:void(0)"><span>Anna Karachunskaya</span></a></li>
+                <li>Telegram <a href="{% get_outlink 'TELEGRAM_URL' %}" target="_blank"><span>allaboutkarafon</span></a></li>
+                <li>Instagram <a href="{% get_outlink 'INSTAGRAM_URL' %}" target="_blank"><span>Karachunia</span></a></li>
+                <li>Вконтакте <a href="{% get_outlink 'VK_URL' %}" target="_blank"><span>Карачуня Трансформация</span></a></li>
+                <li>Youtube <a href="{% get_outlink 'YOUTUBE_URL' %}" target="_blank"><span>Anna Karachunskaya</span></a></li>
             </nav>
         </div>
     </div>
     <div class="footer_lemur">
         <img src="{% static 'core/img/logo_lemur.svg' %}" alt="lemur_logo">
         <div class="footer_lemur_text">Разработка и техническая поддержка сайта<br>
-            <a href="https://lemurteam.ru/" target="_blank"><span>Lemur Media</span></a>
+            <a href="{% get_outlink 'LEMUR_URL' %}" target="_blank"><span>Lemur Media</span></a>
         </div>
     </div>
 </div>

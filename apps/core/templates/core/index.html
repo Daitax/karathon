@@ -3,6 +3,7 @@
 {% block content %}
 {% load navbar %}
 {% load steps_block %}
+{% load get_outlink %}
 
 <div class="content_wrapper">
   <div class="first-screen_wrapper">
@@ -34,8 +35,8 @@
       <ol class="about_karathon_list_wrapper">
         <li>карафон длится<br>13 дней</li>
         <li>каждый день участник выполняет задание </li>
-        <li>задания даются ежедневно в прямом эфире в <a href="javascript:void(0)"><span>Instagram</span></a></li>
-        <li>каждый участник сдает отчёт до 12 ночи в личном <a href="javascript:void(0)"><span>кабинете</span></a></li>
+        <li>задания даются ежедневно в прямом эфире в <a href="{% get_outlink 'INSTAGRAM_URL' %}" target="_blank"><span>Instagram</span></a></li>
+        <li>каждый участник сдает отчёт до 12 ночи в личном <a href="{% url 'account:account-index' %}"><span>кабинете</span></a></li>
       </ol>
     </div>
     <div class="about_karathon_description">

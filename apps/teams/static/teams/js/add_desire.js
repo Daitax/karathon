@@ -89,11 +89,6 @@ userToDelete.forEach(element => element.addEventListener("click", function () {
   )
 }))
 
-// let player = document.querySelector(".team_wishlist_items_item")
-// player.addEventListener("mouseover", function () {
-//   document.querySelector('[window-elem="delete"]').setAttribute("style", "visibility: visible; margin-left: 0;")
-// })
-
 function closeAddDesireForm() {
   overlay.classList.remove('show')
   addDesireFormWrapper.classList.remove('show')
@@ -154,5 +149,3 @@ if (addDesireFormWrapper) {
     submitAddDesireForm(event.target)
   })
 }
-
-
