@@ -29,7 +29,7 @@ window.addEventListener("scroll", function () {
 let avatarButtons = document.querySelectorAll('[navbar-elem="user_avatar"]')
 
 avatarButtons.forEach(element => element.addEventListener("click", function () {
-  // Показывает/убирает меню аккаунта при клике по аватарке
+  // Показывает/убирает меню аккаунта на главной странице при клике по аватарке
   let accountMenu = element.nextElementSibling
 
   accountMenu.classList.toggle("show")
@@ -39,12 +39,29 @@ let content = document.querySelector('[window-elem="content"]')
 let accMenues = document.querySelectorAll('[window-elem="account_menu"]')
 
 content.addEventListener("click", function () {
-  // Убирает меню аккаунта при клике вне его
+  // Убирает меню аккаунта на главной странице при клике вне его
   accMenues.forEach(element => element.classList.remove("show"))
 })
 
 let inputAvatar = document.querySelector('[window-elem="input_avatar"]')
 let avatarPreview = document.querySelector('[window-elem="avatar_preview"]')
+let avatarPreviewBig = document.querySelector('[window-elem="avatar_preview_big"]')
+
+function showPreview(val) {
+  // Добавляет стили на блоки превью для аватарки при передачи в функцию пути
+  avatarPreview.setAttribute("style", "\
+        display:block;\
+        background-image:url(" + val + ");\
+        background-repeat: no-repeat;\
+        background-position: center center;\
+        background-size: cover;")
+  avatarPreviewBig.setAttribute("style", "\
+        display:block;\
+        background-image:url(" + val + ");\
+        background-repeat: no-repeat;\
+        background-position: center center;\
+        background-size: cover;")
+}
 
 if (inputAvatar) {
   inputAvatar.addEventListener("change", function () {
@@ -57,14 +74,8 @@ if (inputAvatar) {
         if (customInputAvatar) {
           customInputAvatar.setAttribute("style", "border:none")
         }
-        avatarPreview.setAttribute("style", "\
-        display:block;\
-        background-image:url(" + fileReader.result + ");\
-        background-repeat: no-repeat;\
-        background-position: center center;\
-        background-size: cover;")
+        showPreview(fileReader.result)
       }, false);
-
       fileReader.readAsDataURL(this.files[0]);
     }
   });
@@ -153,7 +164,6 @@ if (localtime[0]) {
       }
     }, 1000);
   }
-
   printTime(odds)
   startCountdown()
 }

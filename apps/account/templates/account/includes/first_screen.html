@@ -16,6 +16,9 @@
               {% endif %}
             {% endif %}
         </div>
+        <label for="account_photo">
+            <div window-elem="avatar_preview_big"></div>
+        </label>
         {% if user.participant.photo %}
         <div class="first-screen_avatar" window-elem="account_avatar">
             <img src="{{user.participant.photo.url}}">

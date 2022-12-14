@@ -6,7 +6,6 @@
 
 <!DOCTYPE html>
 <html lang="ru">
-
   <head>
     <meta charset="UTF-8" />
     <title>Title</title>
@@ -14,7 +13,6 @@
     <link rel="stylesheet" href="{% static 'core/less/style.less'|compile %}?v{% now 'u' %}" />
     {% csrf_token %}
   </head>
-
   <body>
     <div class="global-wrapper">
       <header class="header" window-elem="header">{% navbar %}</header>
@@ -35,14 +33,13 @@
         <div class="authentication_form_wrapper" popup-element="popup" form-name="authentication"></div>
       {% endif %}
     <div>
+    <script src="{% static 'account/js/authentication.js' %}"></script>
+    <script src="{% static 'account/js/imask.js' %}"></script>
     <script src="{% static 'core/js/functions.js' %}"></script>
     <script src="{% static 'core/js/base.js' %}"></script>
     <script src="{% static 'core/js/task.js' %}"></script>
     <script src="{% static 'core/js/steps_countdown.js' %}"></script>
-    <script src="{% static 'account/js/authentication.js' %}"></script>
-    <script src="{% static 'account/js/imask.js' %}"></script>
     <script src="{% static 'steps/js/report.js' %}"></script>
     <script src="{% static 'teams/js/add_desire.js' %}"></script>
   </body>
-
 </html>

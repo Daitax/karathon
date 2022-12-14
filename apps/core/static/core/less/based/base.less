@@ -159,13 +159,14 @@ input[type=number] {
         bottom: 0;
         right: 0;
         left: 0;
-        width: 0;
+        // width: 0;
+        opacity: 0;
         background: @gradient_blue_green;
     }
 
     &:hover::before {
-        width: 100%;
-
+        // width: 100%;
+        opacity: 1;
         .hover_animation()
     }
 }
@@ -267,12 +268,14 @@ input[type=number] {
         bottom: 0;
         right: 0;
         left: 0;
-        width: 0;
+        // width: 0;
         background: @gradient_pink_blue;
+        opacity: 0;
     }
 
     &:hover::before {
-        width: 100%;
+        // width: 100%;
+        opacity: 1;
         .hover_animation();
     }
 }
