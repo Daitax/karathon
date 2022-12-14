@@ -169,3 +169,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"
+
+INSTAGRAM_URL = "https://instagram.com/karachunia?igshid=YmMyMTA2M2Y="
+LEMUR_URL = "https://lemurteam.ru/"
+TELEGRAM_URL = "https://t.me/allaboutkarafon"
+VK_URL = "https://vk.com/karachunia"
+YOUTUBE_URL = "https://www.youtube.com/@annakarachunskaya4096"

@@ -1,6 +1,8 @@
 {% if user.participant.is_authenticated and active_karathon %}
-  <div>
-    <span>Задание дня:</span>
-    <span>{{ task|default_if_none:'На сегодня заданий нет' }}</span>
+<div class="green_button task_today_wrapper" task-elem="task_wrapper">
+  <div class="close" task-elem="close"></div>
+  <div class="task_today" task-elem="task">
+    <span task-elem="task_header">Задание дня</span><span task-elem="task_description"><p>: </p>{{ task|default_if_none:'На сегодня заданий нет' }}</span>
   </div>
+</div>
 {% endif %}
