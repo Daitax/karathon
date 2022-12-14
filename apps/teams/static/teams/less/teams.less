@@ -9,7 +9,6 @@
 .team_wishlist_items {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 30px;
 }
 
 .delete {
@@ -33,31 +32,7 @@
     width: 50%;
     margin-top: 50px;
 
-    &:last-child {
-        height: 150px;
-        width: 150px;
-        border-radius: 50%;
-        border: 2px solid @pink;
-        cursor: pointer;
 
-        &::before {
-            content: "";
-            position: absolute;
-            left: 50%;
-            width: 2px;
-            height: 43px;
-            background: @pink;
-        }
-
-        &::after {
-            content: "";
-            position: absolute;
-            left: calc(50% - 21.5px);
-            width: 43px;
-            height: 2px;
-            background: @pink;
-        }
-    }
 
     .team_wishlist_items_item_delete {
         .delete();
@@ -103,18 +78,19 @@
         margin-left: 20px;
     }
 
+    span {
+        font-size: 16px;
+        color: @pink
+    }
+
     button {
-        .custom_button();
+        .pink_button();
+        padding: 12px 40px 12px 20px;
         position: absolute;
         bottom: 12px;
         left: 88px;
         border: none;
         appearance: button;
-    }
-
-    span {
-        font-size: 16px;
-        color: @pink
     }
 
     p {
@@ -132,5 +108,50 @@
 
     &:hover>.team_wishlist_items_item_delete {
         visibility: visible;
+    }
+}
+
+.team_wishlist_items_add {
+    cursor: pointer;
+    margin-top: 50px;
+    position: relative;
+}
+
+.team_wishlist_items_add_circle {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 2px solid @pink;
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: calc(50% - 21.5px);
+        width: 2px;
+        height: 43px;
+        background: @pink;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: calc(50% - 21.5px);
+        top: 50%;
+        width: 43px;
+        height: 2px;
+        background: @pink;
+    }
+}
+
+.team_wishlist_items_add_button_wrapper {
+    position: absolute;
+    bottom: 12px;
+    left: 88px;
+    width: max-content;
+
+    button {
+        padding: 12px 40px 12px 20px;
+        font-size: 20px;
     }
 }

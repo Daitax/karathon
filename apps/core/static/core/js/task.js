@@ -1,12 +1,14 @@
 let task = document.querySelector('[task-elem="task_wrapper"]')
 let taskDescription = document.querySelector('[task-elem="task_description"]')
 let taskClose = document.querySelector('[task-elem="close"]')
+let taskText = document.querySelector('[task-elem="task"]')
 
 if (task) {
     task.addEventListener("click", function () {
         // Закрывает/открывает задание по клику на него
         taskDescription.classList.toggle("show")
         taskClose.classList.toggle("show")
+        taskText.classList.toggle("background")
     })
 }
 

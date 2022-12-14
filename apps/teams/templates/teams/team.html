@@ -23,7 +23,7 @@
         {% if report_sent %}
           <div>Отчёт сдан</div>
         {% else %}
-          <div class="pink_button" button-action="open-report-form">Сдать отчёт</div>
+          <div class="pink_button" button-action="open-report-form"><span>Сдать отчёт</span></div>
         {% endif %}
       </div>
     {% endif %}
@@ -48,8 +48,13 @@
           </div>
         </div>
         {% endfor %}
-        <div class="team_wishlist_items_item" button-action="open-add-desire-form">
-          <button>Добавить друга</button>
+        <div class="team_wishlist_items_add" button-action="open-add-desire-form">
+          <div class="team_wishlist_items_add_circle"></div>
+          <div class="team_wishlist_items_add_button_wrapper">
+            <button class="pink_button">
+              <span>Добавить друга</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

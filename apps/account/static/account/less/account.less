@@ -80,12 +80,13 @@
     cursor: pointer;
 }
 
-.account_content_avatar_custom_input {
-    position: relative;
-    width: 246px;
-    height: 246px;
-    border: 2px solid #F648A5;
+.account_content_no_avatar {
+    position: absolute;
+    top: 0;
+    height: 250px;
+    width: 250px;
     border-radius: 50%;
+    border: 2px solid @pink;
     cursor: pointer;
 
     &::before {
@@ -94,6 +95,7 @@
         width: 2px;
         height: 43px;
         left: 122px;
+        top: 103.5px;
         background: @pink;
     }
 
@@ -102,6 +104,7 @@
         position: absolute;
         width: 43px;
         height: 2px;
+        top: 50%;
         left: 100.5px;
         background: @pink;
         z-index: -1;
@@ -120,22 +123,12 @@ div[window-elem="avatar_preview"] {
 }
 
 .account_content_avatar_text {
+    margin-left: 90px;
+    margin-top: 190px;
+    width: max-content;
     padding: 12px 40px 12px 20px;
-    position: absolute;
-    background: @pink;
-    color: @white;
-    font-weight: 700;
     font-size: 20px;
     letter-spacing: 0.05em;
-    text-transform: uppercase;
-    bottom: 20px;
-    left: 90px;
-    width: max-content;
-    cursor: pointer;
-
-    &:hover {
-        background: linear-gradient(97.04deg, #F648A5 -4.24%, #00AFEB 49.4%, #F648A5 88.96%);
-    }
 }
 
 .account_content_full_name label,

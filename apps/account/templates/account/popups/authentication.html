@@ -17,14 +17,16 @@
       </label>
     {% endif %}
     {% if window == 'phone' %}
-      <input class="button pink_button" type="button" value="Подтвердить" auth-form-elem="button">
+      <button class="button pink_button" auth-form-elem="button">
+        <span auth-form-elem="button">Подтвердить</span>
+      </button>
     {% endif %}
   </form>
 {% endif %}
 {% if window == 'enter' %}
   <div auth-form-elem="enter" reload="{{ reload_overlay }}">
   <div class="text">Не забудь заполнить анкету в личном кабинете</div>
-  <a class="button pink_button" href="{% url 'account:account-index' %}">Заполнить</a>
-  <button class="white_button button" auth-form-elem="later">Позже</button>
+  <a class="button pink_button" href="{% url 'account:account-index' %}"><span>Заполнить</span></a>
+  <button class="white_button button" auth-form-elem="later"><span>Позже</span></button>
 {% endif %}
 </div>

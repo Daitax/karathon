@@ -1,5 +1,6 @@
-<dl class="steps_block_wrapper container">
-    <dt>{{total_steps}}</dt>
+<dl class="steps_block_wrapper container" window-elem="steps_block">
+    {% comment %} <dt total-steps="{{total_steps}}" window-elem="steps_total"></dt> {% endcomment %}
+    <dt window-elem="steps_total">{{total_steps}}</dt>
     <dd>{{total_steps_word}} мы прошли с момента запуска проекта</dd>
     <dt>{{total_steps}}</dt>
     <dd>{{total_steps_word}} пройдено в предыдущем карафоне</dd>
