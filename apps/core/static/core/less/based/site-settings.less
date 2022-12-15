@@ -5,20 +5,25 @@
 @green: #5ac82d;
 
 @animation_settings: gradient 4s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
+
 @gradient_pink_blue: linear-gradient(110.04deg, @pink -4.24%, @blue 49.4%, @pink 88.96%);
 @gradient_blue_green: linear-gradient(110.04deg, @blue -4.24%, @green 49.4%, @blue 88.96%);
 @gradient_green_blue: linear-gradient(110.04deg, @green -4.24%, @blue 49.4%, @green 88.96%);
 
 @keyframes gradient {
     0% {
-        background-position: 100%;
+        background-position: 50%;
     }
 
-    50% {
+    33% {
         background-position: 0;
     }
 
-    100% {
+    66% {
         background-position: 100%;
+    }
+
+    100% {
+        background-position: 50%;
     }
 }

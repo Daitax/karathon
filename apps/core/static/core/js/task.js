@@ -8,13 +8,13 @@ if (task) {
         // Закрывает/открывает задание по клику на него
         taskDescription.classList.toggle("show")
         taskClose.classList.toggle("show")
-        taskText.classList.toggle("background")
+        taskText.classList.toggle("task_today_background")
     })
 }
 
 window.addEventListener("load", function () {
     this.window.addEventListener("scroll", function () {
-        // Задание дня зафиксровано в левом нижнем углу экрана
+        // Задание дня зафиксровано в левом нижнем углу экрана до подвала
         let topTask = document.body.scrollHeight - footer.clientHeight - task.clientHeight
         if (task.getBoundingClientRect().bottom >= footer.getBoundingClientRect().top) {
             task.setAttribute("style", "position:absolute; height: fit-content; top:" + topTask + "px")
