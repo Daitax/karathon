@@ -24,6 +24,7 @@ function openAddDesireForm() {
         }
       }
     })
+  // .then(sessionStorage.setItem("is_reloaded", true)) // флаг перезагрузки страницы
 }
 
 let userToDelete = document.querySelectorAll('[window-elem="delete"]')
@@ -79,6 +80,7 @@ userToDelete.forEach(element => element.addEventListener("click", function () {
               window.location.reload()
             }
           })
+        // .then(sessionStorage.setItem("is_reloaded", true)) // флаг перезагрузки страницы
       }
     }
     if (confirm == "deny") {
@@ -117,6 +119,7 @@ function submitAddDesireForm(button) {
         }
       }
     })
+  // .then(sessionStorage.setItem("is_reloaded", true)) // флаг перезагрузки страницы
 }
 
 let openFormAddDesireButton = document.querySelector('[button-action="open-add-desire-form"]')

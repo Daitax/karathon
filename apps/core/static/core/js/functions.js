@@ -7,23 +7,24 @@ function getCookie(name) {
 
 let stickyNavbar = document.querySelector('[window-elem="sticky_navbar"]')
 let firstScreen = document.querySelector('[window-elem="first-screen"]')
-let firstScreenBottom = firstScreen.getBoundingClientRect().bottom
 let footer = document.querySelector('[window-elem="footer"]')
-let footerTop = footer.offsetTop
 let stickyAccMenu = document.querySelector('[window-elem="sticky_navbar"] > [window-elem="account_menu"]')
+var footerTop = footer.offsetTop
+console.log(stickyNavbar)
+window.addEventListener("load", function () {
+  window.addEventListener("scroll", function () {
+    // Убирает/показывает главное меню при скролле ниже/выше первого экрана
+    let firstScreenBottom = firstScreen.getBoundingClientRect().bottom
 
-window.addEventListener("scroll", function () {
-  // Показывает/убирает главное меню при прокрутке ниже первого экрана
-  let screenTop = window.pageYOffset
-
-  if ((firstScreenBottom <= screenTop) && (screenTop <= footerTop)) {
-    stickyNavbar.setAttribute("style", "top: 0")
-  } else {
-    stickyNavbar.setAttribute("style", "top: -150px")
-    if (stickyAccMenu) {
-      stickyAccMenu.classList.remove("show")
+    if (firstScreenBottom > 0) {
+      stickyNavbar.setAttribute("style", "top: -150px")
+      if (stickyAccMenu) {
+        stickyAccMenu.classList.remove("show")
+      }
+    } else {
+      stickyNavbar.setAttribute("style", "top: 0")
     }
-  }
+  })
 })
 
 let avatarButtons = document.querySelectorAll('[navbar-elem="user_avatar"]')
@@ -43,63 +44,30 @@ content.addEventListener("click", function () {
   accMenues.forEach(element => element.classList.remove("show"))
 })
 
-let inputAvatar = document.querySelector('[window-elem="input_avatar"]')
-let avatarPreview = document.querySelector('[window-elem="avatar_preview"]')
-let avatarPreviewBig = document.querySelector('[window-elem="avatar_preview_big"]')
-
-function showPreview(val) {
-  // Добавляет стили на блоки превью для аватарки при передачи в функцию пути
-  avatarPreview.setAttribute("style", "\
-        display:block;\
-        background-image:url(" + val + ");\
-        background-repeat: no-repeat;\
-        background-position: center center;\
-        background-size: cover;")
-  avatarPreviewBig.setAttribute("style", "\
-        display:block;\
-        background-image:url(" + val + ");\
-        background-repeat: no-repeat;\
-        background-position: center center;\
-        background-size: cover;")
-}
-
-if (inputAvatar) {
-  inputAvatar.addEventListener("change", function () {
-    // Показывает превью аватарки перед загрузкой на сервер
-    if (this.files[0]) {
-      let fileReader = new FileReader();
-      let customInputAvatar = document.querySelector('[window-elem="custom_input_avatar"]')
-
-      fileReader.addEventListener("load", function () {
-        if (customInputAvatar) {
-          customInputAvatar.setAttribute("style", "border:none")
-        }
-        showPreview(fileReader.result)
-      }, false);
-      fileReader.readAsDataURL(this.files[0]);
-    }
-  });
-}
-
 let accountMenu = document.querySelector('[window-elem="account_avatar"] ~ [window-elem="account_menu"]')
-if (accountMenu) {
-  let accountMenuTop = accountMenu.getBoundingClientRect().top
-  let accountMenuAbsoluteBottom = firstScreen.getBoundingClientRect().bottom - footer.getBoundingClientRect().top
-  let accountMenuFixedOffset = 90
 
-  window.addEventListener("scroll", function () {
-    // двигает меню пользователя от первого экрана до подвала
-    if ((window.pageYOffset > accountMenuTop - accountMenuFixedOffset) && (window.pageYOffset < (footerTop - accountMenu.clientHeight))) {
-      accountMenu.setAttribute("style", "position: fixed; top: 97px; right: calc(50% - 670px); bottom: auto;")
-    }
-    else {
-      accountMenu.setAttribute("style", "position: absolute; top: auto; right: -10px; bottom: -140px;")
-    }
-    if (window.pageYOffset > (footerTop - accountMenu.clientHeight - accountMenuFixedOffset)) {
-      accountMenu.setAttribute("style", "bottom:" + accountMenuAbsoluteBottom + "px")
-    }
-  })
-}
+window.addEventListener("load", function () {
+  if (accountMenu) {
+    let accountMenuAbsoluteBottom = firstScreen.getBoundingClientRect().bottom - footer.getBoundingClientRect().top
+    let accountMenuFixedOffset = 90
+    let accountMenuHeight = accountMenu.clientHeight
+    let beforeAccMenu = accountMenu.offsetTop - accountMenuFixedOffset
+    let topBorder = beforeAccMenu + accountMenuFixedOffset - 10
+    let bottomBorder = footer.offsetTop - accountMenuHeight - accountMenuFixedOffset
+    this.window.addEventListener("scroll", function () {
+      // Оставляет меню аккаунта сбоку при скролле от первого экрана до подвала
+      if (window.pageYOffset < topBorder) {
+        accountMenu.setAttribute("style", "position: absolute; top: auto; right: -10px; bottom: -140px;")
+      }
+      if ((window.pageYOffset >= topBorder) && (window.pageYOffset < bottomBorder)) {
+        accountMenu.setAttribute("style", "position: fixed; top: 90px; right: calc(50% - 670px); bottom: auto;")
+      }
+      if (window.pageYOffset >= bottomBorder) {
+        accountMenu.setAttribute("style", "bottom:" + accountMenuAbsoluteBottom + "px")
+      }
+    })
+  }
+})
 
 let deadline = 86400 // количество секунд в сутках
 let localtime = document.querySelectorAll('[menu-elem="participant_localtime"]')
