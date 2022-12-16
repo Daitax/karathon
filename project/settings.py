@@ -95,6 +95,9 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
+        # 'OPTIONS': {
+        #     'init_command': 'set session wait_timeout=600;'
+        # }
     }
 }
 

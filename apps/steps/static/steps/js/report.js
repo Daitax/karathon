@@ -66,9 +66,9 @@ if (reportFormWrapper) {
   reportFormWrapper.addEventListener('click', function (event) {
     let target = event.target
 
-    if (target.getAttribute('report-form-elem') == 'button') {
-      submitReportForm(target)
-    }
+    // if (target.getAttribute('report-form-elem') == 'button') {
+    //   submitReportForm(target)
+    // }
     if (target.getAttribute('report-form-elem') == 'custom_input') {
       let input = document.querySelector("#photo_report")
       let inputCustom = document.querySelector('[report-form-elem="custom_input"]')
