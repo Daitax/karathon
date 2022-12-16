@@ -1,6 +1,6 @@
 {% if user.is_authenticated %}
-  <a class="pink_button" href="/participate/">Участовать</a>
+  <a class="pink_button" href="/participate/"><span>Участовать</span></a>
 {% else %}
-  <a class="pink_button" href="javascript:void(0)" button-action="open-auth-form">Войти</a>
+  <a class="pink_button" href="javascript:void(0)" button-action="open-auth-form"><span>Войти</span></a>
 {% endif %}
   <div class="button_text_cost">Стоимость участия &mdash; 500₽</div>

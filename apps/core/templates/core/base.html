@@ -23,17 +23,22 @@
       <div class="content" window-elem="content">{% block content_second %}{% endblock %}</div>
       <footer class="footer" window-elem="footer">{% include 'core/includes/footer.html' %}</footer>
     </div>
-    {% comment %} {% task_today %} {% endcomment %}
+    {% task_today %}
     <div class="overlay" popup-element="overlay">
       {% if user.is_authenticated %}
         <div class="report_form_wrapper" popup-element="popup" form-name="report"></div>
         <div class="desire_form_wrapper" popup-element="popup" form-name="desire"></div>
+        <div class="confirmation_wrapper" popup-element="popup" popup-name="confirmation">
+          {% include 'teams/popups/confirmation.html' %}
+        </div>
       {% else %}
         <div class="authentication_form_wrapper" popup-element="popup" form-name="authentication"></div>
       {% endif %}
-    <div>
+    </div>
     <script src="{% static 'core/js/functions.js' %}"></script>
     <script src="{% static 'core/js/base.js' %}"></script>
+    <script src="{% static 'core/js/task.js' %}"></script>
+    <script src="{% static 'core/js/steps_countdown.js' %}"></script>
     <script src="{% static 'account/js/authentication.js' %}"></script>
     <script src="{% static 'account/js/imask.js' %}"></script>
     <script src="{% static 'steps/js/report.js' %}"></script>

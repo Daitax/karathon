@@ -56,14 +56,22 @@ class IndividualTask(models.Model):
                 )
 
             case "double_best":
-                double_best = participant.best_steps_karathon() * 2
+                best_steps = participant.best_steps_karathon()
 
-                text = "Пройдите {} {} или {} {}".format(
-                    double_best,
-                    ending_numbers(double_best, ['шаг', 'шага', 'шагов']),
-                    self.steps,
-                    ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
-                )
+                if best_steps:
+                    double_best = best_steps * 2
+
+                    text = "Пройдите {} {} или {} {}".format(
+                        double_best,
+                        ending_numbers(double_best, ['шаг', 'шага', 'шагов']),
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                    )
+                else:
+                    text = "Пройдите {} {}".format(
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                    )
 
             case "double_result_day":
                 from apps.steps.models import Step
@@ -85,14 +93,20 @@ class IndividualTask(models.Model):
                     )
 
             case "improve_best":
-                best = participant.best_steps_karathon()
+                best_steps = participant.best_steps_karathon()
 
-                text = "Пройдите больше {} {} или {} {}".format(
-                    best,
-                    ending_numbers(best, ['шага', 'шагов', 'шагов']),
-                    self.steps,
-                    ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
-                )
+                if best_steps:
+                    text = "Пройдите больше {} {} или {} {}".format(
+                        best_steps,
+                        ending_numbers(best_steps, ['шага', 'шагов', 'шагов']),
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                    )
+                else:
+                    text = "Пройдите {} {}".format(
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                    )
 
             case "improve_result_day":
                 from apps.steps.models import Step
@@ -115,12 +129,15 @@ class IndividualTask(models.Model):
 
             case "add_steps_to_day":
                 from apps.steps.models import Step
-                day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
-                steps = day_steps.steps
+                try:
+                    day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
+                    steps = day_steps.steps
+                except ObjectDoesNotExist:
+                    steps = 0
 
                 text = "Пройдите {} {}".format(
                     steps + self.steps,
-                    ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                    ending_numbers(steps + self.steps, ['шаг', 'шага', 'шагов'])
                 )
 
             case "palindrome":
@@ -134,16 +151,20 @@ class IndividualTask(models.Model):
 
             case "add_steps_to_report_digit":
                 from apps.steps.models import Step
-                day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
-                digit_list = [int(a) for a in str(day_steps.steps)]
+                try:
+                    day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
 
-                if self.position > len(digit_list):
-                    position = self.position % len(digit_list)
-                else:
-                    position = self.position
+                    digit_list = [int(a) for a in str(day_steps.steps)]
 
-                digit = int(digit_list[position - 1])
-                digit = 5 if digit == 0 else digit
+                    if self.position > len(digit_list):
+                        position = self.position % len(digit_list)
+                    else:
+                        position = self.position
+
+                    digit = int(digit_list[position - 1])
+                    digit = 5 if digit == 0 else digit
+                except ObjectDoesNotExist:
+                    digit = 5
 
                 steps = digit * 1000
 
@@ -153,14 +174,20 @@ class IndividualTask(models.Model):
                 )
 
             case "best_personal_record":
-                best = participant.best_steps_all()
+                best_steps = participant.best_steps_all()
 
-                text = "Пройдите больше {} {} или {} {}".format(
-                    best,
-                    ending_numbers(best, ['шага', 'шагов', 'шагов']),
-                    self.steps,
-                    ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
-                )
+                if best_steps:
+                    text = "Пройдите больше {} {} или {} {}".format(
+                        best_steps,
+                        ending_numbers(best_steps, ['шага', 'шагов', 'шагов']),
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                    )
+                else:
+                    text = "Пройдите {} {}".format(
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                    )
 
             case _:
                 return None

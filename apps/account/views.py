@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.http import JsonResponse
@@ -154,6 +155,7 @@ def auth_code(request):
     return JsonResponse(out)
 
 
+@login_required
 def index(request):
     participant_form = ParticipantForm(instance=request.user.participant)
     if request.method == 'POST' and 'personal' in request.POST:
@@ -184,6 +186,7 @@ def index(request):
     return render(request, 'account/index.html', context)
 
 
+@login_required
 def messages(request):
     messages_list = Notification.objects.filter(participant=request.user.participant)
     return render(request, 'account/messages.html', {
@@ -191,6 +194,7 @@ def messages(request):
     })
 
 
+@login_required
 def results(request):
     context = {}
     return render(request, 'account/results.html', context)

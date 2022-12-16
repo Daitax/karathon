@@ -19,13 +19,18 @@
       {% if user.participant.photo %}
       <label class="account_content_avatar_ex" for="account_photo">
         <img src="{{user.participant.photo.url}}">
-        <div src="" window-elem="avatar_preview"></div>
-        <div class="account_content_avatar_text">сменить фото</div>
+        <div window-elem="avatar_preview"></div>
+        <div class="account_content_avatar_text pink_button">
+          <span>сменить фото</span>
+        </div>
       </label>
       {% else %}
-      <label class="account_content_avatar_custom_input" for="account_photo" window-elem="custom_input_avatar">
+      <label class="account_content_avatar_ex" for="account_photo" window-elem="custom_input_avatar">
+        <div class="account_content_no_avatar"></div>
         <div window-elem="avatar_preview"></div>
-        <div class="account_content_avatar_text">добавить фото</div>
+        <div class="account_content_avatar_text pink_button">
+          <span>добавить фото</span>
+        </div>
       </label>
       {% endif %}
       <input id="account_photo" type="file" name="photo" accept="image/jpeg,image/png" style="display: none;" window-elem="input_avatar">
@@ -83,7 +88,7 @@
       <p>категория, по которой ты будешь получать задания</p>
     </label>
     <div class="account_content_info_button">
-      <button class="pink_button" type="submit" value="account" name="personal">Сохранить</button>
+      <button class="pink_button" type="submit" value="account" name="personal"><span>Сохранить</span></button>
       <p>нажимая на кнопку, ты даешь согласие на <a href="javascript:void(0)">обработку и хранение персональных
         данных</a>
       </p>

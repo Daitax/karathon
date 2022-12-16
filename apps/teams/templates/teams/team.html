@@ -23,7 +23,7 @@
         {% if report_sent %}
           <div>Отчёт сдан</div>
         {% else %}
-          <div class="pink_button" button-action="open-report-form">Сдать отчёт</div>
+          <div class="pink_button" button-action="open-report-form"><span>Сдать отчёт</span></div>
         {% endif %}
       </div>
     {% endif %}
@@ -32,7 +32,7 @@
       <div class="team_wishlist_items">
       {% for desire_item in desire_list %}
         <div class="team_wishlist_items_item">
-          <div class="team_wishlist_items_item_delete" user-to-delete="{{desire_item}}" window-elem="delete"></div>
+          <div class="team_wishlist_items_item_delete" user-to-delete="{{desire_item.id}}" window-elem="delete"></div>
           {% if desire_item.desired_participant.photo %}
           <img src="{{desire_item.desired_participant.photo.url}}">
           {%else%}
@@ -42,14 +42,19 @@
             <p>{{ desire_item.desired_participant.first_name }}</p>
             <p>{{ desire_item.desired_participant.last_name }}</p>
             <p><span>{{ desire_item.desired_participant.instagram|truncatechars:15 }}</span></p>
-            {% if  desire_item.desired_participant.category%}
+            {% if  desire_item.desired_participant.category %}
             <p>{{ desire_item.desired_participant.category }}</p>
             {% endif %}
           </div>
         </div>
         {% endfor %}
-        <div class="team_wishlist_items_item" button-action="open-add-desire-form">
-          <button>Добавить друга</button>
+        <div class="team_wishlist_items_add" button-action="open-add-desire-form">
+          <div class="team_wishlist_items_add_circle"></div>
+          <div class="team_wishlist_items_add_button_wrapper">
+            <button class="pink_button">
+              <span>Добавить друга</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

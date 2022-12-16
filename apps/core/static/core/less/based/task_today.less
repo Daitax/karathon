@@ -1,0 +1,34 @@
+.task_today_wrapper {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+
+    .task_today {
+        padding: 25px;
+
+        span:nth-child(2) {
+            color: @white;
+            display: none;
+
+            &.show {
+                display: inline;
+            }
+
+            p {
+                display: contents;
+                color: @black;
+            }
+        }
+
+        &:hover {
+            // background: linear-gradient(110.04deg, @green -6.04%, @blue 45.1%, @green 99.67%);
+            background: @gradient_green_blue;
+            .hover_animation();
+        }
+
+        &.background {
+            background: inherit;
+        }
+    }
+}

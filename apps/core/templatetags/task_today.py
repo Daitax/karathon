@@ -10,7 +10,6 @@ def task_today(context):
         active_karathon = participant.get_active_karathon()
         task = participant.today_task()
         text_task = task.text_individual_task(participant) if task else None
-
         return {
             'user': context.request.user,
             'active_karathon': active_karathon,
@@ -18,5 +17,5 @@ def task_today(context):
         }
     else:
         return {
-            'user': 'context.request.user'
+            'user': context.request.user
         }

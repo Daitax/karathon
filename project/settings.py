@@ -92,13 +92,12 @@ DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DB_ENGINE'),
         'HOST': os.environ.get('DB_HOST'),
-        # 'PORT': os.environ.get('DB_PORT'),
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'OPTIONS': {
-            'init_command': 'set session wait_timeout=600;'
-        }
+        # 'OPTIONS': {
+        #     'init_command': 'set session wait_timeout=600;'
+        # }
     }
 }
 
@@ -167,5 +166,11 @@ AUTH_USER_MODEL = 'account.Participant'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CELERY_BROKER_URL = "redis://redis:6379"
-CELERY_RESULT_BACKEND = "redis://redis:6379"
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
+
+INSTAGRAM_URL = "https://instagram.com/karachunia?igshid=YmMyMTA2M2Y="
+LEMUR_URL = "https://lemurteam.ru/"
+TELEGRAM_URL = "https://t.me/allaboutkarafon"
+VK_URL = "https://vk.com/karachunia"
+YOUTUBE_URL = "https://www.youtube.com/@annakarachunskaya4096"
