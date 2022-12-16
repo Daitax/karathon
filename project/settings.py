@@ -166,8 +166,8 @@ AUTH_USER_MODEL = 'account.Participant'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CELERY_BROKER_URL = "redis://redis:6379"
-CELERY_RESULT_BACKEND = "redis://redis:6379"
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
 
 INSTAGRAM_URL = "https://instagram.com/karachunia?igshid=YmMyMTA2M2Y="
 LEMUR_URL = "https://lemurteam.ru/"
