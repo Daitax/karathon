@@ -48,6 +48,13 @@ class Karathon(models.Model):
     def __str__(self):
         return str(self.number) + ' карафон' + ' (' + self.get_karathon_type_value() + ')'
 
+    @staticmethod
+    def not_finished_karathons(current_datetime=datetime.datetime.now()):
+        karathons = Karathon.objects.filter(
+            finished_at__gte=current_datetime
+        )
+        return karathons
+
     def get_karathon_type_value(self):
         return get_choice_value(self.TYPE, self.type)
 
