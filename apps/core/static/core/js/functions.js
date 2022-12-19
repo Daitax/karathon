@@ -10,7 +10,6 @@ let firstScreen = document.querySelector('[window-elem="first-screen"]')
 let footer = document.querySelector('[window-elem="footer"]')
 let stickyAccMenu = document.querySelector('[window-elem="sticky_navbar"] > [window-elem="account_menu"]')
 var footerTop = footer.offsetTop
-console.log(stickyNavbar)
 window.addEventListener("load", function () {
   window.addEventListener("scroll", function () {
     // Убирает/показывает главное меню при скролле ниже/выше первого экрана
