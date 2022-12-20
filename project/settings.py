@@ -26,10 +26,10 @@ environ.Env.read_env(os.path.join(BASE_DIR, 'docker/.env'))
 SECRET_KEY = 'django-insecure-()726)0h^0f$_9h3k7*hidl@5pa0h5x*+@r-0ay_g4co8s!_4n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG'),
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'dyugaev.beget.tech', '213.139.208.116']
-
+INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'debug_toolbar',
     'phonenumber_field',
     'static_precompiler',
 
@@ -60,6 +61,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -95,9 +98,9 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
-        # 'OPTIONS': {
-        #     'init_command': 'set session wait_timeout=600;'
-        # }
+        'OPTIONS': {
+            'init_command': 'set session wait_timeout=600;'
+        }
     }
 }
 
@@ -165,6 +168,11 @@ AUTH_USER_MODEL = 'account.Participant'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+if DEBUG:
+    import socket  # only if you haven't already imported this
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
 
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')

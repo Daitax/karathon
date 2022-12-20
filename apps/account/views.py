@@ -188,7 +188,7 @@ def index(request):
 
 @login_required
 def messages(request):
-    messages_list = Notification.objects.filter(participant=request.user.participant)
+    messages_list = Notification.objects.prefetch_related('participant').filter(participant=request.user.participant)
     return render(request, 'account/messages.html', {
         'messages_list': messages_list,
     })
