@@ -3,6 +3,7 @@ import datetime
 import pytz
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db import models
+from django.urls import reverse
 
 from apps.core.utils import get_choice_value
 from apps.core.validators import not_earlier_today
@@ -57,6 +58,9 @@ class Karathon(models.Model):
 
     def get_karathon_type_value(self):
         return get_choice_value(self.TYPE, self.type)
+
+    def karathon_url(self):
+        return reverse('core:karathon', args=[self.number])
 
     def is_ended_karathon(self):
         from apps.account.models import Participant

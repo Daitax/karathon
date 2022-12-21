@@ -169,19 +169,19 @@ def index(request):
         'participant_form': participant_form,
     }
 
-    if Winner.is_winner_participant(request.user.participant):
-        winner_questionnaire_form = WinnerQuestionnaireForm()
-
-        if request.method == 'POST' and 'winner' in request.POST:
-            winner_questionnaire_form = WinnerQuestionnaireForm(request.POST)
-
-            if winner_questionnaire_form.is_valid():
-                pass
-
-        context = {
-            'participant_form': participant_form,
-            'winner_questionnaire_form': winner_questionnaire_form
-        }
+    # if Winner.is_winner_participant(request.user.participant):
+    #     winner_questionnaire_form = WinnerQuestionnaireForm()
+    #
+    #     if request.method == 'POST' and 'winner' in request.POST:
+    #         winner_questionnaire_form = WinnerQuestionnaireForm(request.POST)
+    #
+    #         if winner_questionnaire_form.is_valid():
+    #             pass
+    #
+    #     context = {
+    #         'participant_form': participant_form,
+    #         'winner_questionnaire_form': winner_questionnaire_form
+    #     }
 
     return render(request, 'account/index.html', context)
 

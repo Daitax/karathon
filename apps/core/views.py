@@ -12,6 +12,21 @@ def index(request):
     return render(request, 'core/index.html', {'user': request.user})
 
 
+def about_karathons(request):
+    return render(request, 'core/about_karathons.html')
+
+
+def karathon(request, **kwargs):
+    karathon_number = kwargs['karathon_number']
+
+    karathon = Karathon.objects.get(number=karathon_number)
+
+    context = {
+        'karathon': karathon
+    }
+    return render(request, 'core/karathon.html', context)
+
+
 @login_required
 def participate(request):
     if request.method == "POST":
