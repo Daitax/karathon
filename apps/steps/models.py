@@ -4,7 +4,7 @@ from django.db.models import signals, Sum
 from django.utils.safestring import mark_safe
 
 from apps.account.models import Participant
-from apps.core.utils import ending_numbers, get_report_image_path
+from apps.core.utils import get_report_image_path
 from apps.steps.signals import check_individual_task_complete
 
 
@@ -32,10 +32,6 @@ class Step(models.Model):
         if self.photo:
             return mark_safe('<img src="{}" height="100" />'.format(self.photo.url))
         return ""
-    
-    def plural_name(self, value):
-        words = ["шаг", "шага", "шагов"]
-        return ending_numbers(value, words)
     
     def total(self):
         return Step.objects.aggregate(Sum('steps'))

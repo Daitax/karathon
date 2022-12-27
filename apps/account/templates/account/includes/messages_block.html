@@ -1,0 +1,10 @@
+{% for message_item in messages_list %}
+    <div class="message_item" mes-id="{{message_item.id}}" window-elem="message_item">
+        {% if not message_item.is_viewed %}
+        <div class="message_item_new" onclick="collectData(this)" mes-id="{{message_item.id}}" window-elem="new_message">new</div>
+        {% endif %}
+        <div class="message_item_date">{{ message_item.datetime_creation }}</div>
+        <div class="message_item_header"><h4>{{ message_item.header }}</h4></div>
+        <div class="message_item_text">{{ message_item.text }}</div>
+    </div>
+{% endfor %}

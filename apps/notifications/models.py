@@ -26,17 +26,20 @@ class Notification(models.Model):
     text = models.CharField('Текст', max_length=200)
     date = models.DateTimeField('Дата и время', auto_now_add=True)
     is_viewed = models.BooleanField('Прочитано', default=False)
-
+    
+    class Meta:
+        ordering = ("is_viewed", "-date")
+        
     def datetime_creation(self):
         participant_timezone = pytz.timezone(self.participant.timezone)
         participant_notification_datetime = self.date.astimezone(participant_timezone)
 
         # TODO разобраться с выводом месяца на русском языке методами python/django
-        format_datetime = participant_notification_datetime.strftime('%d') + ' ' + \
-            print_month_ru(participant_notification_datetime.strftime('%m')) + ' ' + \
-            participant_notification_datetime.strftime('%Y') + ' | ' + \
-            participant_notification_datetime.strftime('%H') + ":" + \
-            participant_notification_datetime.strftime('%M')
+        format_datetime = (participant_notification_datetime.strftime('%d') + ' ' +
+            print_month_ru(participant_notification_datetime.strftime('%m')) + ' ' +
+            participant_notification_datetime.strftime('%Y') + ' | ' +
+            participant_notification_datetime.strftime('%H') + ":" +
+            participant_notification_datetime.strftime('%M'))
 
         return format_datetime
 
@@ -46,8 +49,8 @@ class Notification(models.Model):
         template = NotificationTemplate.objects.get(key='task_today')
 
         # TODO разобраться с выводом месяца на русском языке методами python/django
-        format_date = date.strftime('%d') + ' ' + print_month_ru(date.strftime('%m')) + ' ' + \
-                      date.strftime('%Y') + ' г.'
+        format_date = (date.strftime('%d') + ' ' + print_month_ru(date.strftime('%m')) + ' ' +
+                      date.strftime('%Y') + ' г.')
 
         header = template.header.format(format_date=format_date)
 

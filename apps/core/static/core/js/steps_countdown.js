@@ -20,7 +20,7 @@ function format(str) {
     return ((strWithSpaces[0] === ' ') ? strWithSpaces.slice(1) : strWithSpaces)
 }
 
-function counter(value, element, timeout = 10, step = Math.floor(value * 0.005) + 111, delta = 0.5) {
+function counter(value, element, timeout = 30, step = Math.floor(value * 0.015) + 111, delta = 1) {
     // Счетчик от 0 до заданного числа
     let i = 0;
     (function () {
@@ -37,7 +37,7 @@ function counter(value, element, timeout = 10, step = Math.floor(value * 0.005) 
 
 window.addEventListener("load", function () {
     this.window.addEventListener("scroll", function () {
-        if (window.pageYOffset >= stepsBlockTop - 0.5 * window.screen.height) {
+        if (window.pageYOffset >= stepsBlockTop - window.screen.height) {
             // Запускает счетчики шагов при прокрутке не доходя половины экрана до блока шагов
             if (!isStarted) {
                 counter(totalStepsAmount, stepsTotal);

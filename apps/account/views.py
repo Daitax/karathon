@@ -1,14 +1,17 @@
 from django.contrib.auth import login, logout
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
 
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_http_methods
 
 from .forms import AuthPhoneForm, AuthCodeForm, ParticipantForm, WinnerQuestionnaireForm
 from .models import Participant, Sms, Winner
 from apps.notifications.models import Notification
+
+import json
 
 
 @require_http_methods(['POST'])
@@ -185,16 +188,73 @@ def index(request):
 
 
 def messages(request):
-    messages_list = Notification.objects.filter(participant=request.user.participant)
+    if request.method == 'POST':
+        return messages_read(request)
+    if request.method == 'GET_PREV_MESSAGES':
+        return messages_add(request)
+    messages_list = Notification.objects.select_related("participant").filter(
+        participant__user=request.user.participant,
+        is_viewed=False,
+        )
+    next_messages_exist = False
+    if len(Notification.objects.select_related("participant").filter(
+        participant__user=request.user.participant,
+        )) > settings.MESSAGES_PER_PAGE:
+        next_messages_exist = True
+    if len(messages_list) <= settings.MESSAGES_PER_PAGE:
+        messages_list = Notification.objects.select_related("participant").filter(
+        participant__user=request.user.participant,
+        )[:settings.MESSAGES_PER_PAGE]
     return render(request, 'account/messages.html', {
         'messages_list': messages_list,
+        'next_messages_exist': next_messages_exist,
     })
 
+def messages_add(request):
+    messages_list = Notification.objects.select_related("participant").filter(
+        participant__user=request.user.participant,
+    )
+    messages_showed = list(json.loads(request.body).values())[0]
+    if messages_showed + settings.MESSAGES_PER_PAGE < len(messages_list):
+        messages_list = messages_list[messages_showed:messages_showed + settings.MESSAGES_PER_PAGE]
+        next_messages_exist = True
+    messages_list = messages_list[messages_showed:]
+    next_messages_exist = False
+    context = {
+        'messages_list': messages_list,
+    }
+    messages_block = render_to_string('account/includes/messages_block.html', context ,request)
+    out = {
+        'status': 'ok',
+        'messages_block': messages_block,
+        'next_messages_exist': next_messages_exist,
+    }
+    return JsonResponse(out)
 
+def messages_read(request):
+    data = json.loads(request.body)
+    mes_showed = data.pop('amount')
+    messages_ids = list(data.values())
+    messages_to_update =[get_object_or_404(Notification, id=message_id) for message_id in messages_ids]
+    for message in messages_to_update:
+        message.is_viewed=True
+    Notification.objects.bulk_update(messages_to_update, ["is_viewed"])
+    messages_list = Notification.objects.select_related("participant").filter(
+        participant__user=request.user.participant,
+    )[:mes_showed]
+    context = {
+        'messages_list': messages_list,
+    }
+    messages_block = render_to_string('account/includes/messages_block.html', context ,request)
+    out = {
+        'status': 'ok',
+        'messages_block': messages_block,
+    }
+    return JsonResponse(out)
+    
 def results(request):
     context = {}
     return render(request, 'account/results.html', context)
-
 
 def user_logout(request):
     logout(request)

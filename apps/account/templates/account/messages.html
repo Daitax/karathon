@@ -5,16 +5,14 @@
 <div class="container">
   <div class="account_content_wrapper">
     <h2>Сообщения</h2>
-      {% for message_item in messages_list %}
-        <div class="message_item">
-          {% if not message_item.is_viewed %}
-          <div class="message_item_new">new</div>
-          {% endif %}
-          <div class="message_item_date">{{ message_item.datetime_creation }}</div>
-          <div class="message_item_header"><h4>{{ message_item.header }}</h4></div>
-          <div class="message_item_text">{{ message_item.text }}</div>
-        </div>
-      {% endfor %}
+      <div class="messages_items_wrapper" window-elem="messages_items_wrapper">
+        {% include 'account/includes/messages_block.html' %}
+      </div>
+    <div class="pink_button message_item_marked_as_read" window-elem="marked_as_read"><span>прочитано</span></div>
+    <div class="pink_button message_item_marked_as_read show" window-elem="marked_as_read_all"><span>прочитаны все</span></div>
+    {% if next_messages_exist %}
+    <div class="messages_items_next" window-elem="previous_messages">предыдущие сообщения</div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

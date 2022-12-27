@@ -175,3 +175,5 @@ LEMUR_URL = "https://lemurteam.ru/"
 TELEGRAM_URL = "https://t.me/allaboutkarafon"
 VK_URL = "https://vk.com/karachunia"
 YOUTUBE_URL = "https://www.youtube.com/@annakarachunskaya4096"
+
+MESSAGES_PER_PAGE = 5

@@ -24,7 +24,6 @@ function openAddDesireForm() {
         }
       }
     })
-  // .then(sessionStorage.setItem("is_reloaded", true)) // флаг перезагрузки страницы
 }
 
 let userToDelete = document.querySelectorAll('[window-elem="delete"]')
@@ -80,7 +79,6 @@ userToDelete.forEach(element => element.addEventListener("click", function () {
               window.location.reload()
             }
           })
-        // .then(sessionStorage.setItem("is_reloaded", true)) // флаг перезагрузки страницы
       }
     }
     if (confirm == "deny") {
@@ -94,6 +92,7 @@ userToDelete.forEach(element => element.addEventListener("click", function () {
 function closeAddDesireForm() {
   overlay.classList.remove('show')
   addDesireFormWrapper.classList.remove('show')
+  window.location.reload()
 }
 
 function submitAddDesireForm(button) {
@@ -119,7 +118,6 @@ function submitAddDesireForm(button) {
         }
       }
     })
-  // .then(sessionStorage.setItem("is_reloaded", true)) // флаг перезагрузки страницы
 }
 
 let openFormAddDesireButton = document.querySelector('[button-action="open-add-desire-form"]')

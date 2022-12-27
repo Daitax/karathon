@@ -14,13 +14,26 @@
     font-family: "RussoOne-Regular";
     font-size: 40px;
     font-weight: 700;
-    z-index: -1;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.7
+    }
+
+    &.touched {
+        opacity: 0.7;
+        -webkit-text-stroke: none;
+        color: @pink;
+        z-index: 2;
+    }
 }
 
 .message_item_date {
     font-size: 16px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    z-index: 1;
+    position: relative;
 }
 
 .message_item_header {
@@ -29,4 +42,30 @@
 
 .message_item_text {
     margin-top: 20px;
+}
+
+.message_item_marked_as_read {
+    max-width: 400px;
+    font-size: 1rem;
+    visibility: hidden;
+    transition: 0.5s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+    opacity: 0;
+
+
+    &.show {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+.messages_items_next {
+    color: @pink;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }

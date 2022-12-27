@@ -113,7 +113,7 @@ def send_add_desire_form(request):
 def index(request):
     if request.method == 'POST':
         return delete_user(request)
-    desire_list = DesiredTeam.objects.filter(desirer=request.user.participant)
+    desire_list = DesiredTeam.objects.select_related().filter(desirer__user=request.user.participant)
     context = {
         'desire_list': desire_list,
         'current_karathon_team': current_karathon_team(request),
