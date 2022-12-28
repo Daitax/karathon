@@ -1,4 +1,5 @@
 import pytz
+from django.conf import settings
 from django.db import models
 
 from apps.account.models import Participant
@@ -95,3 +96,15 @@ class Notification(models.Model):
     def not_viewed_amount(self):
         not_viewed_notification_list = Notification.objects.filter(participant=self.participant, is_viewed=False)
         return not_viewed_notification_list.count()
+    
+    def next_page_exists(self):
+        messages = Notification.objects.select_related("participant").filter(
+            participant=self.participant
+        )
+        # messages_not_viewed = Notification.objects.select_related("participant").filter(
+        #     participant=self.participant,
+        #     is_viewed=False
+        # )
+        if messages.count() == messages.filter(is_viewed=False).count() or messages.count() <= settings.MESSAGES_PER_PAGE:
+            return False
+        return True

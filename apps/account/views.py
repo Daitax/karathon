@@ -196,18 +196,13 @@ def messages(request):
         participant__user=request.user.participant,
         is_viewed=False,
         )
-    next_messages_exist = False
-    if len(Notification.objects.select_related("participant").filter(
-        participant__user=request.user.participant,
-        )) > settings.MESSAGES_PER_PAGE:
-        next_messages_exist = True
     if len(messages_list) <= settings.MESSAGES_PER_PAGE:
         messages_list = Notification.objects.select_related("participant").filter(
         participant__user=request.user.participant,
         )[:settings.MESSAGES_PER_PAGE]
     return render(request, 'account/messages.html', {
         'messages_list': messages_list,
-        'next_messages_exist': next_messages_exist,
+        'next_messages_exist': Notification(participant=request.user.participant).next_page_exists(),
     })
 
 def messages_add(request):
