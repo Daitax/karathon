@@ -120,6 +120,7 @@ def index(request):
     }
     return render(request, 'teams/team.html', context)
 
+
 def delete_user(request):
     id_user_to_delete = json.loads(request.body).get("user_id")
     get_object_or_404(DesiredTeam, id=id_user_to_delete).delete()
@@ -127,6 +128,7 @@ def delete_user(request):
         'status': 'ok',
     }
     return JsonResponse(out)
+
 
 def current_karathon_team(request):
     active_karathon = request.user.participant.get_active_karathon()

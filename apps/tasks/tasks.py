@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+
 def is_individual_task_completed(report):
     task = report.participant.today_task()
 
@@ -17,14 +19,23 @@ def is_individual_task_completed(report):
                     date__gte=karathon.starts_at,
                     date__lte=karathon.finished_at
                 ).exclude(date=report.date).order_by('-steps').first()
+                if best_steps:
+                    steps = best_steps.steps * 2
+                else:
+                    steps = 0
 
-                if report.steps == (best_steps.steps * 2) or report.steps == task.steps:
+                if report.steps == steps or report.steps == task.steps:
                     return True
 
             case "double_result_day":
-                day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
+                try:
+                    day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
 
-                if report.steps == (day_steps.steps * 2):
+                    steps = day_steps.steps * 2
+                except ObjectDoesNotExist:
+                    steps = 0
+
+                if report.steps == steps or report.steps == task.steps:
                     return True
 
             case "improve_best":
@@ -35,20 +46,32 @@ def is_individual_task_completed(report):
                     date__gte=karathon.starts_at,
                     date__lte=karathon.finished_at
                 ).exclude(date=report.date).order_by('-steps').first()
+                if best_steps:
+                    steps = best_steps.steps
+                else:
+                    steps = 0
 
-                if report.steps > best_steps.steps or report.steps == task.steps:
+                if report.steps > steps or report.steps == task.steps:
                     return True
 
             case "improve_result_day":
-                day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
+                try:
+                    day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
+                    steps = day_steps.steps
+                except ObjectDoesNotExist:
+                    steps = 0
 
-                if report.steps > day_steps.steps * 2:
+                if report.steps > steps or report.steps == task.steps:
                     return True
 
             case "add_steps_to_day":
-                day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
+                try:
+                    day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
+                    steps = day_steps.steps
+                except ObjectDoesNotExist:
+                    steps = 0
 
-                if report.steps == day_steps.steps + task.steps:
+                if report.steps == steps + task.steps:
                     return True
 
             case "palindrome":
@@ -77,16 +100,19 @@ def is_individual_task_completed(report):
                     return True
 
             case "add_steps_to_report_digit":
-                day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
-                digit_list = [int(a) for a in str(day_steps.steps)]
+                try:
+                    day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
+                    digit_list = [int(a) for a in str(day_steps.steps)]
 
-                if task.position > len(digit_list):
-                    position = task.position % len(digit_list)
-                else:
-                    position = task.position
+                    if task.position > len(digit_list):
+                        position = task.position % len(digit_list)
+                    else:
+                        position = task.position
 
-                digit = int(digit_list[position - 1])
-                digit = 5 if digit == 0 else digit
+                    digit = int(digit_list[position - 1])
+                    digit = 5 if digit == 0 else digit
+                except ObjectDoesNotExist:
+                    digit = 5
 
                 steps = digit * 1000
 
@@ -98,7 +124,12 @@ def is_individual_task_completed(report):
                     participant=report.participant
                 ).exclude(date=report.date).order_by('-steps').first()
 
-                if report.steps > best_steps.steps or report.steps == task.steps:
+                if best_steps:
+                    steps = best_steps.steps
+                else:
+                    steps = 0
+
+                if report.steps > steps or report.steps == task.steps:
                     return True
 
     return False

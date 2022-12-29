@@ -64,15 +64,22 @@ class Participant(User):
 
     def best_steps_all(self):
         from apps.steps.models import Step
-        return Step.objects.filter(participant=self).order_by('-steps').first().steps
+        best_steps = Step.objects.filter(participant=self).order_by('-steps').first()
+
+        if best_steps:
+            return best_steps.steps
+        return False
 
     def best_steps_karathon(self):
         from apps.steps.models import Step
-        return Step.objects.filter(
+        best_steps = Step.objects.filter(
             participant=self,
             date__gte=self.get_active_karathon().starts_at,
             date__lte=self.get_active_karathon().finished_at
-        ).order_by('-steps').first().steps
+        ).order_by('-steps').first()
+        if best_steps:
+            return int(best_steps.steps)
+        return False
 
     # TODO Сделать вывод участников желаемой команды в столбик
     def desirer_team(self):

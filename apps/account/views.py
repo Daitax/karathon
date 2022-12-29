@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
@@ -157,6 +158,7 @@ def auth_code(request):
     return JsonResponse(out)
 
 
+@login_required
 def index(request):
     participant_form = ParticipantForm(instance=request.user.participant)
     if request.method == 'POST' and 'personal' in request.POST:
@@ -170,29 +172,30 @@ def index(request):
         'participant_form': participant_form,
     }
 
-    if Winner.is_winner_participant(request.user.participant):
-        winner_questionnaire_form = WinnerQuestionnaireForm()
-
-        if request.method == 'POST' and 'winner' in request.POST:
-            winner_questionnaire_form = WinnerQuestionnaireForm(request.POST)
-
-            if winner_questionnaire_form.is_valid():
-                pass
-
-        context = {
-            'participant_form': participant_form,
-            'winner_questionnaire_form': winner_questionnaire_form
-        }
+    # if Winner.is_winner_participant(request.user.participant):
+    #     winner_questionnaire_form = WinnerQuestionnaireForm()
+    #
+    #     if request.method == 'POST' and 'winner' in request.POST:
+    #         winner_questionnaire_form = WinnerQuestionnaireForm(request.POST)
+    #
+    #         if winner_questionnaire_form.is_valid():
+    #             pass
+    #
+    #     context = {
+    #         'participant_form': participant_form,
+    #         'winner_questionnaire_form': winner_questionnaire_form
+    #     }
 
     return render(request, 'account/index.html', context)
 
 
+@login_required
 def messages(request):
     if request.method == 'POST':
         return messages_read(request)
     if request.method == 'GET_PREV_MESSAGES':
         return messages_add(request)
-    messages_list = Notification.objects.select_related("participant").filter(
+    messages_list = Notification.objects.select_related("participant", "template").filter(
         participant__user=request.user.participant,
         is_viewed=False,
         )
@@ -247,6 +250,7 @@ def messages_read(request):
     }
     return JsonResponse(out)
     
+@login_required
 def results(request):
     context = {}
     return render(request, 'account/results.html', context)

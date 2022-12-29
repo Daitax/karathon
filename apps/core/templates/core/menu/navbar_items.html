@@ -2,7 +2,23 @@
 {% load get_outlink %}
 {% load account_menu %}
 
-<li><a href="javascript:void(0)">n-й карафон</a></li>
+{% url 'core:about_karathons' as about_karathons_url %}
+
+{% if karathons|length == 0 %}
+  <li><a href="{{ about_karathons_url }}">О карафонах</a></li>
+{% elif karathons|length == 1 %}
+  {% with karathon=karathons|first %}
+    <li><a href="{{ karathon.karathon_url }}">{{ karathon.number }} карафон</a></li>
+  {% endwith %}
+{% else %}
+  <li><span>Карафоны</span>
+    <div class="navbar_karathon_list_wrapper">
+      {% for karathon in karathons %}
+        <div><a href="{{ karathon.karathon_url }}">{{ karathon.number }} карафон</a></div>
+      {% endfor %}
+    </div>
+  </li>
+{% endif %}
 <li><a href="javascript:void(0)">Рекордсмены</a></li>
 <li><a href="javascript:void(0)">О Карачуне</a></li>
 <li><a href="javascript:void(0)">Прошедшие карафоны</a></li>
@@ -11,7 +27,6 @@
 {% if not user.is_authenticated %}
   <li><a href="javascript:void(0)" button-action="open-auth-form">Вход</a></li>
 {% endif %}
-
 {% if user.is_authenticated %}
   {% if account_url not in request_url %}
     <div class="header_navbar_menu_photo" navbar-elem="user_avatar">

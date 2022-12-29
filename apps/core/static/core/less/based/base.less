@@ -173,6 +173,32 @@ input[type=number] {
     .navbar();
 }
 
+.navbar_karathon_list_wrapper {
+    position: absolute;
+    max-height: 0;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    left: -5px;
+    overflow: hidden;
+
+    div {
+        margin-top: 5px;
+
+    }
+}
+
+.header_navbar_menu li:first-child:hover,
+.sticky_navbar_menu li:first-child:hover {
+    cursor: pointer;
+
+    .navbar_karathon_list_wrapper {
+        padding: 5px;
+        background: @pink;
+        max-height: 100px;
+        transition: max-height 0.8s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+    }
+}
+
+
 .sticky_navbar_menu {
     position: fixed;
     top: -150px;

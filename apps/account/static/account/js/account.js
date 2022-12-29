@@ -145,7 +145,9 @@ markedButtons.forEach(element => element.addEventListener("click", function () {
 }))
 
 accountMenu = document.querySelector('[window-elem="account_avatar"] ~ [window-elem="account_menu"]')
-beforeAccMenu = accountMenu.offsetTop
+if (accountMenu) {
+    beforeAccMenu = accountMenu.offsetTop
+}
 
 if (previousMessages) {
     previousMessages.addEventListener("click", function () {
