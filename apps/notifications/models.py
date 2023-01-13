@@ -54,10 +54,9 @@ class Notification(models.Model):
                       date.strftime('%Y') + ' г.')
 
         header = template.header.format(format_date=format_date)
-        text_task = task.text_individual_task(participant)
 
         addition = task.addition if task.addition else ''
-        text = template.text.format(task=text_task, addition=addition)
+        text = template.text.format(task=task.task, addition=addition)
 
         Notification.objects.create(
             participant=participant,
@@ -95,17 +94,18 @@ class Notification(models.Model):
         )
         
     def not_viewed_amount(self):
-        not_viewed_notification_list = Notification.objects.filter(participant=self.participant, is_viewed=False)
-        return not_viewed_notification_list.count()
+        not_viewed_notification_list = Notification.objects.select_related("participant").filter(
+            participant=self.participant,
+            is_viewed=False
+        )
+        if not_viewed_notification_list:
+            return len(not_viewed_notification_list)
+        return ""
     
     def next_page_exists(self):
         messages = Notification.objects.select_related("participant").filter(
             participant=self.participant
         )
-        # messages_not_viewed = Notification.objects.select_related("participant").filter(
-        #     participant=self.participant,
-        #     is_viewed=False
-        # )
         if messages.count() == messages.filter(is_viewed=False).count() or messages.count() <= settings.MESSAGES_PER_PAGE:
             return False
         return True

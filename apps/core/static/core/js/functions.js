@@ -16,7 +16,7 @@ window.addEventListener("load", function () {
     let firstScreenBottom = firstScreen.getBoundingClientRect().bottom
 
     if (firstScreenBottom > 0) {
-      stickyNavbar.setAttribute("style", "top: -150px")
+      stickyNavbar.setAttribute("style", "top: -5.08rem")
       if (stickyAccMenu) {
         stickyAccMenu.classList.remove("show")
       }
@@ -44,24 +44,23 @@ content.addEventListener("click", function () {
 })
 
 let accountMenu = document.querySelector('[window-elem="account_avatar"] ~ [window-elem="account_menu"]')
-
 function stickyAccountMenu() {
+  // Оставляет меню аккаунта сбоку при скролле от первого экрана до подвала
   let accountMenuAbsoluteBottom = firstScreen.getBoundingClientRect().bottom - footer.getBoundingClientRect().top
   let accountMenuFixedOffset = 90
   let accountMenuHeight = accountMenu.clientHeight
-  // let beforeAccMenu = accountMenu.offsetTop - accountMenuFixedOffset
-  // let topBorder = beforeAccMenu + accountMenuFixedOffset - 10
   let beforeAccMenu = accountMenu.offsetTop
   let topBorder = beforeAccMenu - 10
   let bottomBorder = footer.offsetTop - accountMenuHeight - accountMenuFixedOffset
+  let container = document.querySelector(".container")
+  let accMenuRightOffset = (100 - Math.round(container.clientWidth / document.body.clientWidth * 100)) / 2
 
   this.window.addEventListener("scroll", function () {
-    // Оставляет меню аккаунта сбоку при скролле от первого экрана до подвала
     if (window.pageYOffset < topBorder) {
-      accountMenu.setAttribute("style", "position: absolute; top: auto; right: -10px; bottom: -140px;")
+      accountMenu.setAttribute("style", "position: absolute; top: auto; right: -.34rem; bottom: -4.75rem;")
     }
     if ((window.pageYOffset >= topBorder) && (window.pageYOffset < bottomBorder)) {
-      accountMenu.setAttribute("style", "position: fixed; top: 90px; right: calc(50% - 670px); bottom: auto;")
+      accountMenu.setAttribute("style", "position: fixed; top: 3.05rem; right: calc(" + accMenuRightOffset + "% - .34rem); bottom: auto;")
     }
     if (window.pageYOffset >= bottomBorder) {
       accountMenu.setAttribute("style", "bottom:" + accountMenuAbsoluteBottom + "px")

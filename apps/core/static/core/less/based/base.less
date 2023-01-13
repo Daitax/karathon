@@ -19,29 +19,36 @@
     src: url(/static/core/less/fonts/RussoOne-Regular.ttf)
 }
 
+@container: @container_main;
+
 html {
     height: 100%;
+    // font-size: 30px;
+    font-size: clamp(15px, 2.05vw, 50px);
+    // font-size: 2.05vw;
 }
 
 body {
-    font-size: 30px;
+    // font-size: 30px;
     font-family: "Montserrat";
-    letter-spacing: 0.03em;
+    letter-spacing: .03em;
     color: @black;
     height: 100%;
 }
 
 h1 {
     font-weight: 800;
-    font-size: 100px;
+    // font-size: 100px;
+    font-size: 3.33rem;
     line-height: 1.25;
-    letter-spacing: 0.05em;
+    letter-spacing: .05em;
     text-transform: uppercase;
 }
 
 h2 {
     font-weight: 700;
-    font-size: 80px;
+    // font-size: 80px;
+    font-size: 2.66rem;
     line-height: 1.25;
     letter-spacing: 0.03em;
     text-transform: uppercase;
@@ -49,17 +56,19 @@ h2 {
 
 h3 {
     font-weight: 700;
-    font-size: 70px;
+    // font-size: 70px;
+    font-size: 2.33rem;
     line-height: 1.25;
-    letter-spacing: 0.03em;
+    letter-spacing: .03em;
     text-transform: uppercase;
 }
 
 h4 {
     font-weight: 700;
-    font-size: 40px;
+    // font-size: 40px;
+    font-size: 1.33rem;
     line-height: 1.25;
-    letter-spacing: 0.05em;
+    letter-spacing: .05em;
     text-transform: uppercase;
 }
 
@@ -105,7 +114,7 @@ input[type=number] {
 }
 
 .container {
-    width: 1320px;
+    width: @container;
     margin-left: auto;
     margin-right: auto;
 }
@@ -129,6 +138,7 @@ input[type=number] {
 
 .green_button {
     .button();
+    padding: 0;
     background: @green;
 
     &::before {
@@ -177,12 +187,14 @@ input[type=number] {
     position: absolute;
     max-height: 0;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    left: -5px;
+    // left: -5px;
+    left: -.17rem;
     overflow: hidden;
+    z-index: 1;
 
     div {
-        margin-top: 5px;
-
+        // margin-top: 5px;
+        margin-top: .17rem;
     }
 }
 
@@ -191,19 +203,23 @@ input[type=number] {
     cursor: pointer;
 
     .navbar_karathon_list_wrapper {
-        padding: 5px;
+        // padding: 5px;
+        padding: .17rem;
         background: @pink;
-        max-height: 100px;
+        // max-height: 100px;
+        max-height: 3.39rem;
         transition: max-height 0.8s cubic-bezier(0.46, 0.03, 0.52, 0.96);
     }
 }
 
-
 .sticky_navbar_menu {
     position: fixed;
-    top: -150px;
-    left: calc(50% - 660px); // половина разности ширины экрана и контейнера
-    padding: 15px 0;
+    // top: -150px;
+    top: -5.08rem;
+    // left: 4%; // половина разности ширины экрана и контейнера
+    left: calc((100% - @container)/2);
+    // padding: 15px 0;
+    padding: .51rem 0;
     margin-top: 10px;
     background: @pink;
     transition: top 0.8s;
@@ -216,10 +232,11 @@ input[type=number] {
     background: @pink;
     position: absolute;
     top: 0;
-    left: -30px;
-    width: 30px;
+    // left: -30px;
+    // width: 30px;
+    left: -1.02rem;
+    width: 1.02rem;
     height: 100%;
-
 }
 
 .sticky_navbar_menu li:last-child::after {
@@ -227,10 +244,11 @@ input[type=number] {
     background: @pink;
     position: absolute;
     top: 0;
-    right: -30px;
-    width: 30px;
+    // right: -30px;
+    // width: 30px;
+    right: -1.02rem;
+    width: 1.02rem;
     height: 100%;
-
 }
 
 .sticky_navbar_menu img {
@@ -243,7 +261,13 @@ input[type=number] {
 
 .first-screen_wrapper {
     background: @pink;
-    padding-top: 40px;
+    // padding-top: 40px;
+    padding-top: 1.36rem;
+    height: 100vh;
+}
+
+.first-screen_text {
+    width: 56%;
 }
 
 .first-screen {
@@ -252,23 +276,30 @@ input[type=number] {
 }
 
 .first-screen_text_collab {
-    font-size: 40px;
+    // font-size: 40px;
+    font-size: 1.33rem;
 }
 
 .first-screen_button_wrapper {
-    margin-top: 45px;
-    margin-bottom: 100px;
+    // margin-top: 45px;
+    margin-top: 1.53rem;
+    // margin-bottom: 100px;
+    margin-bottom: 3.39rem;
 }
 
 .button_text_cost {
-    font-size: 25px;
-    margin-top: 20px;
+    // font-size: 25px;
+    font-size: 0.83rem;
+    // margin-top: 20px;
+    margin-top: 0.68rem;
 }
 
 .first-screen_photo img {
     position: absolute;
-    height: 750px;
-    width: 750px;
+    // height: 750px;
+    height: 25rem;
+    // width: 750px;
+    width: 25rem;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -276,33 +307,42 @@ input[type=number] {
 .first-screen>.participants_account_menu {
     max-height: none;
     top: auto;
-    bottom: -140px;
+    // bottom: -140px;
+    bottom: -4.75rem;
 }
 
 .first-screen_avatar img {
-    height: 550px;
-    width: 550px;
+    // height: 550px;
+    // width: 550px;
+    height: 18.33rem;
+    width: 18.33rem;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .first-screen_account_time {
-    margin-top: 80px;
-    min-height: 1em;
+    // margin-top: 80px;
+    margin-top: 2.71rem;
+    min-height: 1rem;
     font-weight: 700;
-    font-size: 80px;
+    // font-size: 80px;
+    font-size: 2.66rem;
     letter-spacing: 0.05em;
     color: @white
 }
 
 .first-screen_account_button_wrapper {
-    margin-top: 25px;
-    margin-bottom: 50px;
+    // margin-top: 25px;
+    margin-top: .85rem;
+    // margin-bottom: 50px;
+    margin-bottom: 1.69rem;
 }
 
 .first-screen_no_avatar p {
-    height: 550px;
-    width: 550px;
+    // height: 550px;
+    // width: 550px;
+    height: 18.33rem;
+    width: 18.33rem;
     border-radius: 50%;
     background: @white;
     font-weight: 700;
@@ -314,11 +354,13 @@ input[type=number] {
 }
 
 .about_karathon {
-    margin-top: 200px;
+    // margin-top: 200px;
+    margin-top: 6.78rem;
 }
 
 .about_karathon_description {
-    margin-top: 50px;
+    // margin-top: 50px;
+    margin-top: 1.69rem;
     max-width: 70%;
     line-height: 1.4;
 }
@@ -328,26 +370,32 @@ input[type=number] {
 }
 
 .about_karathon_list_wrapper {
-    margin-top: 100px;
+    // margin-top: 100px;
+    margin-top: 3.39rem;
 }
 
 .about_karathon_list_wrapper li {
     position: relative;
-    font-size: 40px;
+    // font-size: 40px;
+    font-size: 1.33rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    padding-bottom: 100px;
+    // padding-bottom: 100px;
+    padding-bottom: 3.39rem;
 }
 
 .about_karathon_list_wrapper li::before {
     content: counter(num);
     counter-increment: num;
     position: absolute;
-    bottom: 30px;
-    left: -50px;
+    // bottom: 30px;
+    bottom: 1.02rem;
+    // left: -50px;
+    left: -1.69rem;
     font-family: "MontserratAlternates-Bold";
-    font-size: 200px;
+    // font-size: 200px;
+    font-size: 6.66rem;
     font-weight: normal;
     color: transparent;
     -webkit-text-stroke: 1px @pink;
@@ -355,17 +403,20 @@ input[type=number] {
 }
 
 .about_karathon_description_button_wrapper {
-    margin-top: 100px;
+    // margin-top: 100px;
+    margin-top: 3.39rem;
 }
 
 .about_karathon_wrapper {
-    margin-top: 80px;
+    // margin-top: 80px;
+    margin-top: 2.71rem;
     max-width: 70%;
 }
 
 .about_karathon_wrapper dt {
     color: @pink;
-    margin-top: 100px;
+    // margin-top: 100px;
+    margin-top: 3.39rem;
 }
 
 .about_karathon_wrapper dt h3 {
@@ -377,8 +428,10 @@ input[type=number] {
 }
 
 .about_karathon_button_wrapper {
-    margin-top: 100px;
-    margin-bottom: 160px;
+    // margin-top: 100px;
+    margin-top: 3.39rem;
+    // margin-bottom: 160px;
+    margin-bottom: 5.42rem;
 }
 
 .overlay {

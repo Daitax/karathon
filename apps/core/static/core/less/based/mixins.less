@@ -64,7 +64,7 @@
     appearance: button;
     display: inline-block;
     align-self: baseline;
-    font-size: 30px;
+    font-size: 1rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-decoration: none;
@@ -72,8 +72,9 @@
     text-transform: uppercase;
     cursor: pointer;
     position: relative;
-    overflow: hidden;
-    padding: 25px 90px;
+    // overflow: hidden;
+    // padding: 25px 90px;
+    padding: .84rem 3.05rem;
 
     &:hover {
         text-decoration: none;
@@ -109,14 +110,16 @@
     }
 }
 
-.popup(@max-width: 500px) {
+// .popup(@max-width: 500px) {
+.popup(@max-width: 16.95rem) {
     display: flex;
     flex-direction: column;
     position: absolute;
     top: 50%;
     left: 50%;
     width: 96%;
-    padding: 50px;
+    // padding: 50px;
+    padding: 1.69rem;
     max-width: @max-width;
     background: @white;
     transform: translate(-50%, -50%);
@@ -153,18 +156,23 @@
     }
 
     .text {
-        font-size: 20px;
+        // font-size: 20px;
+        font-size: 0.66rem;
         line-height: 1.5;
         letter-spacing: 0.03em;
-        margin-top: 14px;
+        // margin-top: 14px;
+        margin-top: .47rem;
     }
 
     .input {
         border: 2px solid @pink;
         width: 100%;
-        font-size: 20px;
-        padding: 29px 0 29px 22px;
-        margin-top: 30px;
+        // font-size: 20px;
+        font-size: 0.66rem;
+        // padding: 29px 0 29px 22px;
+        padding: .98rem 0 .98rem .75rem;
+        // margin-top: 30px;
+        margin-top: 1.02rem;
     }
 
     .input:focus {
@@ -183,30 +191,36 @@
     }
 
     .error {
-        font-size: 20px;
+        // font-size: 20px;
+        font-size: 0.66rem;
         line-height: 1.5;
         letter-spacing: 0.03em;
-        margin-top: 14px;
+        // margin-top: 14px;
+        margin-top: .47rem;
         position: absolute
     }
 
     .button {
         display: block;
-        padding: 25px 0;
+        // padding: 25px 0;
+        padding: .85rem 0;
         align-self: auto;
-        margin-top: 30px;
+        // margin-top: 30px;
+        margin-top: 1.02rem;
         width: 100%;
     }
 
     .button:first-child {
-        margin-top: 20px;
+        // margin-top: 20px;
+        margin-top: .68rem;
     }
 }
 
 .navbar {
     display: flex;
     justify-content: space-between;
-    font-size: 15px;
+    // font-size: 15px;
+    font-size: 0.5rem;
     letter-spacing: 0.03em;
     font-weight: 600;
     text-transform: uppercase;
@@ -217,10 +231,13 @@
 
     img {
         position: absolute;
-        right: -50px;
+        // right: -50px;
+        right: -1.69rem;
         top: -10px;
-        height: 100px;
-        width: 100px;
+        // height: 100px;
+        // width: 100px;
+        height: 3.33rem;
+        width: 3.33rem;
         border-radius: 50%;
         object-fit: cover;
         cursor: pointer;
@@ -229,25 +246,30 @@
     }
 
     button {
-        width: 400px;
+        // width: 400px;
+        width: 13.56rem;
     }
 }
 
 .account_input {
     display: flex;
     align-items: center;
-    margin-top: 30px;
+    // margin-top: 30px;
+    margin-top: 1.02rem;
 
     p {
         font-weight: 400;
-        font-size: 20px;
+        // font-size: 20px;
+        font-size: 0.66rem;
         line-height: 1.5;
         letter-spacing: 0.03em;
-        margin-left: 20px;
+        // margin-left: 20px;
+        margin-left: .68rem;
     }
 
     button {
-        flex: 0 400px;
+        // flex: 0 400px;
+        flex: 0 13.56rem;
     }
 
     p {

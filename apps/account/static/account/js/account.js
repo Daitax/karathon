@@ -144,11 +144,6 @@ markedButtons.forEach(element => element.addEventListener("click", function () {
         })
 }))
 
-accountMenu = document.querySelector('[window-elem="account_avatar"] ~ [window-elem="account_menu"]')
-if (accountMenu) {
-    beforeAccMenu = accountMenu.offsetTop
-}
-
 if (previousMessages) {
     previousMessages.addEventListener("click", function () {
         // Выводит прочитанные сообщения при нажатии на кнопку
@@ -175,25 +170,6 @@ if (previousMessages) {
                     previousMessages.setAttribute("style", "display:none")
                 }
             })
-            .then(function () {
-                accountMenuAbsoluteBottom = firstScreen.getBoundingClientRect().bottom - footer.getBoundingClientRect().top
-                accountMenuFixedOffset = 90
-                accountMenuHeight = accountMenu.clientHeight
-                topBorder = beforeAccMenu + 8
-                bottomBorder = footer.offsetTop - accountMenuHeight - accountMenuFixedOffset
-
-                this.window.addEventListener("scroll", function () {
-                    // Оставляет меню аккаунта сбоку при скролле от первого экрана до подвала
-                    if (window.pageYOffset < topBorder) {
-                        accountMenu.setAttribute("style", "position: absolute; top: auto; right: -10px; bottom: -140px;")
-                    }
-                    if ((window.pageYOffset >= topBorder) && (window.pageYOffset < bottomBorder)) {
-                        accountMenu.setAttribute("style", "position: fixed; top: 90px; right: calc(50% - 670px); bottom: auto;")
-                    }
-                    if (window.pageYOffset >= bottomBorder) {
-                        accountMenu.setAttribute("style", "bottom:" + accountMenuAbsoluteBottom + "px")
-                    }
-                })
-            })
+            .then(stickyAccountMenu())
     })
 }

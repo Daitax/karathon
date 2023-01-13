@@ -195,17 +195,18 @@ def messages(request):
         return messages_read(request)
     if request.method == 'GET_PREV_MESSAGES':
         return messages_add(request)
-    messages_list = Notification.objects.select_related("participant", "template").filter(
-        participant__user=request.user.participant,
+    user = request.user.participant
+    messages_list = Notification.objects.select_related("participant").filter(
+        participant__user=user,
         is_viewed=False,
         )
     if len(messages_list) <= settings.MESSAGES_PER_PAGE:
         messages_list = Notification.objects.select_related("participant").filter(
-        participant__user=request.user.participant,
+        participant__user=user,
         )[:settings.MESSAGES_PER_PAGE]
     return render(request, 'account/messages.html', {
         'messages_list': messages_list,
-        'next_messages_exist': Notification(participant=request.user.participant).next_page_exists(),
+        'next_messages_exist': Notification(participant=user).next_page_exists(),
     })
 
 def messages_add(request):
