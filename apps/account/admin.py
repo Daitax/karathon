@@ -10,7 +10,7 @@ class ParticipantAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Персональная информация', {'fields': ('username', 'first_name', 'last_name', 'middle_name', 'phone',
                                                    'instagram',
-                                                   'timezone', 'category', 'photo',)}),
+                                                   'timezone_offset', 'category', 'photo',)}),
     )
 
 

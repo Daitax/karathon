@@ -18,6 +18,7 @@ class User(AbstractUser):
 
 
 class Participant(User):
+    # TODO Удалить временные зоны с регионами
     TIMEZONES = (
         ('Europe/Moscow', 'Мск'),
         ('Europe/Samara', 'Мск+01'),
@@ -45,12 +46,40 @@ class Participant(User):
         ('Pacific/Midway', 'Мск-14'),
     )
 
+    TIMEZONES_OFFSET = (
+        ('+3', 'Мск'),
+        ('+4', 'Мск+01'),
+        ('+5', 'Мск+02'),
+        ('+6', 'Мск+03'),
+        ('+7', 'Мск+04'),
+        ('+8', 'Мск+05'),
+        ('+9', 'Мск+06'),
+        ('+10', 'Мск+07'),
+        ('+11', 'Мск+08'),
+        ('+12', 'Мск+09'),
+        ('+2', 'Мск-01'),
+        ('+1', 'Мск-02'),
+        ('0', 'Мск-03'),
+        ('-1', 'Мск-04'),
+        ('-2', 'Мск-05'),
+        ('-3', 'Мск-06'),
+        ('-4', 'Мск-07'),
+        ('-5', 'Мск-08'),
+        ('-6', 'Мск-09'),
+        ('-7', 'Мск-10'),
+        ('-8', 'Мск-11'),
+        ('-9', 'Мск-12'),
+        ('-10', 'Мск-13'),
+        ('-11', 'Мск-14'),
+    )
+
     user = models.OneToOneField(User, parent_link=True, on_delete=models.CASCADE)
     middle_name = models.CharField('Отчество', max_length=20, blank=True)
     phone = PhoneNumberField('Номер телефона', unique=True)
     photo = models.ImageField('Аватарка', blank=True, upload_to=get_participant_photo_path)
     instagram = models.URLField('Ссылка на инстаграм', blank=True)
     timezone = models.CharField(max_length=30, choices=TIMEZONES, default='Europe/Moscow')
+    timezone_offset = models.CharField(max_length=3, choices=TIMEZONES_OFFSET, default='+3')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     karathon = models.ManyToManyField(Karathon, related_name='participant')
 
@@ -103,8 +132,11 @@ class Participant(User):
             return None
 
     def get_participant_time(self):
-        participant_timezone = pytz.timezone(self.timezone)
+        participant_offset = datetime.timedelta(hours=int(self.timezone_offset))
+        participant_timezone = datetime.timezone(participant_offset)
         return datetime.datetime.now(participant_timezone)
+        # participant_timezone = pytz.timezone(self.timezone)
+        # return datetime.datetime.now(participant_timezone)
 
     def is_today_report(self):
         try:

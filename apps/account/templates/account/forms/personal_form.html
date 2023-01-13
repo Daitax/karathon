@@ -61,9 +61,9 @@
     </label>
     <label class="account_content_info_timezone">
       <div>
-        <select name="timezone">
-          {% for value,name in participant_form.fields.timezone.choices %}
-            <option value="{{ value }}"{% if participant_form.timezone.value == value %}
+        <select name="timezone_offset">
+          {% for value,name in participant_form.fields.timezone_offset.choices %}
+            <option value="{{ value }}"{% if participant_form.timezone_offset.value == value %}
                     selected{% endif %}>{{ name }}</option>
           {% endfor %}
         </select>
