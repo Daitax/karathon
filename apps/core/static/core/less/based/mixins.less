@@ -24,7 +24,7 @@
     border-radius: 50%;
     // border-width: 2px;
     // border-style: solid;
-    border: var(--circle-width) solid;
+    border: var(--border-main) solid;
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: 0.8s cubic-bezier(0.46, 0.03, 0.52, 0.96);
@@ -68,7 +68,7 @@
 }
 
 .button {
-    appearance: button;
+    // appearance: button;
     display: inline-block;
     align-self: baseline;
     font-size: 1rem;
@@ -172,7 +172,7 @@
     }
 
     .input {
-        border: 2px solid @pink;
+        border: var(--border-main) solid @pink;
         width: 100%;
         // font-size: 20px;
         font-size: 0.66rem;
@@ -180,6 +180,9 @@
         padding: .98rem 0 .98rem .75rem;
         // margin-top: 30px;
         margin-top: 1.02rem;
+        // -webkit-appearance: none;
+        -webkit-border-radius: 0;
+        border-radius: 0;
     }
 
     .input:focus {
@@ -232,6 +235,10 @@
     font-weight: 600;
     text-transform: uppercase;
 
+    @media (max-width: 576px) {
+        flex-direction: column;
+    }
+
     li a {
         color: @white;
     }
@@ -240,7 +247,8 @@
         position: absolute;
         // right: -50px;
         right: -1.69rem;
-        top: -10px;
+        // top: -10px;
+        top: -.34rem;
         // height: 100px;
         // width: 100px;
         height: 3.33rem;
@@ -264,6 +272,21 @@
     // margin-top: 30px;
     margin-top: 1.02rem;
 
+    @media (max-width: 576px) {
+        flex-direction: column;
+        align-items: baseline;
+        margin-top: 1.85rem;
+
+        // div,
+        select {
+            width: 100%;
+        }
+
+        // label div {
+        //     width: 100%;
+        // }
+    }
+
     p {
         font-weight: 400;
         // font-size: 20px;
@@ -272,11 +295,20 @@
         letter-spacing: 0.03em;
         // margin-left: 20px;
         margin-left: .68rem;
+
+        @media (max-width: 576px) {
+            font-size: 1.04rem;
+            margin-left: 0.75rem;
+        }
     }
 
     button {
         // flex: 0 400px;
         flex: 0 13.56rem;
+
+        @media (max-width: 576px) {
+            flex: auto;
+        }
     }
 
     p {

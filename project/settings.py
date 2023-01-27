@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-()726)0h^0f$_9h3k7*hidl@5pa0h5x*+@r-0ay_g4co8s!_4n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG'),
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'dyugaev.beget.tech', '213.139.208.116']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'dyugaev.beget.tech', '213.139.208.116', '192.168.0.103', '192.168.1.2']
 INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 # Application definition

@@ -1,7 +1,7 @@
 <form class="account_content_form_wrapper" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="account_content_full_name">
-    <div>
+    <div class="account_content_full_name_items">
       <label>
         <input type="text" name="last_name" value="{{ participant_form.last_name.value }}" placeholder="Фамилия">
         <div>{{ participant_form.last_name.errors }}</div>

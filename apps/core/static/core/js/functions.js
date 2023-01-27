@@ -9,19 +9,24 @@ let stickyNavbar = document.querySelector('[window-elem="sticky_navbar"]')
 let firstScreen = document.querySelector('[window-elem="first-screen"]')
 let footer = document.querySelector('[window-elem="footer"]')
 let stickyAccMenu = document.querySelector('[window-elem="sticky_navbar"] > [window-elem="account_menu"]')
+let mobMenues = document.querySelectorAll('[window-elem="mobile_menu"]')
 var footerTop = footer.offsetTop
 window.addEventListener("load", function () {
   window.addEventListener("scroll", function () {
     // Убирает/показывает главное меню при скролле ниже/выше первого экрана
-    let firstScreenBottom = firstScreen.getBoundingClientRect().bottom
+    let firstScreenBottom = firstScreen.clientHeight
 
-    if (firstScreenBottom > 0) {
-      stickyNavbar.setAttribute("style", "top: -5.08rem")
+    if ((window.pageYOffset >= firstScreenBottom) && (window.pageYOffset <= footer.offsetTop - stickyNavbar.clientHeight)) {
+      stickyNavbar.setAttribute("style", "top: 0")
+    }
+    else {
+      stickyNavbar.setAttribute("style", "top: -6.08rem")
       if (stickyAccMenu) {
         stickyAccMenu.classList.remove("show")
       }
-    } else {
-      stickyNavbar.setAttribute("style", "top: 0")
+      if (mobMenues) {
+        mobMenues.forEach(element => element.classList.remove("show"))
+      }
     }
   })
 })
@@ -43,36 +48,43 @@ content.addEventListener("click", function () {
   accMenues.forEach(element => element.classList.remove("show"))
 })
 
-let accountMenu = document.querySelector('[window-elem="account_avatar"] ~ [window-elem="account_menu"]')
-function stickyAccountMenu() {
-  // Оставляет меню аккаунта сбоку при скролле от первого экрана до подвала
-  let accountMenuAbsoluteBottom = firstScreen.getBoundingClientRect().bottom - footer.getBoundingClientRect().top
-  let accountMenuFixedOffset = 90
-  let accountMenuHeight = accountMenu.clientHeight
-  let beforeAccMenu = accountMenu.offsetTop
-  let topBorder = beforeAccMenu - 10
-  let bottomBorder = footer.offsetTop - accountMenuHeight - accountMenuFixedOffset
-  let container = document.querySelector(".container")
-  let accMenuRightOffset = (100 - Math.round(container.clientWidth / document.body.clientWidth * 100)) / 2
+// let accountMenu = document.querySelector('[window-elem="account_avatar"] ~ [window-elem="account_menu"]')
+// function stickyAccountMenu() {
+//   // Оставляет меню аккаунта сбоку при скролле от первого экрана до подвала
+//   let accountMenuAbsoluteBottom = firstScreen.getBoundingClientRect().bottom - footer.getBoundingClientRect().top
+//   let accountMenuFixedOffset = 90
+//   let accountMenuHeight = accountMenu.clientHeight
+//   let beforeAccMenu = accountMenu.offsetTop
+//   let topBorder = beforeAccMenu - 10
+//   let bottomBorder = footer.offsetTop - accountMenuHeight - accountMenuFixedOffset
+//   let container = document.querySelector(".container")
+//   let accMenuRightOffset = (100 - Math.round(container.clientWidth / document.body.clientWidth * 100)) / 2
 
-  this.window.addEventListener("scroll", function () {
-    if (window.pageYOffset < topBorder) {
-      accountMenu.setAttribute("style", "position: absolute; top: auto; right: -.34rem; bottom: -4.75rem;")
-    }
-    if ((window.pageYOffset >= topBorder) && (window.pageYOffset < bottomBorder)) {
-      accountMenu.setAttribute("style", "position: fixed; top: 3.05rem; right: calc(" + accMenuRightOffset + "% - .34rem); bottom: auto;")
-    }
-    if (window.pageYOffset >= bottomBorder) {
-      accountMenu.setAttribute("style", "bottom:" + accountMenuAbsoluteBottom + "px")
-    }
-  })
-}
+//   this.window.addEventListener("scroll", function () {
+//     if (window.pageYOffset < topBorder) {
+//       accountMenu.setAttribute("style", "position: absolute; top: auto; right: -.34rem; bottom: -4.75rem;")
+//     }
+//     if ((window.pageYOffset >= topBorder) && (window.pageYOffset < bottomBorder)) {
+//       accountMenu.setAttribute("style", "position: fixed; top: 3.05rem; right: calc(" + accMenuRightOffset + "% - .34rem); bottom: auto;")
+//     }
+//     if (window.pageYOffset >= bottomBorder) {
+//       accountMenu.setAttribute("style", "bottom:" + accountMenuAbsoluteBottom + "px")
+//     }
+//   })
+// }
 
-window.addEventListener("load", function () {
-  if (accountMenu) {
-    stickyAccountMenu()
-  }
-})
+
+
+
+
+
+
+
+// window.addEventListener("load", function () {
+//   if (accountMenu) {
+//     stickyAccountMenu()
+//   }
+// })
 
 let deadline = 86400 // количество секунд в сутках
 let localtime = document.querySelectorAll('[menu-elem="participant_localtime"]')
@@ -140,3 +152,26 @@ if (localtime[0]) {
   printTime(odds)
   startCountdown()
 }
+
+function mobileMenuShow() {
+  // показывает/убирает главное меню по клику на кнопку "Меню"
+  let mobileMenuButtons = document.querySelectorAll('[window-elem="mobile_menu_button"]')
+
+  mobileMenuButtons.forEach(element => element.addEventListener("click", function () {
+    let mobileMenu = element.nextElementSibling
+    mobileMenu.classList.toggle("show")
+  }))
+}
+
+mobileMenuShow()
+
+
+content.addEventListener("click", function () {
+  // Убирает меню при клике вне его в мобильной версии
+  mobMenues.forEach(element => element.classList.remove("show"))
+})
+
+firstScreen.addEventListener("click", function () {
+  // Убирает меню при клике вне его в мобильной версии
+  mobMenues.forEach(element => element.classList.remove("show"))
+})

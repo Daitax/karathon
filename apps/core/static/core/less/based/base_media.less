@@ -1,0 +1,205 @@
+@media (max-width: 576px) {
+    html {
+        font-size: @font_size_adaptive;
+    }
+
+    // body {
+    //     overflow: -webkit-paged-y;
+    // }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.94rem;
+    }
+
+    // .global-wrapper {
+    //     overflow-x: auto;
+    // }
+
+    // .content {
+    //     overflow: hidden;
+    // }
+
+    .header_navbar_menu {
+        margin-top: 1.5rem;
+
+        img {
+            right: -0.54rem;
+            top: auto;
+        }
+    }
+
+    .header_navbar_menu_mobile_buttons {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.04rem;
+        color: @white;
+        cursor: pointer;
+
+        a {
+            color: @white;
+            text-decoration: none;
+        }
+
+        .participants_account_menu_name {
+            color: @black;
+        }
+    }
+
+    .header_navbar_menu_mobile_background {
+        display: block;
+        position: absolute;
+        top: 1.87rem;
+        background: @pink;
+        max-height: 0;
+        font-size: .83rem;
+        overflow: hidden;
+        transition: max-height 0.5s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+        box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+        z-index: 2;
+
+        &.show {
+            max-height: 20rem;
+        }
+    }
+
+    .header_navbar_menu_mobile_wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 1.02rem 0.95rem 0.81rem 1.02rem;
+
+        li {
+            margin-top: 1.3rem;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+    }
+
+    .navbar_karathon_list_wrapper {
+        left: 1.02rem;
+    }
+
+    .header_navbar_menu,
+    .sticky_navbar_menu {
+
+        >li,
+        >.header_navbar_menu_photo,
+        >.participants_account_menu {
+            display: none;
+        }
+    }
+
+    .sticky_navbar_menu {
+        margin-top: 1.04rem;
+        padding: 0.47rem 0;
+
+        img {
+            top: -0.66rem;
+            right: -0.5rem;
+        }
+
+        &::after,
+        &::before {
+            width: calc((100% - @container_main)/4);
+        }
+    }
+
+    .header_navbar_menu_photo {
+        margin-top: -1.125rem;
+    }
+
+    .first-screen {
+        flex-direction: column;
+        // width: 100%;
+        // padding-left: 4%;
+        // padding-right: 4%;
+        // overflow: hidden;
+    }
+
+    .first-screen_wrapper {
+        width: 100%;
+        overflow-x: clip;
+    }
+
+    .first-screen_text {
+        width: 100%;
+    }
+
+    .first-screen_photo {
+
+        img {
+            height: 24.31rem;
+            width: 24.31rem;
+            right: -7.5rem;
+        }
+    }
+
+    .pink_button,
+    .blue_button,
+    .white_button {
+        width: 100%;
+        padding-top: 1.46rem;
+        padding-bottom: 1.46rem;
+    }
+
+    .first-screen_button_wrapper {
+        margin-bottom: 1.6rem;
+
+        // a {
+        //     width: 100%;
+        //     padding-top: 1.46rem;
+        //     padding-bottom: 1.46rem;
+        // }
+    }
+
+    .first-screen_avatar {
+        margin-left: auto;
+
+        img {
+            height: 13.88rem;
+            width: 13.88rem;
+            margin-right: -3rem;
+        }
+    }
+
+    .first-screen_no_avatar p {
+        height: 13.88rem;
+        width: 13.88rem;
+        margin-right: -3.08rem;
+        padding-top: calc(50% + 1rem);
+        font-size: .9rem;
+    }
+
+    .first-screen_account_button_wrapper div {
+        width: 100%;
+    }
+
+    .about_karathon_description {
+        max-width: 100%;
+    }
+
+    .about_karathon_list {
+        max-width: 100%;
+    }
+
+    .about_karathon_description_button_wrapper a,
+    .about_karathon_button_wrapper a {
+        width: 100%;
+        padding-top: 1.46rem;
+        padding-bottom: 1.46rem;
+    }
+
+    .about_karathon_wrapper {
+        max-width: 100%;
+    }
+
+    .about_karathon_list_wrapper li {
+        margin-left: 1.04rem;
+        font-size: 1.25rem;
+    }
+}

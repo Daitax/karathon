@@ -170,6 +170,5 @@ if (previousMessages) {
                     previousMessages.setAttribute("style", "display:none")
                 }
             })
-            .then(stickyAccountMenu())
     })
 }

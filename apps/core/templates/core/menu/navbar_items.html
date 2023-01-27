@@ -36,6 +36,9 @@
         <img class="no_avatar" src="{% static 'core/img/no_avatar.png' %}">
         {% endif %}
     </div>
-    {% account_menu %}
+    {% comment %} {% account_menu %} {% endcomment %}
+    <div class="participants_account_menu" window-elem="account_menu">
+      {% account_menu %}
+    </div>
   {% endif %}
 {% endif %}

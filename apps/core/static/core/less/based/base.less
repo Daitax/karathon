@@ -24,7 +24,7 @@
 html {
     height: 100%;
     // font-size: 30px;
-    font-size: clamp(15px, 2.05vw, 50px);
+    font-size: @font_size_main;
     // font-size: 2.05vw;
 }
 
@@ -160,13 +160,15 @@ input[type=number] {
     .button();
     color: @pink;
     background: @white;
-    border: 2px solid @pink;
+    // border: 2px solid @pink;
+    border: var(--border-main) solid @pink;
 
     &:hover {
         background: @gradient_pink_blue;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        border: 2px solid transparent;
+        // border: 2px solid transparent;
+        border: var(--border-main) solid transparent;
         border-image: @gradient_pink_blue;
         border-image-slice: 1;
         .hover_animation();
@@ -179,8 +181,17 @@ input[type=number] {
 
 .header_navbar_menu {
     position: relative;
-    margin-top: 20px;
+    // margin-top: 20px;
+    margin-top: .68rem;
     .navbar();
+}
+
+.header_navbar_menu_mobile_buttons {
+    display: none;
+}
+
+.header_navbar_menu_mobile_background {
+    display: none;
 }
 
 .navbar_karathon_list_wrapper {
@@ -215,48 +226,74 @@ input[type=number] {
 .sticky_navbar_menu {
     position: fixed;
     // top: -150px;
-    top: -5.08rem;
+    top: -6.08rem;
     // left: 4%; // половина разности ширины экрана и контейнера
     left: calc((100% - @container)/2);
     // padding: 15px 0;
     padding: .51rem 0;
-    margin-top: 10px;
+    // margin-top: 10px;
+    margin-top: .34rem;
     background: @pink;
     transition: top 0.8s;
     z-index: 2;
     .navbar();
+
+    img {
+        top: 0px;
+    }
+
+    &::after {
+        content: "";
+        background: @pink;
+        position: absolute;
+        top: 0;
+        // right: -30px;
+        // width: 30px;
+        right: 100%;
+        width: 1.02rem;
+        height: 100%;
+    }
+
+    &::before {
+        content: "";
+        background: @pink;
+        position: absolute;
+        top: 0;
+        // right: -30px;
+        // width: 30px;
+        left: 100%;
+        width: 1.02rem;
+        height: 100%;
+    }
 }
 
-.sticky_navbar_menu li:first-child::before {
-    content: "";
-    background: @pink;
-    position: absolute;
-    top: 0;
-    // left: -30px;
-    // width: 30px;
-    left: -1.02rem;
-    width: 1.02rem;
-    height: 100%;
-}
+// .sticky_navbar_menu li:first-child::before {
+//     content: "";
+//     background: @pink;
+//     position: absolute;
+//     top: 0;
+//     // left: -30px;
+//     // width: 30px;
+//     left: -1.02rem;
+//     width: 1.02rem;
+//     height: 100%;
+// }
 
-.sticky_navbar_menu li:last-child::after {
-    content: "";
-    background: @pink;
-    position: absolute;
-    top: 0;
-    // right: -30px;
-    // width: 30px;
-    right: -1.02rem;
-    width: 1.02rem;
-    height: 100%;
-}
+// .sticky_navbar_menu li:last-child::after {
+//     content: "";
+//     background: @pink;
+//     position: absolute;
+//     top: 0;
+//     // right: -30px;
+//     // width: 30px;
+//     right: -1.02rem;
+//     width: 1.02rem;
+//     height: 100%;
+// }
 
-.sticky_navbar_menu img {
-    top: 0px;
-}
-
-.no_avatar {
-    border: 2px solid @pink;
+.sticky_navbar_menu .no_avatar {
+    // border: 2px solid @pink;
+    border: var(--border-main) solid @pink;
 }
 
 .first-screen_wrapper {
@@ -272,7 +309,8 @@ input[type=number] {
 
 .first-screen {
     display: flex;
-    position: relative
+    position: relative;
+    // height: 100vh;
 }
 
 .first-screen_text_collab {
@@ -304,11 +342,19 @@ input[type=number] {
     object-fit: cover;
 }
 
-.first-screen>.participants_account_menu {
-    max-height: none;
-    top: auto;
-    // bottom: -140px;
-    bottom: -4.75rem;
+.content_with_menu_wrapper>.participants_account_menu {
+    // max-height: none;
+    // top: auto;
+    // // bottom: -140px;
+    // bottom: -4.75rem;
+    position: sticky;
+    left: 70%;
+    top: 3.05rem;
+    max-height: fit-content;
+    margin-top: -8.51rem;
+    // margin-top: -60vh;
+    // margin-top: calc(100% - 400px);
+    // margin-top: calc(-100vh + 14rem);
 }
 
 .first-screen_avatar img {
@@ -390,7 +436,7 @@ input[type=number] {
     counter-increment: num;
     position: absolute;
     // bottom: 30px;
-    bottom: 1.02rem;
+    // bottom: 1.02rem;
     // left: -50px;
     left: -1.69rem;
     font-family: "MontserratAlternates-Bold";
@@ -400,6 +446,9 @@ input[type=number] {
     color: transparent;
     -webkit-text-stroke: 1px @pink;
     z-index: -1;
+    top: 39%;
+    margin-top: -0.625em;
+    line-height: 6.66rem;
 }
 
 .about_karathon_description_button_wrapper {

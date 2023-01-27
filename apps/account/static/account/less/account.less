@@ -14,12 +14,16 @@
         // font-size: 20px;
         font-size: .66rem;
         letter-spacing: 0.05em;
+        -webkit-appearance: none;
+        -webkit-border-radius: 0;
+        border-radius: 0;
     }
 
     input[name="instagram"],
     [name="email"] {
         // padding: 26px 0 26px 22px;
-        padding: .88rem 0 .88rem .75rem;
+        // padding: .88rem 0 .88rem .75rem;
+        padding-right: 0;
     }
 
     input:focus {
@@ -51,6 +55,7 @@
         -webkit-appearance: none;
         border-radius: unset;
         background: none;
+        color: @black;
     }
 }
 
@@ -109,9 +114,9 @@
         // height: 43px;
         height: 1.48rem;
         // left: 122px;
-        left: 4.14rem;
+        left: 50%;
         // top: 103.5px;
-        top: 3.51rem;
+        top: calc(50% - 0.74rem + 1px);
         background: @pink;
     }
 
@@ -123,7 +128,8 @@
         height: 2px;
         top: 50%;
         // left: 100.5px;
-        left: 3.41rem;
+        // left: 3.41rem;
+        left: calc(50% - 0.74rem + 1px);
         background: @pink;
         z-index: -1;
     }
@@ -145,7 +151,8 @@ div[window-elem="avatar_preview"] {
 
 div[window-elem="avatar_preview_big"] {
     position: absolute;
-    right: 1.25rem;
+    // right: 1.25rem;
+    right: auto;
     // height: 550px;
     height: 18.64rem;
     // width: 550px;

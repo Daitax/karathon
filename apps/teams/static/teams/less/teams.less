@@ -104,18 +104,20 @@
 .team_wishlist_items_add_circle {
     // height: 150px;
     // width: 150px;
+    position: relative;
     height: 5rem;
     width: 5rem;
     border-radius: 50%;
-    border: 2px solid @pink;
+    // border: 2px solid @pink;
+    border: var(--border-main) solid @pink;
 
     &::before {
         content: "";
         position: absolute;
         left: 50%;
         // top: calc(50% - 21.5px);
-        top: calc(50% - .73rem + 1px);
-        width: 2px;
+        top: calc(50% - .73rem + var(--border-main)/2);
+        width: var(--border-main);
         // width: .07rem;
         // height: 43px;
         height: 1.46rem;
@@ -126,11 +128,11 @@
         content: "";
         position: absolute;
         // left: calc(50% - 21.5px);
-        left: calc(50% - .73rem + 1px);
+        left: calc(50% - .73rem + var(--border-main)/2);
         top: 50%;
         // width: 43px;
         width: 1.46rem;
-        height: 2px;
+        height: var(--border-main);
         // height: .07rem;
         background: @pink;
     }

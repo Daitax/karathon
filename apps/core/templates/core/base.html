@@ -3,6 +3,7 @@
 {% load navbar %}
 {% load task_today %}
 {% load steps_block %}
+{% load account_menu %}
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -16,9 +17,24 @@
   <body>
     <div class="global-wrapper">
       <header class="header" window-elem="header">{% navbar %}</header>
-      <div class="content" window-elem="content">{% block content %}{% endblock %}</div>
-      {% steps_block %}
-      <div class="content" window-elem="content">{% block content_second %}{% endblock %}</div>
+      {% if request.resolver_match.view_name  != 'core:site-index' %}
+      {% include 'account/includes/first_screen.html' %}
+      {% comment %} {% endif %} {% endcomment %}
+      <div class="content_with_menu_wrapper">
+        {% comment %} {% if request.resolver_match.view_name  != 'core:site-index' %} {% endcomment %}
+        <div class="participants_account_menu">
+          {% account_menu %}
+        </div>
+        <div class="participants_account_menu mobile">
+          {% account_menu %}
+        </div>
+      {% else %}
+      <div class="content_with_menu_wrapper">
+      {% endif %}
+        <div class="content" window-elem="content">{% block content %}{% endblock %}</div>
+        {% steps_block %}
+        <div class="content" window-elem="content">{% block content_second %}{% endblock %}</div>
+      </div>
       <footer class="footer" window-elem="footer">{% include 'core/includes/footer.html' %}</footer>
     </div>
     {% task_today %}
