@@ -27,14 +27,6 @@ function openAddDesireForm() {
 }
 
 let userToDelete = document.querySelectorAll('[window-elem="delete"]')
-let confirmationPopup = document.querySelector('[popup-name="confirmation"]')
-
-function confirmationClose() {
-  // Закрывает поп-ап подтверждения удаления друга из команды
-  overlay.classList.remove('show')
-  confirmationPopup.classList.remove('show')
-}
-
 let closeConfirmationButton = document.querySelector('[popup-element="close"]')
 
 if (closeConfirmationButton) {
@@ -52,16 +44,15 @@ userToDelete.forEach(element => element.addEventListener("click", function () {
     'is_delete': true
   }
 
-  overlay.classList.add('show')
-  confirmationPopup.classList.add('show')
+  confirmationOpen(header = "Удалить друга?")
 
   let popupButtons = document.querySelectorAll('[popup-element]')
 
   popupButtons.forEach(el => el.addEventListener("click", function () {
     // Подтверждение удаления друга из команды
-    let confirm = el.getAttribute("popup-element")
+    let choise = el.getAttribute("popup-element")
 
-    if (confirm == "confirm") {
+    if (choise == "confirm") {
       confirmationClose()
 
       if (data.is_delete) {
@@ -81,7 +72,7 @@ userToDelete.forEach(element => element.addEventListener("click", function () {
           })
       }
     }
-    if (confirm == "deny") {
+    if (choise == "deny") {
       confirmationClose()
       data.is_delete = false
     }

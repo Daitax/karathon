@@ -153,18 +153,13 @@ if (localtime[0]) {
   startCountdown()
 }
 
-function mobileMenuShow() {
+let mobileMenuButtons = document.querySelectorAll('[window-elem="mobile_menu_button"]')
+
+mobileMenuButtons.forEach(element => element.addEventListener("click", function () {
   // показывает/убирает главное меню по клику на кнопку "Меню"
-  let mobileMenuButtons = document.querySelectorAll('[window-elem="mobile_menu_button"]')
-
-  mobileMenuButtons.forEach(element => element.addEventListener("click", function () {
-    let mobileMenu = element.nextElementSibling
-    mobileMenu.classList.toggle("show")
-  }))
-}
-
-mobileMenuShow()
-
+  let mobileMenu = element.nextElementSibling
+  mobileMenu.classList.toggle("show")
+}))
 
 content.addEventListener("click", function () {
   // Убирает меню при клике вне его в мобильной версии
@@ -175,3 +170,39 @@ firstScreen.addEventListener("click", function () {
   // Убирает меню при клике вне его в мобильной версии
   mobMenues.forEach(element => element.classList.remove("show"))
 })
+
+let logoutButton = document.querySelectorAll('[menu-elem="logout"]')
+let popupHeader = document.querySelector('[popup-name="confirmation"] h4')
+let popupButtons = document.querySelectorAll('[popup-element]')
+let confirmationPopup = document.querySelector('[popup-name="confirmation"]')
+
+function confirmationClose() {
+  // Закрывает поп-ап подтверждения и убирает заголовок в нем
+  overlay.classList.remove('show')
+  confirmationPopup.classList.remove('show')
+  popupHeader.innerHTML = ""
+}
+
+function confirmationOpen(header) {
+  // Открывает поп-ап подтверждения и добавляет заголовок
+  overlay.classList.add('show')
+  confirmationPopup.classList.add('show')
+  popupHeader.innerHTML = header
+}
+
+logoutButton.forEach(element => element.addEventListener("click", function (event) {
+  // Показывает попап с подтверждением выхода из аккаунта
+  event.preventDefault()
+  confirmationOpen(header = "Выйти?")
+  popupButtons.forEach(el => el.addEventListener("click", function () {
+    let choise = el.getAttribute("popup-element")
+
+    if (choise == "confirm") {
+      location.href = element.getAttribute("href")
+    }
+    if (choise == "deny") {
+      popupHeader.innerHTML = ""
+      confirmationClose()
+    }
+  }))
+}, false))

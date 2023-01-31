@@ -15,14 +15,6 @@
         font-size: 1.94rem;
     }
 
-    // .global-wrapper {
-    //     overflow-x: auto;
-    // }
-
-    // .content {
-    //     overflow: hidden;
-    // }
-
     .header_navbar_menu {
         margin-top: 1.5rem;
 
@@ -46,6 +38,16 @@
 
         .participants_account_menu_name {
             color: @black;
+        }
+
+        &::before {
+            content: "";
+            background: @pink;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            width: calc((100% - @container_main)/4);
+            height: 100%;
         }
     }
 
