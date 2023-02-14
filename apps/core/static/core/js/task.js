@@ -14,13 +14,14 @@ if (task) {
 
 window.addEventListener("load", function () {
     this.window.addEventListener("scroll", function () {
+        // console.log(window.pageYOffset, window.innerHeight, document.body.clientHeight)
         // Задание дня зафиксровано в левом нижнем углу экрана до подвала
         if (task) {
             let topTask = document.body.scrollHeight - footer.clientHeight - task.clientHeight
             if (task.getBoundingClientRect().bottom >= footer.getBoundingClientRect().top) {
                 task.setAttribute("style", "position:absolute; height: fit-content; top:" + topTask + "px")
             }
-            if (footer.offsetTop > window.pageYOffset + document.body.clientHeight) {
+            if (footer.offsetTop > window.pageYOffset + window.innerHeight) {
                 task.setAttribute("style", "position:fixed; left:0; bottom:0")
             }
         }

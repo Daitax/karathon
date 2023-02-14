@@ -40,14 +40,22 @@ avatarButtons.forEach(element => element.addEventListener("click", function () {
   accountMenu.classList.toggle("show")
 }))
 
-let content = document.querySelector('[window-elem="content"]')
+let indexpageBackgroundArr = document.querySelectorAll('[window-elem="content"], .footsteps')
 let accMenues = document.querySelectorAll('[window-elem="account_menu"]')
 
-content.addEventListener("click", function () {
+// content.addEventListener("click", function () {
+//   // Убирает меню аккаунта на главной странице при клике вне его
+//   accMenues.forEach(element => element.classList.remove("show"))
+// })
+
+// document.querySelector(".footsteps").addEventListener("click", function () {
+//   console.log("click")
+// })
+
+indexpageBackgroundArr.forEach(element => element.addEventListener("click", function () {
   // Убирает меню аккаунта на главной странице при клике вне его
   accMenues.forEach(element => element.classList.remove("show"))
-})
-
+}))
 // let accountMenu = document.querySelector('[window-elem="account_avatar"] ~ [window-elem="account_menu"]')
 // function stickyAccountMenu() {
 //   // Оставляет меню аккаунта сбоку при скролле от первого экрана до подвала
@@ -156,11 +164,12 @@ if (localtime[0]) {
 let mobileMenuButtons = document.querySelectorAll('[window-elem="mobile_menu_button"]')
 
 mobileMenuButtons.forEach(element => element.addEventListener("click", function () {
-  // показывает/убирает главное меню по клику на кнопку "Меню"
+  // Показывает/убирает главное меню по клику на кнопку "Меню"
   let mobileMenu = element.nextElementSibling
   mobileMenu.classList.toggle("show")
 }))
 
+let content = document.querySelector('[window-elem="content"]')
 content.addEventListener("click", function () {
   // Убирает меню при клике вне его в мобильной версии
   mobMenues.forEach(element => element.classList.remove("show"))
@@ -206,3 +215,35 @@ logoutButton.forEach(element => element.addEventListener("click", function (even
     }
   }))
 }, false))
+
+function showStepOrHide(elem, crossing_block = document.querySelector('[ window-elem="about_karathon_wrapper"]')) {
+  let leftBorder = crossing_block.getBoundingClientRect().left
+  let rightBorder = crossing_block.getBoundingClientRect().right
+  let topBorder = crossing_block.getBoundingClientRect().top
+  let bottomBorder = crossing_block.getBoundingClientRect().bottom
+  let elemY = elem.getBoundingClientRect().top
+  let elemX = elem.getBoundingClientRect().left
+  let deltaX = elem.clientWidth
+  let deltaY = elem.clientHeight
+
+  if (elemY < 0.5 * window.innerHeight) {
+    if ((elemY + deltaY >= topBorder && elemY <= bottomBorder) && (elemX >= leftBorder && elemX <= rightBorder)) {
+      elem.classList.add('show_blur')
+    } else {
+      elem.classList.add('show')
+    }
+  } else {
+    elem.classList.remove('show') || elem.classList.remove('show_blur')
+  }
+}
+
+if (window.location.pathname == "/") {
+  let stepsArr = document.querySelectorAll('[window-elem="footsteps"] img')
+
+  if (stepsArr) {
+    window.addEventListener("scroll", function () {
+      // Показывает/убирает следы на главной странице
+      stepsArr.forEach(element => showStepOrHide(element))
+    })
+  }
+}
