@@ -24,6 +24,10 @@ function openAuthenticationForm() {
         }
       }
     })
+    .then(function () {
+      let ph = document.querySelector('[auth-form-elem="phone"]')
+      ph.focus()
+    })
 }
 
 function closeAuthenticationForm() {
