@@ -9,6 +9,7 @@ let stickyNavbar = document.querySelector('[window-elem="sticky_navbar"]')
 let firstScreen = document.querySelector('[window-elem="first-screen"]')
 let footer = document.querySelector('[window-elem="footer"]')
 let stickyAccMenu = document.querySelector('[window-elem="sticky_navbar"] > [window-elem="account_menu"]')
+let mobStickyAccMenu = document.querySelectorAll('.header_navbar_menu_mobile_buttons > [window-elem="account_menu"]')[1]
 let mobMenues = document.querySelectorAll('[window-elem="mobile_menu"]')
 var footerTop = footer.offsetTop
 window.addEventListener("load", function () {
@@ -23,6 +24,9 @@ window.addEventListener("load", function () {
       stickyNavbar.setAttribute("style", "top: -6.08rem")
       if (stickyAccMenu) {
         stickyAccMenu.classList.remove("show")
+      }
+      if (mobStickyAccMenu) {
+        mobStickyAccMenu.classList.remove("show")
       }
       if (mobMenues) {
         mobMenues.forEach(element => element.classList.remove("show"))
@@ -200,7 +204,7 @@ function confirmationOpen(header) {
 }
 
 logoutButton.forEach(element => element.addEventListener("click", function (event) {
-  // Показывает попап с подтверждением выхода из аккаунта
+  // Показывает поп-ап с подтверждением выхода из аккаунта
   event.preventDefault()
   confirmationOpen(header = "Выйти?")
   popupButtons.forEach(el => el.addEventListener("click", function () {
