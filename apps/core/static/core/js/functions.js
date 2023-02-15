@@ -47,56 +47,10 @@ avatarButtons.forEach(element => element.addEventListener("click", function () {
 let indexpageBackgroundArr = document.querySelectorAll('[window-elem="content"], .footsteps')
 let accMenues = document.querySelectorAll('[window-elem="account_menu"]')
 
-// content.addEventListener("click", function () {
-//   // Убирает меню аккаунта на главной странице при клике вне его
-//   accMenues.forEach(element => element.classList.remove("show"))
-// })
-
-// document.querySelector(".footsteps").addEventListener("click", function () {
-//   console.log("click")
-// })
-
 indexpageBackgroundArr.forEach(element => element.addEventListener("click", function () {
   // Убирает меню аккаунта на главной странице при клике вне его
   accMenues.forEach(element => element.classList.remove("show"))
 }))
-// let accountMenu = document.querySelector('[window-elem="account_avatar"] ~ [window-elem="account_menu"]')
-// function stickyAccountMenu() {
-//   // Оставляет меню аккаунта сбоку при скролле от первого экрана до подвала
-//   let accountMenuAbsoluteBottom = firstScreen.getBoundingClientRect().bottom - footer.getBoundingClientRect().top
-//   let accountMenuFixedOffset = 90
-//   let accountMenuHeight = accountMenu.clientHeight
-//   let beforeAccMenu = accountMenu.offsetTop
-//   let topBorder = beforeAccMenu - 10
-//   let bottomBorder = footer.offsetTop - accountMenuHeight - accountMenuFixedOffset
-//   let container = document.querySelector(".container")
-//   let accMenuRightOffset = (100 - Math.round(container.clientWidth / document.body.clientWidth * 100)) / 2
-
-//   this.window.addEventListener("scroll", function () {
-//     if (window.pageYOffset < topBorder) {
-//       accountMenu.setAttribute("style", "position: absolute; top: auto; right: -.34rem; bottom: -4.75rem;")
-//     }
-//     if ((window.pageYOffset >= topBorder) && (window.pageYOffset < bottomBorder)) {
-//       accountMenu.setAttribute("style", "position: fixed; top: 3.05rem; right: calc(" + accMenuRightOffset + "% - .34rem); bottom: auto;")
-//     }
-//     if (window.pageYOffset >= bottomBorder) {
-//       accountMenu.setAttribute("style", "bottom:" + accountMenuAbsoluteBottom + "px")
-//     }
-//   })
-// }
-
-
-
-
-
-
-
-
-// window.addEventListener("load", function () {
-//   if (accountMenu) {
-//     stickyAccountMenu()
-//   }
-// })
 
 let deadline = 86400 // количество секунд в сутках
 let localtime = document.querySelectorAll('[menu-elem="participant_localtime"]')

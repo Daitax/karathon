@@ -23,25 +23,20 @@
 
 html {
     height: 100%;
-    // font-size: 30px;
     font-size: @font_size_main;
-    // font-size: 2.05vw;
 }
 
 body {
-    // font-size: 30px;
     font-family: "Montserrat";
     letter-spacing: .03em;
     color: @black;
     position: relative;
     height: auto;
     height: 100%;
-    // min-height: 100%;
 }
 
 h1 {
     font-weight: 800;
-    // font-size: 100px;
     font-size: 3.33rem;
     line-height: 1.25;
     letter-spacing: .05em;
@@ -50,7 +45,6 @@ h1 {
 
 h2 {
     font-weight: 700;
-    // font-size: 80px;
     font-size: 2.66rem;
     line-height: 1.25;
     letter-spacing: 0.03em;
@@ -59,7 +53,6 @@ h2 {
 
 h3 {
     font-weight: 700;
-    // font-size: 70px;
     font-size: 2.33rem;
     line-height: 1.25;
     letter-spacing: .03em;
@@ -68,7 +61,6 @@ h3 {
 
 h4 {
     font-weight: 700;
-    // font-size: 40px;
     font-size: 1.33rem;
     line-height: 1.25;
     letter-spacing: .05em;
@@ -169,14 +161,12 @@ input[type=number] {
     .button();
     color: @pink;
     background: @white;
-    // border: 2px solid @pink;
     border: var(--border-main) solid @pink;
 
     &:hover {
         background: @gradient_pink_blue;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        // border: 2px solid transparent;
         border: var(--border-main) solid transparent;
         border-image: @gradient_pink_blue;
         border-image-slice: 1;
@@ -190,7 +180,6 @@ input[type=number] {
 
 .header_navbar_menu {
     position: relative;
-    // margin-top: 20px;
     margin-top: .68rem;
     .navbar();
 }
@@ -207,13 +196,11 @@ input[type=number] {
     position: absolute;
     max-height: 0;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    // left: -5px;
     left: -.17rem;
     overflow: hidden;
     z-index: 1;
 
     div {
-        // margin-top: 5px;
         margin-top: .17rem;
     }
 }
@@ -223,10 +210,8 @@ input[type=number] {
     cursor: pointer;
 
     .navbar_karathon_list_wrapper {
-        // padding: 5px;
         padding: .17rem;
         background: @pink;
-        // max-height: 100px;
         max-height: 3.39rem;
         transition: max-height 0.8s cubic-bezier(0.46, 0.03, 0.52, 0.96);
     }
@@ -234,16 +219,13 @@ input[type=number] {
 
 .sticky_navbar_menu {
     position: fixed;
-    // top: -150px;
     top: -6.08rem;
-    // left: 4%; // половина разности ширины экрана и контейнера
     left: calc((100% - @container)/2);
-    // padding: 15px 0;
     padding: .51rem 0;
-    // margin-top: 10px;
     margin-top: .34rem;
     background: @pink;
     transition: top 0.8s;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
     z-index: 2;
     .navbar();
 
@@ -256,8 +238,6 @@ input[type=number] {
         background: @pink;
         position: absolute;
         top: 0;
-        // right: -30px;
-        // width: 30px;
         right: 100%;
         width: 1.02rem;
         height: 100%;
@@ -268,39 +248,10 @@ input[type=number] {
         background: @pink;
         position: absolute;
         top: 0;
-        // right: -30px;
-        // width: 30px;
-        // left: 100%;
         width: 1.02rem;
         height: 100%;
     }
 }
-
-// .sticky_navbar_menu li:first-child::before {
-//     content: "";
-//     background: @pink;
-//     position: absolute;
-//     top: 0;
-//     // left: -30px;
-//     // width: 30px;
-//     left: -1.02rem;
-//     width: 1.02rem;
-//     height: 100%;
-// }
-
-// .sticky_navbar_menu li:last-of-type::after {
-//     // &::before {
-//     content: "";
-//     background: @pink;
-//     position: absolute;
-//     top: 0;
-//     // right: -30px;
-//     // width: 30px;
-//     right: -1.02rem;
-//     width: 1.02rem;
-//     height: 100%;
-//     // }
-// }
 
 .footsteps {
     position: absolute;
@@ -310,9 +261,6 @@ input[type=number] {
     left: 0;
     right: 0;
     bottom: 0;
-
-    // margin-top: 12.42rem;
-    // margin-left: .61rem;
 
     img {
         width: 4.06rem;
@@ -520,15 +468,12 @@ input[type=number] {
 }
 
 .sticky_navbar_menu .no_avatar {
-    // border: 2px solid @pink;
     border: var(--border-main) solid @pink;
 }
 
 .first-screen_wrapper {
     background: @pink;
-    // padding-top: 40px;
     padding-top: 1.36rem;
-    // height: 100vh;
 }
 
 .first-screen_text {
@@ -538,56 +483,39 @@ input[type=number] {
 .first-screen {
     display: flex;
     position: relative;
-    // height: 100vh;
 }
 
 .first-screen_text_collab {
-    // font-size: 40px;
     font-size: 1.33rem;
 }
 
 .first-screen_button_wrapper {
-    // margin-top: 45px;
     margin-top: 1.53rem;
-    // margin-bottom: 100px;
     margin-bottom: 3.39rem;
 }
 
 .button_text_cost {
-    // font-size: 25px;
     font-size: 0.83rem;
-    // margin-top: 20px;
     margin-top: 0.68rem;
 }
 
 .first-screen_photo img {
     position: absolute;
-    // height: 750px;
     height: 25rem;
-    // width: 750px;
     width: 25rem;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .content_with_menu_wrapper>.participants_account_menu {
-    // max-height: none;
-    // top: auto;
-    // // bottom: -140px;
-    // bottom: -4.75rem;
     position: sticky;
     left: 70%;
     top: 3.05rem;
     max-height: fit-content;
     margin-top: -8.51rem;
-    // margin-top: -60vh;
-    // margin-top: calc(100% - 400px);
-    // margin-top: calc(-100vh + 14rem);
 }
 
 .first-screen_avatar img {
-    // height: 550px;
-    // width: 550px;
     height: 18.33rem;
     width: 18.33rem;
     border-radius: 50%;
@@ -595,26 +523,20 @@ input[type=number] {
 }
 
 .first-screen_account_time {
-    // margin-top: 80px;
     margin-top: 2.71rem;
     min-height: 1rem;
     font-weight: 700;
-    // font-size: 80px;
     font-size: 2.66rem;
     letter-spacing: 0.05em;
     color: @white
 }
 
 .first-screen_account_button_wrapper {
-    // margin-top: 25px;
     margin-top: .85rem;
-    // margin-bottom: 50px;
     margin-bottom: 1.69rem;
 }
 
 .first-screen_no_avatar p {
-    // height: 550px;
-    // width: 550px;
     height: 18.33rem;
     width: 18.33rem;
     border-radius: 50%;
@@ -628,36 +550,26 @@ input[type=number] {
 }
 
 .about_karathon {
-    // margin-top: 200px;
     margin-top: 6.78rem;
     max-width: 70%;
     position: relative;
 }
 
 .about_karathon_description {
-    // margin-top: 50px;
     margin-top: 1.69rem;
-    // max-width: 70%;
     line-height: 1.4;
 }
 
-// .about_karathon_list {
-//     max-width: 70%;
-// }
-
 .about_karathon_list_wrapper {
-    // margin-top: 100px;
     margin-top: 3.39rem;
 }
 
 .about_karathon_list_wrapper li {
     position: relative;
-    // font-size: 40px;
     font-size: 1.33rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    // padding-bottom: 100px;
     padding-bottom: 3.39rem;
 }
 
@@ -665,12 +577,8 @@ input[type=number] {
     content: counter(num);
     counter-increment: num;
     position: absolute;
-    // bottom: 30px;
-    // bottom: 1.02rem;
-    // left: -50px;
     left: -1.69rem;
     font-family: "MontserratAlternates-Bold";
-    // font-size: 200px;
     font-size: 6.66rem;
     font-weight: normal;
     color: transparent;
@@ -682,21 +590,15 @@ input[type=number] {
 }
 
 .about_karathon_description_button_wrapper {
-    // margin-top: 100px;
     margin-top: 3.39rem;
 }
 
 .about_karathon_wrapper {
-    // margin-top: 80px;
     margin-top: 2.71rem;
-    // max-width: 70%;
-    // position: relative;
-    // z-index: 1;
 }
 
 .about_karathon_wrapper dt {
     color: @pink;
-    // margin-top: 100px;
     margin-top: 3.39rem;
 }
 
@@ -709,9 +611,7 @@ input[type=number] {
 }
 
 .about_karathon_button_wrapper {
-    // margin-top: 100px;
     margin-top: 3.39rem;
-    // margin-bottom: 160px;
     margin-bottom: 5.42rem;
 }
 

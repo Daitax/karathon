@@ -1,10 +1,8 @@
 .team_content_button {
-    // margin-top: 75px;
     margin-top: 2.54rem;
 }
 
 .team_wishlist_wrapper {
-    // margin-top: 150px;
     margin-top: 5.08rem;
 }
 
@@ -18,7 +16,6 @@
     display: flex;
     align-items: center;
     width: 50%;
-    // margin-top: 50px;
     margin-top: 1.69rem;
 
 
@@ -41,8 +38,6 @@
     }
 
     img {
-        // height: 150px;
-        // width: 150px;
         height: 5rem;
         width: 5rem;
         border-radius: 50%;
@@ -51,24 +46,19 @@
 
     div {
         flex: 1;
-        // margin-left: 20px;
         margin-left: .68rem;
     }
 
     span {
-        // font-size: 16px;
         font-size: .53rem;
         color: @pink
     }
 
     button {
         .pink_button();
-        // padding: 12px 40px 12px 20px;
         padding: .41rem 1.36rem .41rem .68rem;
         position: absolute;
-        // bottom: 12px;
         bottom: .41rem;
-        // left: 88px;
         left: 2.98rem;
         border: none;
         appearance: button;
@@ -77,7 +67,6 @@
     p {
         margin-bottom: 3px;
         font-weight: 700;
-        // font-size: 20px;
         font-size: .66rem;
         letter-spacing: 0.03em;
         text-transform: uppercase;
@@ -85,7 +74,6 @@
 
     p:last-child {
         font-weight: 400;
-        // font-size: 16px;
         font-size: .53rem;
     }
 
@@ -96,30 +84,23 @@
 
 .team_wishlist_items_add {
     cursor: pointer;
-    // margin-top: 50px;
     margin-top: 1.69rem;
     position: relative;
 }
 
 .team_wishlist_items_add_circle {
-    // height: 150px;
-    // width: 150px;
     position: relative;
     height: 5rem;
     width: 5rem;
     border-radius: 50%;
-    // border: 2px solid @pink;
     border: var(--border-main) solid @pink;
 
     &::before {
         content: "";
         position: absolute;
         left: 50%;
-        // top: calc(50% - 21.5px);
         top: calc(50% - .73rem + var(--border-main)/2);
         width: var(--border-main);
-        // width: .07rem;
-        // height: 43px;
         height: 1.46rem;
         background: @pink;
     }
@@ -127,29 +108,22 @@
     &::after {
         content: "";
         position: absolute;
-        // left: calc(50% - 21.5px);
         left: calc(50% - .73rem + var(--border-main)/2);
         top: 50%;
-        // width: 43px;
         width: 1.46rem;
         height: var(--border-main);
-        // height: .07rem;
         background: @pink;
     }
 }
 
 .team_wishlist_items_add_button_wrapper {
     position: absolute;
-    // bottom: 12px;
     bottom: .41rem;
-    // left: 88px;
     left: 2.98rem;
     width: max-content;
 
     button {
-        // padding: 12px 40px 12px 20px;
         padding: .41rem 1.36rem .41rem .68rem;
-        // font-size: 20px;
         font-size: .66rem;
     }
 }

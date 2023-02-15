@@ -1,8 +1,6 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% block content %}
-{% comment %} {% load navbar %} {% endcomment %}
-{% load steps_block %}
 {% load get_outlink %}
 
 <div class="content_wrapper">
@@ -50,7 +48,6 @@
       {% include 'core/includes/pink_button.html' %}
     </div>
 {% endblock %}
-    {% comment %} {% steps_block %} {% endcomment %}
 {% block content_second %}
   </div>
   <div class="about_karathon">

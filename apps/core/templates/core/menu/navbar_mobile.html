@@ -9,7 +9,6 @@
     </div>
     <div class="header_navbar_menu_mobile_background" window-elem="mobile_menu">
         <div class="header_navbar_menu_mobile_wrapper">
-            {% comment %} {% include 'core/menu/navbar_items.html' %} {% endcomment %}
             {% if karathons|length == 0 %}
             <li><a href="{{ about_karathons_url }}">О карафонах</a></li>
             {% elif karathons|length == 1 %}
@@ -46,7 +45,6 @@
                 <img class="no_avatar" src="{% static 'core/img/no_avatar.png' %}">
                 {% endif %}
             </div>
-            {% comment %} {% account_menu %} {% endcomment %}
             <div class="participants_account_menu" window-elem="account_menu">
             {% account_menu %}
             </div>

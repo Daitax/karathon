@@ -15,11 +15,6 @@
     {% csrf_token %}
   </head>
   <body>
-    {% comment %} <div style="height:100{% if request.resolver_match.view_name  == 'core:site-index' %}%{% else %}vh{% endif %}"> {% endcomment %}
-    {% comment %} {% if request.resolver_match.view_name  == 'core:site-index' %}
-      {% include 'core/includes/footsteps.html' %}
-    {% endif %} {% endcomment %}
-    
     <div class="global-wrapper">
       {% if request.resolver_match.view_name  == 'core:site-index' %}
         {% include 'core/includes/footsteps.html' %}
@@ -27,9 +22,7 @@
       <header class="header" window-elem="header">{% navbar %}</header>
       {% if request.resolver_match.view_name  != 'core:site-index' %}
       {% include 'account/includes/first_screen.html' %}
-      {% comment %} {% endif %} {% endcomment %}
       <div class="content_with_menu_wrapper">
-        {% comment %} {% if request.resolver_match.view_name  != 'core:site-index' %} {% endcomment %}
         <div class="participants_account_menu">
           {% account_menu %}
         </div>
@@ -49,10 +42,7 @@
       </div>
       {% task_today %}
       <footer class="footer" window-elem="footer">{% include 'core/includes/footer.html' %}</footer>
-      
     </div>
-    {% comment %} {% task_today %} {% endcomment %}
-  {% comment %} </div> {% endcomment %}
     <div class="overlay" popup-element="overlay">
       {% if user.is_authenticated %}
         <div class="report_form_wrapper" popup-element="popup" form-name="report"></div>

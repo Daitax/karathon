@@ -102,7 +102,6 @@ function submitAddDesireForm(button) {
   })
     .then((response) => response.json())
     .then(function (data) {
-      // console.log(data)
       if (data.status == 'ok') {
         if (data.action == 'window') {
           addDesireFormWrapper.innerHTML = data.window
