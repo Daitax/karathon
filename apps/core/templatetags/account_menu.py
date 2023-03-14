@@ -17,5 +17,5 @@ def account_menu(context):
         }
     else:
         return {
-            'user': user,
+            'user': context.request.user,
         }

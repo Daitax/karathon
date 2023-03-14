@@ -2,6 +2,7 @@ import datetime
 import hashlib
 
 import pytz
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -162,8 +163,8 @@ class Participant(User):
                 pass
         return None
 
-
-signals.post_save.connect(send_new_participant_notifications, sender=Participant)
+if not settings.IS_TESTING:
+    signals.post_save.connect(send_new_participant_notifications, sender=Participant)
 
 
 class Sms(models.Model):

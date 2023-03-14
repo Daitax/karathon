@@ -28,7 +28,18 @@ SECRET_KEY = 'django-insecure-()726)0h^0f$_9h3k7*hidl@5pa0h5x*+@r-0ay_g4co8s!_4n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG'),
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'dyugaev.beget.tech', '213.139.208.116', '192.168.0.103', '192.168.1.2']
+IS_TESTING = False
+
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'dyugaev.beget.tech',
+    '213.139.208.116',
+    '192.168.0.103',
+    '192.168.1.2',
+    'testserver',
+]
+
 INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 # Application definition
@@ -91,18 +102,26 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get('DB_ENGINE'),
-        'HOST': os.environ.get('DB_HOST'),
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'OPTIONS': {
-            'init_command': 'set session wait_timeout=600;'
+if IS_TESTING:
+    DATABASES = {
+        'default': {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
         }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.environ.get('DB_ENGINE'),
+            'HOST': os.environ.get('DB_HOST'),
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'OPTIONS': {
+                'init_command': 'set session wait_timeout=600;'
+            },
+        }
+    }
 
 
 # Password validation
@@ -184,3 +203,7 @@ VK_URL = "https://vk.com/karachunia"
 YOUTUBE_URL = "https://www.youtube.com/@annakarachunskaya4096"
 
 MESSAGES_PER_PAGE = 5
+
+LOGOUT_REDIRECT_URL = '/'
+
+CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"

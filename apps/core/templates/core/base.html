@@ -23,12 +23,14 @@
       {% if request.resolver_match.view_name  != 'core:site-index' %}
       {% include 'account/includes/first_screen.html' %}
       <div class="content_with_menu_wrapper">
+        {% if request.user.is_authenticated %}
         <div class="participants_account_menu">
           {% account_menu %}
         </div>
         <div class="participants_account_menu mobile">
           {% account_menu %}
         </div>
+        {% endif %}
       {% else %}
       <div class="content_with_menu_wrapper">
       {% endif %}

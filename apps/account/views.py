@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_http_methods
+from django.urls import reverse_lazy
 
 from .forms import AuthPhoneForm, AuthCodeForm, ParticipantForm, WinnerQuestionnaireForm
 from .models import Participant, Sms, Winner
@@ -189,7 +190,7 @@ def index(request):
     return render(request, 'account/index.html', context)
 
 
-@login_required
+@login_required(login_url="core:site-index")
 def messages(request):
     if request.method == 'POST':
         return messages_read(request)
@@ -256,6 +257,6 @@ def results(request):
     context = {}
     return render(request, 'account/results.html', context)
 
-def user_logout(request):
-    logout(request)
-    return redirect('core:site-index')
+# def user_logout(request):
+#     logout(request)
+#     return redirect('core:site-index')

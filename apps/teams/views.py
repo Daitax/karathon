@@ -4,7 +4,6 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 import json
 
-# Create your views here.
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_http_methods
 

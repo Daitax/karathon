@@ -27,9 +27,13 @@ urlpatterns = [
 
     path('', include('apps.core.urls')),
 
-    path('account/', include('apps.account.urls')),
-    path('steps/', include('apps.steps.urls'))
+    path('account/', include('apps.account.urls', namespace="account")),
+    path('steps/', include('apps.steps.urls')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler403 = "apps.core.views.permission_denied"
+handler404 = "apps.core.views.page_not_found"
+handler500 = "apps.core.views.server_error"
