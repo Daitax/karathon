@@ -5,3 +5,6 @@
 docker exec -it python bash -c "cd karathon && python3 manage.py test apps"
 ```
 3. не забыть выключить IS_TESTING = False
+
+При отправке отчета можно включить проверку совпадения количества введеных шагов и скриншота, для этого в файле settings.py включить переключатель IS_NEED_CHECK_STEPS = True
+После этого при отправке отчета будет проверяться соответствие.

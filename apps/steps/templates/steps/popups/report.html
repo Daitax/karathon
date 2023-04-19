@@ -1,6 +1,6 @@
 <div class="close" popup-element="close"></div>
-<h4>Сдать отчёт</h4>
 {% if window == 'form' %}
+  <h4>Сдать отчёт</h4>
   <form enctype="multipart/form-data" report-form-elem="form">
     <input type="hidden" name="window" value="{{ window }}" report-form-elem="window">
     <label>
@@ -17,6 +17,7 @@
   </form>
 {% endif %}
 {% if window == 'successful' %}
+  <h4>Отчёт сдан</h4>
   <div reload="{{ reload_overlay }}">
     Отлично!<br>
     Твой результат скоро появится на сайте!

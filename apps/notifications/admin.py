@@ -1,9 +1,7 @@
 from django import forms
 from django.contrib import admin
 
-# Register your models here.
-
-from apps.notifications.models import NotificationTemplate, Notification
+from apps.notifications.models import Notification, NotificationTemplate
 
 
 class NotificationTemplateAdmin(admin.ModelAdmin):
@@ -13,10 +11,9 @@ class NotificationTemplateAdmin(admin.ModelAdmin):
 admin.site.register(NotificationTemplate, NotificationTemplateAdmin)
 
 
-
 class NotificationAdmin(admin.ModelAdmin):
-    list_display = ("participant","is_viewed")
+    list_display = ("participant", "is_viewed")
     list_editable = ("is_viewed",)
-    
+
 
 admin.site.register(Notification, NotificationAdmin)

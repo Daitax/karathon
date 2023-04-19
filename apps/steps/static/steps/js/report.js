@@ -24,6 +24,10 @@ function openReportForm() {
         }
       }
     })
+    .then(function () {
+      let stepsInput = document.querySelector('[name="steps"]')
+      stepsInput.focus()
+    })
 }
 
 function closeReportForm() {

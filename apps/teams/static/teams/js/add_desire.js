@@ -24,6 +24,10 @@ function openAddDesireForm() {
         }
       }
     })
+    .then(function () {
+      let ph = document.querySelector('[desire-form-elem="phone"]')
+      ph.focus()
+    })
 }
 
 let userToDelete = document.querySelectorAll('[window-elem="delete"]')
