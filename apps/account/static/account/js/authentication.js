@@ -91,7 +91,8 @@ if (authenticationFormWrapper) {
       submitAuthenticationForm(target)
     }
     if (target.getAttribute('auth-form-elem') == 'later') {
-      //  TODO Написать функцию закрытия overlay
+      closeAuthenticationForm()
+      window.location.reload()
     }
     if (target.getAttribute('popup-element') == 'close') {
       closeAuthenticationForm()

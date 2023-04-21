@@ -27,7 +27,6 @@
   <div auth-form-elem="enter" reload="{{ reload_overlay }}">
   <div class="text">Не забудь заполнить анкету в личном кабинете</div>
   <a class="button pink_button" href="{% url 'account:account-index' %}"><span>Заполнить</span></a>
-  <button class="white_button button" auth-form-elem="later"><span>Позже</span></button>
-  {% comment %} <button class="white_button button" auth-form-elem="later">Позже</button> {% endcomment %}
+  <button class="white_button button" auth-form-elem="later">Позже</button>
 {% endif %}
 </div>
