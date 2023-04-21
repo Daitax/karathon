@@ -118,6 +118,7 @@ if (markedAsReadButton) {
 markedButtons.forEach(element => element.addEventListener("click", function () {
     // Передаёт id выбранных сообщений во вьюху для обновления атрибута is_viewed
     data["amount"] = amountMessagesShowed()
+    document.querySelector('[window-elem="marked_as_read_all"] > span').classList.add("click_opacity")
 
     let csrfToken = getCookie('csrftoken')
 
@@ -142,11 +143,19 @@ markedButtons.forEach(element => element.addEventListener("click", function () {
         .then(function () {
             hideMarkAllMessagesButton()
         })
+        .then(
+            function () {
+                if (markedAsReadAllButton) {
+                    document.querySelector('[window-elem="marked_as_read_all"] > span').classList.remove("click_opacity")
+                }
+            }
+        )
 }))
 
 if (previousMessages) {
     previousMessages.addEventListener("click", function () {
         // Выводит прочитанные сообщения при нажатии на кнопку
+        previousMessages.classList.toggle("click_opacity")
 
         data = {}
         let csrfToken = getCookie('csrftoken')
@@ -170,5 +179,12 @@ if (previousMessages) {
                     previousMessages.setAttribute("style", "display:none")
                 }
             })
+            .then(
+                function () {
+                    if (previousMessages) {
+                        previousMessages.classList.toggle("click_opacity")
+                    }
+                }
+            )
     })
 }

@@ -155,6 +155,14 @@ input[type=number] {
     &::before {
         background: @gradient_pink_blue;
     }
+
+    &.hover_before {
+        background: @gradient_pink_blue;
+        transition: all 0.5s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+        background-size: 175% 175%;
+        opacity: 1;
+        .hover_animation();
+    }
 }
 
 .white_button {
@@ -625,6 +633,7 @@ input[type=number] {
     visibility: hidden;
     opacity: 0;
     z-index: 20;
+    transition: var(--overlay-transition);
 
     &.show {
         visibility: visible;

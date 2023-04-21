@@ -39,7 +39,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "dyugaev.beget.tech",
     "213.139.208.116",
-    "192.168.0.102",
+    "192.168.0.103",
     "192.168.1.9",
     "testserver",
 ]
@@ -212,7 +212,7 @@ COST_OF_PARTICIPATION = "Стоимость участия \u2014 500₽"
 
 MESSAGES_PER_PAGE = 5
 
-LOGOUT_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "core:site-index"
 
 CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"
 

@@ -42,6 +42,10 @@ function submitAuthenticationForm(button) {
   let csrfToken = getCookie('csrftoken')
   let data = new FormData(authenticationForm)
 
+  if (document.querySelector('[auth-form-elem="button"] > span')) {
+    document.querySelector('[auth-form-elem="button"] > span').classList.add("click_opacity")
+  }
+
   fetch('/account/authentication/', {
     method: "POST",
     body: data,

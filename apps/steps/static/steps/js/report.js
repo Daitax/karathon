@@ -28,6 +28,15 @@ function openReportForm() {
       let stepsInput = document.querySelector('[name="steps"]')
       stepsInput.focus()
     })
+    .then(
+      function () {
+        let reportCustomInput = document.querySelector('[report-form-elem="custom_input"]')
+
+        reportCustomInput.addEventListener("click", function () {
+          reportCustomInput.classList.add("click_opacity")
+        })
+      }
+    )
 }
 
 function closeReportForm() {
@@ -41,6 +50,8 @@ function submitReportForm(button) {
 
   let csrfToken = getCookie('csrftoken')
   let data = new FormData(reportForm)
+
+  document.querySelector('[report-form-elem="button"] > span').classList.add("click_opacity")
 
   fetch('/steps/addreport/', {
     method: "POST",

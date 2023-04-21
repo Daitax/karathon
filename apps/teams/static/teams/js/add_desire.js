@@ -57,6 +57,7 @@ userToDelete.forEach(element => element.addEventListener("click", function () {
     let choise = el.getAttribute("popup-element")
 
     if (choise == "confirm") {
+      el.classList.add("click_opacity")
       confirmationClose()
 
       if (data.is_delete) {
@@ -97,6 +98,8 @@ function submitAddDesireForm(button) {
   let csrfToken = getCookie('csrftoken')
   let data = new FormData(addDesireForm)
 
+  document.querySelector('[desire-form-elem="button"] > span').classList.add("click_opacity")
+
   fetch('/account/team/add-desire/', {
     method: "POST",
     body: data,
@@ -112,11 +115,18 @@ function submitAddDesireForm(button) {
         }
       }
     })
+    .then(function () {
+      document.querySelector('[button-action="open-add-desire-form"] span').classList.remove("click_opacity")
+    })
 }
 
 let openFormAddDesireButton = document.querySelector('[button-action="open-add-desire-form"]')
 if (openFormAddDesireButton) {
-  openFormAddDesireButton.addEventListener('click', openAddDesireForm)
+  openFormAddDesireButton.addEventListener('click', function () {
+    document.querySelector('[button-action="open-add-desire-form"] span').classList.add("click_opacity")
+    openAddDesireForm()
+    // document.querySelector('[button-action="open-add-desire-form"] span').classList.remove("click_opacity")
+  })
 }
 let addDesireFormWrapper = document.querySelector('[popup-element="popup"][form-name="desire"]')
 if (addDesireFormWrapper) {

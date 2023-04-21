@@ -111,6 +111,7 @@
     visibility: hidden;
     opacity: 0;
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+    transition: var(--popup-transition);
 
     &.show {
         visibility: visible;
@@ -247,4 +248,8 @@
     a {
         color: @pink;
     }
+}
+
+.click_opacity {
+    opacity: .3;
 }

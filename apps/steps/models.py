@@ -54,36 +54,6 @@ class Step(models.Model):
         # image_url = str(photo.temporary_file_path())
         scale_coef = [0.25, 0.5, 1, 2, 3, 4, 5, 6]
         min_thresh = 10
-        # delta_thresh = 10
-        # max_thresh = 200
-        # max_thresh = 20
-
-        # def checking(arr, val):
-        #     value = val
-        #     result = []
-        #     if len(arr) == 1:
-        #         result.append(
-        #             str(steps)
-        #             in text_from_screenshot(image_url, arr[0], value)
-        #         )
-        #         result.append(text_from_screenshot(image_url, arr[0], value))
-        #         return result
-        #     while value <= max_thresh:
-        #         if str(steps) in text_from_screenshot(
-        #             image_url, arr[0], value
-        #         ):
-        #             result.append(
-        #                 [
-        #                     True,
-        #                     arr[0],
-        #                     value,
-        #                     text_from_screenshot(image_url, arr[0], value),
-        #                 ]
-        #             )
-        #             return result
-        #         value += delta_thresh
-        #     return checking(arr[1::], val)
-
         return checking(scale_coef, min_thresh, photo, steps)
 
     def total(self):

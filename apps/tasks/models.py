@@ -3,7 +3,6 @@ import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
-# Create your models here.
 from apps.account.models import Participant
 from apps.core.models import Category, Karathon
 from apps.core.utils import ending_numbers
