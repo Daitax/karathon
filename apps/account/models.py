@@ -10,7 +10,7 @@ from django.db.models import signals
 from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.account.signals import send_new_participant_notifications
-from apps.core.models import Category, Karathon, CharityCategory
+from apps.core.models import Category, CharityCategory, Karathon
 from apps.core.utils import get_participant_photo_path
 
 
