@@ -37,7 +37,7 @@
             </a>
         </li>
         <li><a href="javascript:void(0)">Онлайн</a></li>
-        {% if active_karathon_participant %}
+        {% comment %} {% if active_karathon_participant %} {% endcomment %}
             {% if is_today_report %}
                 <li class="sent">Отчёт сдан</li>
             {% else %}
@@ -47,7 +47,7 @@
                 </a>
             </li>
             {% endif %}
-        {% endif %}
+        {% comment %} {% endif %} {% endcomment %}
         <li><a href="{{ logout_url }}" menu-elem="logout">Выйти</a></li>
     </nav>
 </div>

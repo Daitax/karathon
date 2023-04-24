@@ -5,7 +5,13 @@ from apps.core.models import Karathon
 
 
 def index(request):
-    return render(request, "core/index.html", {"user": request.user})
+    return render(
+        request,
+        "core/index.html",
+        {
+            "user": request.user,
+        },
+    )
 
 
 def about_karathons(request):
