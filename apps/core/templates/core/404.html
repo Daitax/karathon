@@ -1,3 +1,40 @@
-<h1>Custom 404</h1>
-<p>Страницы с адресом {{ path }} не существует</p>
-<a href="{% url 'core:site-index' %}">Идите на главную</a>
+{% load compile_static %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Карафон</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" viewport-fit="cover" />
+    <link rel="icon" href="{%static 'core/img/favicon.png' %}" type="image">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'core/less/style.less'|compile %}?v{% now 'u' %}" />
+    {% csrf_token %}
+</head>
+
+<body>
+    <div class="global-wrapper">
+        <div class="custom_404_wrapper">
+            <div class="container">
+                <div class="custom_404_text">
+                    <div class="text_error">
+                        <h1>Страница не найдена</h1>
+                        <div>404</div>
+                    </div>
+                    <p>К сожалению, ссылка устарела или такой страницы никогда не существовало</p>
+                </div>
+                <div class="custom_404_menu">
+                    <li><a href="/">На главную</a></li>
+                    <li><a href="javascript:void(0)">n-ый карафон</a></li>
+                    <li><a href="javascript:void(0)">Рекордсмены</a></li>
+                    <li><a href="javascript:void(0)">О карачуне</a></li>
+                    <li><a href="{% url 'account:account-index' %}">Личный кабинет</a></li>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
