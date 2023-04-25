@@ -70,16 +70,17 @@
 .account_content_avatar_ex {
     position: relative;
     height: 8.46rem;
-}
 
-.account_content_avatar_ex img {
-    position: absolute;
-    top: 0;
-    height: 8.33rem;
-    width: 8.33rem;
-    border-radius: 50%;
-    object-fit: cover;
-    cursor: pointer;
+    img {
+        position: absolute;
+        top: 0;
+        height: 8.33rem;
+        width: 8.33rem;
+        border-radius: 50%;
+        object-fit: cover;
+        cursor: pointer;
+        .avatar_border();
+    }
 }
 
 .account_content_no_avatar {
@@ -123,6 +124,7 @@ div[window-elem="avatar_preview"] {
     object-fit: cover;
     cursor: pointer;
     display: none;
+    .avatar_border();
 }
 
 div[window-elem="avatar_preview_big"] {
@@ -141,7 +143,7 @@ div[window-elem="avatar_preview_big"] {
 
 .account_content_avatar_text {
     margin-left: 3.05rem;
-    margin-top: 6.44rem;
+    margin-top: 6.2rem;
     width: max-content;
     padding: .41rem 1.36rem .41rem .68rem;
     font-size: .66rem;
