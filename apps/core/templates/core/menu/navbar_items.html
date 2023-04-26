@@ -25,7 +25,7 @@
   </li>
 {% endif %}
 <li><a href="javascript:void(0)">Рекордсмены</a></li>
-<li><a href="javascript:void(0)">О Карачуне</a></li>
+<li><a href="{% url 'core:about_karachunia' %}">О Карачуне</a></li>
 <li><a href="javascript:void(0)">Прошедшие карафоны</a></li>
 {% comment %} <li><a href="javascript:void(0)">Благотворительность</a></li> {% endcomment %}
 <li><a href="{% get_outlink 'TELEGRAM_URL' %}" target="_blank">Telegram</a></li>

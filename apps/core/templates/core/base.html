@@ -22,7 +22,7 @@
         {% include 'core/includes/footsteps.html' %}
       {% endif %}
       <header class="header" window-elem="header">{% navbar %}</header>
-      {% if request.resolver_match.view_name  != 'core:site-index' %}
+      {% if request.resolver_match.view_name  != 'core:site-index' and request.resolver_match.view_name != 'core:about_karachunia' %}
       {% include 'account/includes/first_screen.html' %}
       <div class="content_with_menu_wrapper">
         {% if request.user.is_authenticated %}

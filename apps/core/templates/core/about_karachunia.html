@@ -1,0 +1,102 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="about_kara_wrapper">
+    <div class="first-screen_wrapper">
+        <div class="first-screen container" window-elem="first-screen">
+            <div class="about_kara_first_screen">
+                <div class="about_kara_first_screen_photo">
+                    <img src="{% static 'core/img/about_kara_1.svg' %}" alt="about_kara_1">
+                    <span>давай знакомиться!</span>
+                </div>
+                <div>
+                    <h1>о карачуне</h1>
+                    <div class="about_kara_first_screen_text">
+                        <h4>Про любовь. Про себя.</h4>
+                        <p>Меня зовут Аня и я люблю улыбаться. Я делаю это
+                            часто,
+                            много и всегда без причины, что, как
+                            известно,
+                            признак небольшого ума.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <section id="1">
+            <div class="about_kara_section_wrapper text_right">
+                <div class="about_kara_section_photo_wrapper photo_left">
+                    <img src="{% static 'core/img/about_kara_2.svg' %}" alt="about_kara_2">
+                    <img src="{% static 'core/img/steps/footstep_blue.svg' %}" alt="">
+                    <img src="{% static 'core/img/steps/footstep_green.svg' %}" alt="">
+                    <img src="{% static 'core/img/steps/footstep_pink.svg' %}" alt="">
+                    <img src="{% static 'core/img/steps/footstep_pink.svg' %}" alt="">
+                </div>
+                <p>
+                    Я родилась и выросла на Дальнем Востоке, в славном городе-герое Хабаровск, но уже много лет живу в
+                    США.
+                    Последние два года в солнечном штате Аризона.
+                </p>
+            </div>
+        </section>
+        <section id="2">
+            <div class="about_kara_section_wrapper text_left">
+                <div class="about_kara_section_photo_wrapper photo_right">
+                    <img src="{% static 'core/img/about_kara_3.svg' %}" alt="about_kara_3">
+                    <img src="{% static 'core/img/steps/footstep_blue.svg' %}" alt="">
+                    <img src="{% static 'core/img/steps/footstep_green.svg' %}" alt="">
+                    <img src="{% static 'core/img/steps/footstep_pink.svg' %}" alt="">
+                    <img src="{% static 'core/img/steps/footstep_pink.svg' %}" alt="">
+                </div>
+                <p>
+                    Год назад судьба свела меня с Физиклом. Я прошла два потока и стала куратором. Иногда правильным,
+                    иногда
+                    - нет.
+                    Я не проповедую здоровый образ жизни, как религию, но считаю, что каждый способен обзавестись
+                    полезными
+                    привычками и сделать своё существование немножечко лучше.
+                </p>
+            </div>
+        </section>
+        <section id="3">
+            <div class="about_kara_section_wrapper text_right">
+                <div class="about_kara_section_photo_wrapper photo_left">
+                    <img src="{% static 'core/img/about_kara_4.svg' %}" alt="about_kara_4">
+                    <img src="{% static 'core/img/steps/footstep_blue.svg' %}" alt="">
+                    <img src="{% static 'core/img/steps/footstep_green.svg' %}" alt="">
+                    <img src="{% static 'core/img/steps/footstep_pink.svg' %}" alt="">
+                    <img src="{% static 'core/img/steps/footstep_pink.svg' %}" alt="">
+                </div>
+                <p>
+                    Идея марафона по шагам пришла в мою голову ещё до кураторства и первые пять марафонов я провела
+                    самостоятельно. После этого, руководство проекта Physical Transformation, заметив во мне потенциал,
+                    взяло меня под крыло, отмыло от грязи, научило есть вилкой и поделилось со мной самым дорогим, Вами.
+                </p>
+            </div>
+        </section>
+        <section id="4">
+            <div class="about_kara_section_wrapper text_left">
+                <div class="about_kara_section_photo_wrapper photo_right">
+                    <img src="{% static 'core/img/about_kara_5.svg' %}" alt="about_kara_5">
+                    <img src="{% static 'core/img/steps/footstep_blue.svg' %}" alt="">
+                    <img src="{% static 'core/img/steps/footstep_green.svg' %}" alt="">
+                    <img src="{% static 'core/img/steps/footstep_pink.svg' %}" alt="">
+                    <img src="{% static 'core/img/steps/footstep_pink.svg' %}" alt="">
+                </div>
+                <p>
+                    Спасибо всем тем, кто раз за разом возвращается в карафоны и тем, кто пришёл сюда в первый раз. Вы -
+                    моя
+                    мотивация к развитию и росту. Желательно, не вширь.<br><br>
+                    Ваша Карачуня.
+                </p>
+            </div>
+        </section>
+        <div class="about_karathon_description_button_wrapper">
+            {% include 'core/includes/pink_button.html' %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
