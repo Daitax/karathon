@@ -1,5 +1,6 @@
 {% load static %}
 {% load get_outlink %}
+{% url 'core:about_karachunia' as about_karachunia_url %}
 
 <div class="container">
     <div class="footer_nav">
@@ -22,7 +23,7 @@
         <div class="footer_nav_menu">
             <nav class="footer_nav_menu_items">
                 <li><a href="javascript:void(0)">Прошедшие карафоны</a></li>
-                <li><a href="{% url 'core:about_karachunia' %}">О Карачуне</a></li>
+                <li><a {% if request.resolver_match.view_name  == 'core:about_karachunia' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ about_karachunia_url }}" {% endif %}>О Карачуне</a></li>
                 {% comment %} <li><a href="javascript:void(0)">Благотворительность</a></li> {% endcomment %}
                 <li><a href="{% url 'account:account-index' %}">Личный кабинет</a></li>
                 <li><a href="javascript:void(0)">Политика конфиденциальности</a></li>
