@@ -20,6 +20,9 @@
       <button class="button pink_button" auth-form-elem="button">
         <span auth-form-elem="button">Подтвердить</span>
       </button>
+      <p>нажимая на кнопку, ты даешь согласие на <a href="{% url 'core:privacy_policy' %}" target="_blank">обработку и хранение персональных
+        данных</a>
+      </p>
     {% endif %}
   </form>
 {% endif %}

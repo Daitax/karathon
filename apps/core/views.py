@@ -1,29 +1,24 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import render
-from django.views.generic.base import TemplateView
 
 from apps.account.models import Participant
 from apps.core.models import Karathon
 
 
-def index(request):
-    # champ_list = Participant.objects.annotate(Sum("steps")).order_by(
-    #     "steps__sum"
-    # )
+# def index(request):
+#     # champ_list = Participant.objects.annotate(Sum("steps")).order_by(
+#     #     "steps__sum"
+#     # )
 
-    return render(
-        request,
-        "core/index.html",
-        {
-            "user": request.user,
-            # "champ_list": champ_list,
-        },
-    )
-
-
-class AboutKarachuniaView(TemplateView):
-    template_name = "core/about_karachunia.html"
+#     return render(
+#         request,
+#         "core/index.html",
+#         {
+#             "user": request.user,
+#             # "champ_list": champ_list,
+#         },
+#     )
 
 
 def about_karathons(request):

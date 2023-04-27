@@ -9,7 +9,7 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <title>Карафон</title>
+    <title>{% block title %}Карафон{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" viewport-fit="cover" />
     <link rel="icon" href="{%static 'core/img/favicon.png' %}" type="image">
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/img/favicon.png' %}">
@@ -22,7 +22,7 @@
         {% include 'core/includes/footsteps.html' %}
       {% endif %}
       <header class="header" window-elem="header">{% navbar %}</header>
-      {% if request.resolver_match.view_name  != 'core:site-index' and request.resolver_match.view_name != 'core:about_karachunia' %}
+      {% if request.resolver_match.view_name  != 'core:site-index' and request.resolver_match.view_name != 'core:about_karachunia' and request.resolver_match.view_name != 'core:privacy_policy' %}
       {% include 'account/includes/first_screen.html' %}
       <div class="content_with_menu_wrapper">
         {% if request.user.is_authenticated %}
@@ -37,10 +37,12 @@
       <div class="content_with_menu_wrapper">
       {% endif %}
         <div class="content" window-elem="content">{% block content %}{% endblock %}</div>
-        {% if request.resolver_match.view_name  == 'core:site-index' %}
-        {% steps_block %}
-        {% else %}
-        <div class="container">{% steps_block %}</div>
+        {% if request.resolver_match.view_name != 'core:privacy_policy' %}
+          {% if request.resolver_match.view_name  == 'core:site-index' %}
+            {% steps_block %}
+          {% else %}
+            <div class="container">{% steps_block %}</div>
+          {% endif %}
         {% endif %}
         <div class="content" window-elem="content">{% block content_second %}{% endblock %}</div>
       </div>
