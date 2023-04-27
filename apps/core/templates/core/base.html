@@ -39,7 +39,9 @@
         <div class="content" window-elem="content">{% block content %}{% endblock %}</div>
         {% if request.resolver_match.view_name != 'core:privacy_policy' %}
           {% if request.resolver_match.view_name  == 'core:site-index' %}
+          <div class="container">
             {% steps_block %}
+          </div>
           {% else %}
             <div class="container">{% steps_block %}</div>
           {% endif %}

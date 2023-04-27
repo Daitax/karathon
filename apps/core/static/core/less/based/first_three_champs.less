@@ -1,0 +1,97 @@
+.first_champs_block {
+    background: @pink;
+    width: 100vw;
+    overflow-x: scroll;
+    position: relative;
+
+    .wrapper {
+        padding: 5.67rem 0 2.28rem 4%;
+
+        ol {
+            display: flex;
+
+
+            li {
+                display: inline;
+                margin-left: -2.62rem;
+                position: relative;
+
+                div {
+                    margin-left: 4.1rem;
+                    margin-top: 0.7rem;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+                }
+
+                .champ_nameplate {
+                    background: white;
+                    padding: .49rem .69rem;
+                    width: 12.8rem;
+                    margin-left: 0;
+                    margin-top: -1.65rem;
+                    position: absolute;
+
+                    p {
+                        &:nth-child(1) {
+                            font-size: 1.38rem;
+                            font-weight: 700;
+                            color: @pink;
+                        }
+
+                        &:nth-child(2) {
+                            font-size: .86rem;
+                            font-weight: 700
+                        }
+
+                        &:nth-child(3) {
+                            font-size: .76rem
+                        }
+                    }
+                }
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &::before {
+                    content: counter(num);
+                    counter-increment: num;
+                    color: @white;
+                    font-size: 20.69rem;
+                    font-weight: 700;
+                    position: absolute;
+                    top: -7.55rem;
+                }
+            }
+        }
+    }
+}
+
+.champ_photo {
+    position: inherit;
+    width: 12.9rem;
+    height: 12.19rem;
+
+    img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+
+.first_champs_block_link {
+    margin-top: 4.72rem;
+
+    a {
+        text-transform: uppercase;
+        color: @white;
+        font-weight: 700;
+    }
+}
