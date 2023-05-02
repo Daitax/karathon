@@ -1,6 +1,9 @@
 {% load static %}
 {% load get_outlink %}
 {% url 'core:about_karachunia' as about_karachunia_url %}
+{% url 'account:account-index' as account_index%}
+{% url 'core:champions' as champions_url %}
+{% url 'core:privacy_policy' as privacy_policy %}
 
 <div class="container">
     <div class="footer_nav">
@@ -16,7 +19,7 @@
                     </a>
                 </li>
                 <li><a href="javascript:void(0)">n-й карафон</a></li>
-                <li><a href="javascript:void(0)">Рекордсмены</a></li>
+                <li><a{% if request.resolver_match.view_name  == 'core:champions' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ champions_url }}" {% endif %}>Рекордсмены</a></li>
                 
             </nav>
         </div>
@@ -25,8 +28,10 @@
                 <li><a href="javascript:void(0)">Прошедшие карафоны</a></li>
                 <li><a {% if request.resolver_match.view_name  == 'core:about_karachunia' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ about_karachunia_url }}" {% endif %}>О Карачуне</a></li>
                 {% comment %} <li><a href="javascript:void(0)">Благотворительность</a></li> {% endcomment %}
-                <li><a href="{% url 'account:account-index' %}">Личный кабинет</a></li>
-                <li><a href="javascript:void(0)">Политика конфиденциальности</a></li>
+                {% if request.user.is_authenticated %}
+                <li><a {% if request.resolver_match.view_name  == 'account:account-index' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ account_index }}" {% endif %}>Личный кабинет</a></li>
+                {% endif %}
+                <li><a {% if request.resolver_match.view_name  == 'core:privacy_policy' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ privacy_policy }}" target="_blank" {% endif %}>Политика конфиденциальности</a></li>
             </nav>
         </div>
         <div class="footer_nav_social_media">

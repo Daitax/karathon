@@ -1,0 +1,52 @@
+@media (max-width: 576px) {
+    .first-screen_chapm_page_wrapper {
+        h1 {
+            &:nth-child(1) {
+                display: none;
+            }
+        }
+
+        h1 {
+            &:nth-child(2) {
+                display: block;
+            }
+        }
+    }
+
+    .champions_wrapper {
+        .desktop {
+            display: none;
+        }
+
+        .mobile {
+            display: block;
+
+            .mobile_champ_info {
+                margin-left: 1.5rem;
+
+                .information {
+                    margin-left: auto;
+
+                    p {
+                        min-width: auto;
+
+                        &:nth-child(2) {
+                            color: @pink;
+                            font-size: .55rem;
+                            font-weight: 700;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+
+                .steps {
+                    margin-top: .5rem;
+                }
+            }
+        }
+    }
+
+    .champions_item {
+        flex-direction: row;
+    }
+}

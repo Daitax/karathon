@@ -1,10 +1,14 @@
+import json
+
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import get_list_or_404, render
+from django.template.loader import render_to_string
+from django.views.generic.base import TemplateView
 
 from apps.account.models import Participant
 from apps.core.models import Karathon
-
 
 # def index(request):
 #     # champ_list = Participant.objects.annotate(Sum("steps")).order_by(
@@ -21,15 +25,100 @@ from apps.core.models import Karathon
 #     )
 
 
-def about_karathons(request):
-    return render(request, "core/about_karathons.html")
+# def about_karathons(request):
+#     return render(request, "core/about_karathons.html")
 
 
-def karathon(request, **kwargs):
-    karathon_number = kwargs["karathon_number"]
-    karathon = Karathon.objects.get(number=karathon_number)
-    context = {"karathon": karathon}
-    return render(request, "core/karathon.html", context)
+# class ChampionsView(TemplateView):
+#     template_name = "core/includes/chaps_page_block.html"
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         champs = get_list_or_404(Participant)
+#         list_ch = []
+#         i = 0
+#         for champ in champs:
+#             # if champ.photo:
+#             list_ch.append([champ, i + 1])
+#             i += 1
+#         context["champs"] = list_ch[:3]
+#         context["champs_rest"] = list_ch[3::]
+#         return context
+
+
+def champions(request):
+    if request.method == "GET_CHAMPS_LIST":
+        return add_champs_list(request)
+    champs = get_list_or_404(Participant)
+    list_ch = []
+    i = 0
+    for champ in champs:
+        # if champ.photo:
+        list_ch.append([champ, i + 1])
+        i += 1
+    champs = list_ch[: settings.CHAMPS_ON_FIRST_SCREEN]
+    champs_rest = list_ch[
+        settings.CHAMPS_ON_FIRST_SCREEN : settings.CHAMPS_ON_FIRST_SCREEN
+        + settings.CHAMPS_ON_PAGE
+    ]
+    return render(
+        request,
+        "core/champions.html",
+        {"champs": champs, "champs_rest": champs_rest},
+    )
+
+
+def add_champs_list(request):
+    data = json.loads(request.body)
+    champs_showed = data.pop("amount_champs")
+    more_champs = get_list_or_404(Participant)
+    more_champs_list = []
+    i = 0
+    for ch in more_champs:
+        more_champs_list.append([ch, i + 1])
+        i += 1
+    champs_to_show = (
+        champs_showed
+        + settings.CHAMPS_ON_FIRST_SCREEN
+        + settings.CHAMPS_ADDITION
+    )
+    champs_block = render_to_string(
+        "core/includes/champs_page_block.html",
+        {
+            "champs_rest": more_champs_list[
+                settings.CHAMPS_ON_FIRST_SCREEN : champs_to_show
+            ]
+        },
+        request,
+    )
+    next_champs_exist = True
+    if champs_to_show >= len(more_champs):
+        next_champs_exist = False
+    out = {
+        "status": "ok",
+        "champs_showed": champs_showed,
+        "champs_block": champs_block,
+        "next_champs_exist": next_champs_exist,
+    }
+    return JsonResponse(out)
+
+
+# def karathon(request, **kwargs):
+#     karathon_number = kwargs["karathon_number"]
+#     karathon = Karathon.objects.get(number=karathon_number)
+#     context = {"karathon": karathon}
+#     return render(request, "core/karathon.html", context)
+
+
+class KarathonView(TemplateView):
+    template_name = "core/karathon.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        karathon_number = kwargs["karathon_number"]
+        karathon = Karathon.objects.get(number=karathon_number)
+        context = {"karathon": karathon}
+        return context
 
 
 @login_required

@@ -22,7 +22,7 @@
         {% include 'core/includes/footsteps.html' %}
       {% endif %}
       <header class="header" window-elem="header">{% navbar %}</header>
-      {% if request.resolver_match.view_name  != 'core:site-index' and request.resolver_match.view_name != 'core:about_karachunia' and request.resolver_match.view_name != 'core:privacy_policy' %}
+      {% if request.resolver_match.view_name  != 'core:site-index' and request.resolver_match.view_name != 'core:about_karachunia' and request.resolver_match.view_name != 'core:privacy_policy' and request.resolver_match.view_name != 'core:champions' %}
       {% include 'account/includes/first_screen.html' %}
       <div class="content_with_menu_wrapper">
         {% if request.user.is_authenticated %}
@@ -68,6 +68,7 @@
     <script src="{% static 'core/js/functions.js' %}"></script>
     <script src="{% static 'core/js/base.js' %}"></script>
     <script src="{% static 'core/js/task.js' %}"></script>
+    <script src="{% static 'core/js/show_champions.js' %}"></script>
     <script src="{% static 'core/js/steps_countdown.js' %}"></script>
     <script src="{% static 'steps/js/report.js' %}"></script>
     <script src="{% static 'teams/js/add_desire.js' %}"></script>

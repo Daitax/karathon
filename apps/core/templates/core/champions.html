@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block title %}Рекордсмены{% endblock %}
+{% block content %}
+
+<div class="first-screen_wrapper">
+    <div class="first-screen container" window-elem="first-screen">
+        <div class="first-screen_chapm_page_wrapper">
+            <h1>Рекордсмены</h1>
+            <h1>Рекорды</h1>
+            {% include 'core/includes/first_champs.html' %}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="champions_wrapper" window-elem="champions_wrapper">
+        {% include 'core/includes/champs_page_block.html' %}
+    </div>
+    <div class="messages_items_next champions_button" window-elem="next_champs">
+        загрузить ещё
+    </div>
+</div>
+{% endblock %}

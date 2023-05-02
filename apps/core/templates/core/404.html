@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Карафон</title>
+    <title>Ошибка 400</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" viewport-fit="cover" />
     <link rel="icon" href="{%static 'core/img/favicon.png' %}" type="image">
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/img/favicon.png' %}">
@@ -30,7 +30,9 @@
                     <li><a href="javascript:void(0)">n-ый карафон</a></li>
                     <li><a href="javascript:void(0)">Рекордсмены</a></li>
                     <li><a href="javascript:void(0)">О карачуне</a></li>
+                    {% if request.user.is_authenticated %}
                     <li><a href="{% url 'account:account-index' %}">Личный кабинет</a></li>
+                    {% endif %}
                 </div>
             </div>
         </div>

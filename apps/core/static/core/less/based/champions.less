@@ -1,0 +1,91 @@
+.first_screen_first_champs {
+    overflow-x: inherit;
+
+    .first_screen_first_champs_wrapper {
+        padding-left: 0;
+        padding-top: 2.67rem;
+    }
+}
+
+.first-screen_chapm_page_wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2rem;
+
+    h1 {
+        &:nth-child(2) {
+            display: none;
+        }
+    }
+}
+
+.champions_wrapper {
+    margin-top: 2.76rem;
+
+    .desktop {
+        display: block;
+    }
+
+    .mobile {
+        display: none
+    }
+
+    >div {
+        margin-top: 1rem;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+}
+
+.champions_item {
+    display: flex;
+    align-items: center;
+
+    .place {
+        min-width: 7.52rem;
+        font-size: 1.38rem;
+        font-weight: 700;
+        color: @pink;
+    }
+
+    .photo {
+        width: 5.17rem;
+        height: 5.17rem;
+
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            .avatar_border;
+        }
+    }
+
+    .information {
+        margin-left: 2.1rem;
+
+        p {
+            font-size: .86rem;
+            font-weight: 700;
+            min-width: 16rem;
+            text-transform: uppercase;
+        }
+
+        span {
+            color: @pink;
+            font-size: .55rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+    }
+
+    .steps {
+        font-size: .76rem;
+    }
+}
+
+.champions_button {
+    margin-top: 3.24rem;
+}

@@ -29,7 +29,11 @@ SECRET_KEY = (
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = os.environ.get("DEBUG")
+# DEBUG = os.environ.get("DEBUG")
+
+env = environ.Env(DEBUG=(bool, False))
+
+DEBUG = env("DEBUG")
 
 IS_TESTING = False
 
@@ -40,7 +44,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "dyugaev.beget.tech",
     "213.139.208.116",
-    "192.168.0.103",
+    "192.168.0.101",
     "192.168.1.9",
     "testserver",
 ]
@@ -212,6 +216,14 @@ YOUTUBE_URL = "https://www.youtube.com/@annakarachunskaya4096"
 COST_OF_PARTICIPATION = "Стоимость участия \u2014 500₽"
 
 MESSAGES_PER_PAGE = 5
+
+CHAMPIONS_ON_CHAMPS_BLOCK = 5
+
+CHAMPS_ON_FIRST_SCREEN = 3
+
+CHAMPS_ON_PAGE = 4
+
+CHAMPS_ADDITION = 4
 
 LOGOUT_REDIRECT_URL = "core:site-index"
 

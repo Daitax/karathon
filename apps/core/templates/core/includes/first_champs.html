@@ -1,0 +1,36 @@
+{% load static %}
+{% url 'core:champions' as champions_url %}
+
+<div
+    class="{% if request.resolver_match.view_name  == 'core:champions' %}first_champs_block first_screen_first_champs{% else %}first_champs_block{% endif %}">
+    <div
+        class="{% if request.resolver_match.view_name  == 'core:champions' %}wrapper first_screen_first_champs_wrapper{% else %}wrapper{% endif %}">
+        <ol>
+            {% for ch in champs %}
+            <li>
+                <div class="champ_photo">
+                    <img class=""
+                        src="{% if ch.0.photo %}{{ch.0.photo.url}}{% else %}{% static 'core/img/no_avatar.png' %}{% endif %}"
+                        alt="champ_photo">
+                </div>
+                <div class="champ_nameplate">
+                    <p>
+                        {{ch.1}} место
+                    </p>
+                    <p>
+                        {{ch.0.first_name}} {{ch.0.last_name}}
+                    </p>
+                    <p>
+                        23 карафон &mdash; 177 123 шагов
+                    </p>
+                </div>
+            </li>
+            {% endfor %}
+        </ol>
+        {% if view_name == 'core:site-index' %}
+        <div class="first_champs_block_link">
+            <a {% if request.resolver_match.view_name  == 'core:champions' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ champions_url }}" {% endif %}>все рекорды</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
