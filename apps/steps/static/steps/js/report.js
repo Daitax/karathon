@@ -27,6 +27,7 @@ function openReportForm() {
     .then(function () {
       let stepsInput = document.querySelector('[name="steps"]')
       stepsInput.focus()
+      stepsInput.click()
     })
     .then(
       function () {
@@ -97,6 +98,15 @@ if (reportFormWrapper) {
     }
     if (target.getAttribute('popup-element') == 'close') {
       closeReportForm()
+    }
+    if (target.getAttribute('name') == 'steps') {
+      let stepsField = document.querySelector('[name="steps"]')
+      let maskStepsOptions = {
+        mask: Number,
+        thousandsSeparator: ' ',
+      };
+
+      IMask(stepsField, maskStepsOptions);
     }
   })
   reportFormWrapper.addEventListener('submit', function (event) {

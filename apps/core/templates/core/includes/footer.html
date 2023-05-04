@@ -1,11 +1,12 @@
 {% load static %}
 {% load get_outlink %}
+{% url 'account:account-index' as account_index_url %}
 {% url 'core:about_karachunia' as about_karachunia_url %}
-{% url 'account:account-index' as account_index%}
 {% url 'core:champions' as champions_url %}
-{% url 'core:privacy_policy' as privacy_policy %}
+{% url 'core:privacy_policy' as privacy_policy_url %}
 
 <div class="container">
+    {% with request.resolver_match.view_name as view_name %}
     <div class="footer_nav">
         <div class="footer_nav_logo">
             <img src="{% static 'core/img/logo_kara.svg' %}" alt="karathon_logo">
@@ -14,24 +15,32 @@
         <div class="footer_nav_menu">
             <nav class="footer_nav_menu_items">
                 <li>
-                    <a {% if request.resolver_match.view_name  == 'core:site-index' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="/" {% endif %}>
+                    <a {% if view_name  == 'core:site-index' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="/" {% endif %}>
                         Главная
                     </a>
                 </li>
                 <li><a href="javascript:void(0)">n-й карафон</a></li>
-                <li><a{% if request.resolver_match.view_name  == 'core:champions' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ champions_url }}" {% endif %}>Рекордсмены</a></li>
+                <li><a{% if view_name  == 'core:champions' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ champions_url }}" {% endif %}>Рекордсмены</a></li>
                 
             </nav>
         </div>
         <div class="footer_nav_menu">
             <nav class="footer_nav_menu_items">
-                <li><a href="javascript:void(0)">Прошедшие карафоны</a></li>
-                <li><a {% if request.resolver_match.view_name  == 'core:about_karachunia' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ about_karachunia_url }}" {% endif %}>О Карачуне</a></li>
+                <li><a href="javascript:void(0)">
+                    Прошедшие карафоны
+                </a></li>
+                <li><a {% if view_name  == 'core:about_karachunia' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ about_karachunia_url }}" {% endif %}>
+                    О Карачуне
+                </a></li>
                 {% comment %} <li><a href="javascript:void(0)">Благотворительность</a></li> {% endcomment %}
                 {% if request.user.is_authenticated %}
-                <li><a {% if request.resolver_match.view_name  == 'account:account-index' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ account_index }}" {% endif %}>Личный кабинет</a></li>
+                <li><a {% if view_name  == 'account:account-index' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ account_index_url }}" {% endif %}>
+                    Личный кабинет
+                </a></li>
                 {% endif %}
-                <li><a {% if request.resolver_match.view_name  == 'core:privacy_policy' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ privacy_policy }}" target="_blank" {% endif %}>Политика конфиденциальности</a></li>
+                <li><a {% if view_name  == 'core:privacy_policy' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ privacy_policy_url }}" target="_blank" {% endif %}>
+                    Политика конфиденциальности
+                </a></li>
             </nav>
         </div>
         <div class="footer_nav_social_media">
@@ -49,4 +58,5 @@
             <a href="{% get_outlink 'LEMUR_URL' %}" target="_blank"><span>Lemur Media</span></a>
         </div>
     </div>
+    {% endwith %}
 </div>

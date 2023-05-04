@@ -5,7 +5,7 @@
     <input class="input" type="hidden" name="window" value="{{ window }}" desire-form-elem="window">
     <label class="label">
       <div class="text">Укажи номер телефона друга:</div>
-      <input class="input" type="text" name="phone" value="{{ phone }}" desire-form-elem="phone">
+      <input class="input" type="text" data-tel-input name="phone" value="{{ phone }}" desire-form-elem="phone">
       <div class="text" desire-form-elem="error">
          {% if errors.phone %}
          {{ errors.phone.as_text }}

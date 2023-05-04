@@ -27,6 +27,7 @@ function openAddDesireForm() {
     .then(function () {
       let ph = document.querySelector('[desire-form-elem="phone"]')
       ph.focus()
+      ph.click()
     })
 }
 
@@ -139,14 +140,6 @@ if (addDesireFormWrapper) {
 
     if (target.getAttribute('popup-element') == 'close') {
       closeAddDesireForm()
-    }
-
-    if (target.getAttribute('desire-form-elem') == 'phone') {
-      let phoneField = document.querySelector('[desire-form-elem="phone"]')
-      let maskOptions = {
-        mask: '+{7}(000) 000-00-00'
-      };
-      IMask(phoneField, maskOptions);
     }
   })
   addDesireFormWrapper.addEventListener('submit', function (event) {

@@ -27,6 +27,7 @@ function openAuthenticationForm() {
     .then(function () {
       let ph = document.querySelector('[auth-form-elem="phone"]')
       ph.focus()
+      ph.click()
     })
 }
 
@@ -78,6 +79,7 @@ openFormAuthenticationButtons.forEach(element => element.addEventListener('click
 // }
 
 
+
 let authenticationFormWrapper = document.querySelector('[popup-element="popup"][form-name="authentication"]')
 if (authenticationFormWrapper) {
   authenticationFormWrapper.addEventListener('submit', function (event) {
@@ -96,13 +98,6 @@ if (authenticationFormWrapper) {
     }
     if (target.getAttribute('popup-element') == 'close') {
       closeAuthenticationForm()
-    }
-    if (target.getAttribute('auth-form-elem') == 'phone') {
-      let phoneField = document.querySelector('[auth-form-elem="phone"]')
-      let maskOptions = {
-        mask: '+{7}(000) 000-00-00'
-      };
-      IMask(phoneField, maskOptions);
     }
   })
 

@@ -29,7 +29,7 @@
         </ol>
         {% if view_name == 'core:site-index' %}
         <div class="first_champs_block_link">
-            <a {% if request.resolver_match.view_name  == 'core:champions' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ champions_url }}" {% endif %}>все рекорды</a>
+            <a href="{{ champions_url }}">все рекорды</a>
         </div>
         {% endif %}
     </div>

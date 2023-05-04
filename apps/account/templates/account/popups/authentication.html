@@ -5,7 +5,7 @@
     <input type="hidden" name="window" value="{{ window }}" auth-form-elem="window">
     <label class="label" auth-form-elem="phone-wrapper">
       <div class="text">Укажи номер телефона для авторизации:</div>
-      <input class="input" type="text" name="phone" value="{{ phone }}" auth-form-elem="phone"
+      <input class="input" data-tel-input type="tel" maxlength="18" name="phone" value="{{ phone }}" auth-form-elem="phone"
              {% if window == 'code' %}readonly{% endif %}>
       <div class="error">{{ errors.phone.as_text }}</div>
     </label>
