@@ -18,6 +18,7 @@
   </head>
   <body>
     <div class="global-wrapper">
+      {% include 'core/includes/cookie.html' %}
       {% if request.resolver_match.view_name  == 'core:site-index' %}
         {% include 'core/includes/footsteps.html' %}
       {% endif %}

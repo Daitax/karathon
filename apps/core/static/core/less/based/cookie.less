@@ -1,0 +1,36 @@
+.cookie {
+    position: fixed;
+    bottom: 0;
+    z-index: 2;
+    background: #5AC82D;
+    padding: 1.03rem 0;
+    font-size: .69rem;
+    font-weight: 700;
+    visibility: hidden;
+    opacity: 0;
+    transition: var(--popup-transition);
+
+    &.show {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    a {
+        color: white;
+    }
+
+    .wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .text {
+        width: 60%;
+    }
+}
+
+.cookie_button {
+    color: white;
+    background: #5AC82D;
+    border: var(--border-main) solid white;
+}

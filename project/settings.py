@@ -44,7 +44,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "dyugaev.beget.tech",
     "213.139.208.116",
-    "192.168.0.101",
+    "192.168.0.103",
     "192.168.1.9",
     "testserver",
 ]

@@ -1,10 +1,3 @@
-function getCookie(name) {
-  let matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
 let stickyNavbar = document.querySelector('[window-elem="sticky_navbar"]')
 let firstScreen = document.querySelector('[window-elem="first-screen"]')
 let footer = document.querySelector('[window-elem="footer"]')
