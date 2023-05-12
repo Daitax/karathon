@@ -204,11 +204,17 @@
 
 .navbar {
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     font-size: 0.5rem;
     letter-spacing: 0.03em;
     font-weight: 600;
     text-transform: uppercase;
+
+    >li {
+        &:nth-child(n+2) {
+            margin-left: 2.22rem;
+        }
+    }
 
     li a {
         color: @white;

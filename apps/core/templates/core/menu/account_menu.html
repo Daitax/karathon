@@ -12,22 +12,22 @@
     {% endif %}
     <nav class="participants_account_menu_info">
         <li>
-            <a class={% if view_name  == 'account:account-index' %}"active" href="javascript:void(0)" style="cursor: default" {% else %}"" href="{{ account_url }}" {% endif %}>
+            <a class={% if view_name  == 'account:account-index' %}"active" href="javascript:void(0)" style="cursor: default" {% else %}"" href="{{ account_url }}#personal_account" {% endif %}>
                 Персональные данные
             </a>
         </li>
         <li unread-mes="{{not_viewed_notifications_amount}}">
-            <a class={% if view_name == 'account:account-messages' %}"active" href="javascript:void(0)" style="cursor: default" {% else %}"" href="{{ messages_url }}" {% endif %}>
+            <a class={% if view_name == 'account:account-messages' %}"active" href="javascript:void(0)" style="cursor: default" {% else %}"" href="{{ messages_url }}#messages" {% endif %}>
                 Сообщения
             </a>
         </li>
         <li>
-            <a class={% if view_name  == 'account:account-results' %}"active" href="javascript:void(0)" style="cursor: default" {% else %}"" href="{{ results_url }}" {% endif %}>
+            <a class={% if view_name  == 'account:account-results' %}"active" href="javascript:void(0)" style="cursor: default" {% else %}"" href="{{ results_url }}#results" {% endif %}>
                 Мои результаты
             </a>
         </li>
         <li>
-            <a class={% if view_name  == 'account:teams:team-index' %}"active" href="javascript:void(0)" style="cursor: default" {% else %}"" href="{{ team_url }}" {% endif %}>
+            <a class={% if view_name  == 'account:teams:team-index' %}"active" href="javascript:void(0)" style="cursor: default" {% else %}"" href="{{ team_url }}#team" {% endif %}>
                 Моя команда
             </a>
         </li>

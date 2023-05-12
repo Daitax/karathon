@@ -7,7 +7,7 @@
   <div class="account_content_wrapper">
     <div>
       {% if current_karathon_team %}
-        <h2>Твоя команда {{ current_karathon_team.name }}</h2>
+        <h2 id="team">Твоя команда {{ current_karathon_team.name }}</h2>
         <div>Результаты твоей команды в {{ current_karathon_team.karathon.number }}-ом карафоне</div>
         <div>
           {% for team_participant in current_karathon_team.team_participants %}
@@ -15,7 +15,7 @@
           {% endfor %}
         </div>
       {% else %}
-        <div>Вы пока не состоите ни в одной команде</div>
+        <div id="team">Вы пока не состоите ни в одной команде</div>
       {% endif %}
     </div>
     {% if active_karathon_participant %}
