@@ -52,6 +52,10 @@ function submitReportForm(button) {
   let csrfToken = getCookie('csrftoken')
   let data = new FormData(reportForm)
 
+  let steps = data.get("steps").split(' ').join('')
+
+  data.set("steps", steps)
+
   document.querySelector('[report-form-elem="button"] > span').classList.add("click_opacity")
 
   fetch('/steps/addreport/', {

@@ -166,3 +166,5 @@ if (addFormWrapper) {
         }
     })
 }
+
+mobileMaskInput()

@@ -1,3 +1,5 @@
+{% load static %}
+
 <div class="first-screen_wrapper" window-elem="first-screen">
     <div class="first-screen container">
         <div class="first-screen_text">
@@ -22,11 +24,22 @@
             <img src="{{user.participant.photo.url}}">
         </div>
         {% else %}
-        <div class="first-screen_avatar" window-elem="account_avatar">
-            <label class="first-screen_no_avatar">
-                <p>добавить фото</p>
-            </label>
-        </div>
+            {% if request.resolver_match.view_name  == 'account:account-index' %}
+            <div class="first-screen_avatar" window-elem="account_avatar">
+                <label class="first-screen_no_avatar">
+                    <p>добавить фото</p>
+                </label>
+            </div>
+            {% else %}
+            {% comment %} <div class="first-screen_avatar" window-elem="account_avatar">
+                <div class="first-screen_no_avatar">
+                    <a href="{% url 'account:account-index' %}#personal_account"><p>добавить фото</p></a>
+                </div>
+            </div> {% endcomment %}
+            <div class="first-screen_avatar">
+                <img src="{% static 'core/img/no_avatar.png' %}">
+            </div>
+            {% endif %}
         {% endif %}
     </div>
 </div>
