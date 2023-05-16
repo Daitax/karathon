@@ -167,4 +167,4 @@ if (addFormWrapper) {
     })
 }
 
-mobileMaskInput()
+window.addEventListener("load", mobileMaskInput())
