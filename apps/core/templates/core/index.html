@@ -21,38 +21,17 @@
       </div>
       <div class="first-screen_photo">
         <img src="{% static 'core/img/photo_anna.svg' %}" alt="Anna_Karachunskaya" window-elem="first-screen-promo">
-        {% comment %} <div class="blur"  window-elem="first-screen-promo"  window-elem="first-screen-promo"></div> {% endcomment %}
+        {% comment %} <div class="blur"></div> {% endcomment %}
+        <p window-elem="first-screen-promo">{% get_outlink 'KARATHON_PRESENTATION_TEXT' %}</p>
       </div>
     </div>
   </div>
-  <div class="container">
-    <div class="about_karathon">
-    <h2>что такое<br>карафон?</h2>
-    <div class="about_karathon_description">
-      Kарафон — это интерактивный марафон по шагам, с целью повысить свою активность и сделать мир чуточку лучше. Часть
-      средств, собранных в ходе карафона, будет переведена в благотворительные организации, выбранные победителями.
-    </div>
-    <div class="about_karathon_list">
-      <ol class="about_karathon_list_wrapper">
-        <li>карафон длится<br>13 дней</li>
-        <li>каждый день участник выполняет задание </li>
-        <li>задания даются ежедневно в прямом эфире в <a href="{% get_outlink 'INSTAGRAM_URL' %}" target="_blank"><span>Instagram</span></a></li>
-        <li>каждый участник сдает отчёт до 12 ночи в личном <a href="{% url 'account:account-index' %}"><span>кабинете</span></a></li>
-      </ol>
-    </div>
-    <div class="about_karathon_description">
-      Шаги можно нахаживать на улице или дорожке, ходить или бегать. Участвовать может каждый, у кого есть ноги.<br><br>
-      Если ты заинтересовался, хочешь попробовать свои силы, повысить активность и установить новые рекорды, то я рада
-      тебя приветствовать в тринадцатом карафоне.<br><br>
-      Если готов проверить себя, регистрируйся прямо сейчас!
-    </div>
-    <div class="about_karathon_description_button_wrapper">
-      {% include 'core/includes/pink_button.html' %}
-    </div>
-  </div>
+  {% include 'core/includes/about_karathon_description.html' %}
 {% endblock %}
 {% block content_second %}
 {% first_champs %}
-{% include 'core/includes/about_karathon.html' %}
+  <div class="container">
+  {% include 'core/includes/about_karathon.html' %}
+  </div>
 </div>
 {% endblock %}

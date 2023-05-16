@@ -213,6 +213,12 @@ TELEGRAM_URL = "https://t.me/allaboutkarafon"
 VK_URL = "https://vk.com/karachunia"
 YOUTUBE_URL = "https://www.youtube.com/@annakarachunskaya4096"
 
+KARATHON_VIDEO_LINK = (
+    "https://rutube.ru/play/embed/726f628d5594d08e4fe1ddbf911d559a"
+)
+
+KARATHON_PRESENTATION_TEXT = "презентация нового 17-го карафона"
+
 COST_OF_PARTICIPATION = "Стоимость участия \u2014 500₽"
 
 MESSAGES_PER_PAGE = 5

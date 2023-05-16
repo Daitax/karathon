@@ -510,6 +510,8 @@ input[type=number] {
 }
 
 .first-screen_photo {
+    position: relative;
+
     img {
         position: absolute;
         height: 25rem;
@@ -517,6 +519,22 @@ input[type=number] {
         border-radius: 50%;
         object-fit: cover;
         cursor: pointer;
+    }
+
+    p {
+        text-transform: uppercase;
+        font-weight: 700;
+        background: white;
+        position: absolute;
+        bottom: 3.5rem;
+        left: -1rem;
+        width: 18.48rem;
+        padding: .8rem 2.9rem .8rem 1rem;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 
     .blur {
