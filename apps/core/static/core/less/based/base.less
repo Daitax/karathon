@@ -509,12 +509,33 @@ input[type=number] {
     margin-top: 0.68rem;
 }
 
-.first-screen_photo img {
-    position: absolute;
-    height: 25rem;
-    width: 25rem;
-    border-radius: 50%;
-    object-fit: cover;
+.first-screen_photo {
+    img {
+        position: absolute;
+        height: 25rem;
+        width: 25rem;
+        border-radius: 50%;
+        object-fit: cover;
+        cursor: pointer;
+    }
+
+    .blur {
+        width: 25rem;
+        height: 25rem;
+        background: @white;
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        z-index: 2;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: var(--overlay-transition);
+    }
+
+    &:hover .blur {
+        opacity: .3;
+        visibility: visible;
+    }
 }
 
 .content_with_menu_wrapper>.participants_account_menu {
