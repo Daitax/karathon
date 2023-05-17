@@ -39,28 +39,6 @@ function removeButtonsOpacity(btn) {
 addButtonsOpacity(".blue_button")
 addButtonsOpacity(".pink_button")
 
-let firstScreenPromo = document.querySelectorAll('[window-elem="first-screen-promo"]')
-
-if (firstScreenPromo) {
-  firstScreenPromo.forEach(element => element.addEventListener("click", function () {
-    let promoVideo = document.querySelector('[popup-name="promo-video"]')
-
-    overlay.classList.add('show')
-    promoVideo.classList.add("show")
-
-    if (promoVideo) {
-      promoVideo.addEventListener('click', function (event) {
-        let target = event.target
-
-        if (target.getAttribute('popup-element') == 'close') {
-          overlay.classList.remove('show')
-          promoVideo.classList.remove("show")
-        }
-      })
-    }
-  }))
-}
-
 let overlay = document.querySelector('[popup-element="overlay"]')
 
 overlay.addEventListener('click', closePopup)

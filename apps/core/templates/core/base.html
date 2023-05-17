@@ -53,9 +53,11 @@
       <footer class="footer" window-elem="footer">{% include 'core/includes/footer.html' %}</footer>
     </div>
     <div class="overlay" popup-element="overlay">
+      {% if request.resolver_match.view_name  == 'core:site-index' %}
       <div class="promo_video_wrapper" popup-element="popup" popup-name="promo-video">
         {% include 'core/popups/promo_video.html' %}
       </div>
+      {% endif %}
       {% if user.is_authenticated %}
         <div class="report_form_wrapper" popup-element="popup" form-name="report"></div>
         <div class="desire_form_wrapper" popup-element="popup" form-name="desire"></div>
