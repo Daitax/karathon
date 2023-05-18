@@ -2,5 +2,43 @@
 
 {% block title %}Мои результаты{% endblock %}
 {% block content %}
-  {{ step }}
+<div class="container">
+  <div class="account_content_wrapper">
+    <h2 id="results">твои результаты</h2>
+    <div class="results_description">
+      Количество пройденых тобой и твоей командой шагов в 17-ом карафоне по дням:
+    </div>
+    <div class="results_block_wrapper">
+      <div class="total_wrapper">
+        <div class="item">
+          <div class="steps">
+            <span>всего</span>
+            <div id="steps" results-steps="{{participant_steps_total.0}}">{{participant_steps_total.0}}</div>
+            <div>{{participant_steps_total.1}}</div>
+          </div>
+          <div class="team">
+            команда: 103 193 шага
+          </div>
+        </div>
+      </div>
+      <div class="daily_wrapper">
+        {% for step in steps %}
+        <div class="item">
+          <div class="steps">
+            <span>{{step.0.date|date:"d.m.Y"}}</span>
+            <div id="steps" results-steps="{{step.0.steps}}">{{step.0.steps}}</div>
+            <div>{{step.1}}</div>
+          </div>
+          <div class="team">
+            команда: 28 486 шагов
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="results_button_wrapper">
+      <div class="pink_button" button-action="open-report-form"><span>Сдать отчет</span></div>
+    </div>
+  </div>
+</div>
 {% endblock %}

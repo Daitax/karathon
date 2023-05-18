@@ -7,12 +7,18 @@ from . import views
 app_name = "account"
 
 urlpatterns = [
-    path("", views.index, name="account-index"),
+    # path("", views.index, name="account-index"),
+    path("", views.AccountView.as_view(), name="account-index"),
     path("messages/", views.messages, name="account-messages"),
-    path("results/", views.results, name="account-results"),
+    path("results/", views.ResultsView.as_view(), name="account-results"),
     path("team/", include("apps.teams.urls", namespace="teams")),
+    # path(
+    #     "authentication/", views.authentication, name="account-authentication"
+    # ),
     path(
-        "authentication/", views.authentication, name="account-authentication"
+        "authentication/",
+        views.AuthView.as_view(),
+        name="account-authentication",
     ),
     # path("logout/", views.user_logout, name="account-logout"),
     path(

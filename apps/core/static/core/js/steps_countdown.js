@@ -49,5 +49,9 @@ window.addEventListener("load", function () {
     })
 })
 
+let resultSteps = document.querySelectorAll("#steps")
 
+resultSteps.forEach(element =>
+    element.innerHTML = format(element.getAttribute("results-steps"))
+)
 

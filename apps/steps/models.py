@@ -27,6 +27,7 @@ class Step(models.Model):
     )
 
     class Meta:
+        ordering = ("-date",)
         verbose_name = "Шаг"
         verbose_name_plural = "Шаги"
 
