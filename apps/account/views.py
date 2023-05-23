@@ -464,7 +464,7 @@ class ResultsView(LoginRequiredMixin, TemplateView):
         words = ["шаг", "шага", "шагов"]
         context = super().get_context_data(**kwargs)
         participant_id = self.request.user.participant.id
-        steps = get_list_or_404(Step, participant=participant_id)
+        steps = Step.objects.filter(participant=participant_id)
         steps = [[item, ending_numbers(item.steps, words)] for item in steps]
         participant_steps = Step.objects.filter(
             participant=participant_id

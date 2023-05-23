@@ -6,7 +6,7 @@
 
   {% for karathon in participant_karathon_list %}
     <div>
-      <div>{{ karathon.number }} карафон ({{ karathon.get_karathon_type_value }})</div>
+      <div>{{ karathon.number }} карафон ({{ karathon.get_type_display }})</div>
       <div>который пройдёт c {{ karathon.starts_at|date:'d E Y' }} по {{ karathon.finished_at|date:'d E Y' }}</div>
     </div>
   {% endfor %}
@@ -18,7 +18,7 @@
       <label>
         <div>
           <input type="radio" name="karathon" value="{{ karathon.id }}">
-        <span>{{ karathon.number }}-й карафон ({{ karathon.get_karathon_type_value }})</span>
+        <span>{{ karathon.number }}-й карафон ({{ karathon.get_type_display }})</span>
         </div>
         <div>который пройдёт c {{ karathon.starts_at|date:'d E Y' }} по {{ karathon.finished_at|date:'d E Y' }}</div>
       </label>

@@ -27,7 +27,7 @@
             </li>
             {% endfor %}
         </ol>
-        {% if view_name == 'core:site-index' %}
+        {% if view_name == 'core:site-index' or view_name == 'core:karathon' %}
         <div class="first_champs_block_link">
             <a href="{{ champions_url }}">все рекорды</a>
         </div>

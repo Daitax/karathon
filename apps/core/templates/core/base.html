@@ -22,8 +22,11 @@
       {% if request.resolver_match.view_name  == 'core:site-index' %}
         {% include 'core/includes/footsteps.html' %}
       {% endif %}
+      {% if request.resolver_match.view_name  == 'core:karathon' %}
+        {% include 'core/includes/footsteps_karathon_page.html' %}
+      {% endif %}
       <header class="header" window-elem="header">{% navbar %}</header>
-      {% if request.resolver_match.view_name  != 'core:site-index' and request.resolver_match.view_name != 'core:about_karachunia' and request.resolver_match.view_name != 'core:privacy_policy' and request.resolver_match.view_name != 'core:champions' %}
+      {% if request.resolver_match.view_name  != 'core:site-index' and request.resolver_match.view_name != 'core:about_karachunia' and request.resolver_match.view_name != 'core:privacy_policy' and request.resolver_match.view_name != 'core:champions' and request.resolver_match.view_name != 'core:karathon' %}
       {% include 'account/includes/first_screen.html' %}
       <div class="content_with_menu_wrapper">
         {% if request.user.is_authenticated %}

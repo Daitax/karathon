@@ -167,7 +167,7 @@ logoutButton.forEach(element => element.addEventListener("click", function (even
   }))
 }, false))
 
-function showStepOrHide(elem, crossing_block = document.querySelector('[ window-elem="about_karathon_wrapper"]')) {
+function showStepOrHide(elem, crossing_block = document.querySelector('[window-elem="about_karathon_wrapper"]')) {
   let leftBorder = crossing_block.getBoundingClientRect().left
   let rightBorder = crossing_block.getBoundingClientRect().right
   let topBorder = crossing_block.getBoundingClientRect().top
@@ -197,4 +197,12 @@ if (window.location.pathname == "/") {
       stepsArr.forEach(element => showStepOrHide(element))
     })
   }
+}
+
+
+if (window.location.pathname.includes("-karathon")) {
+  window.addEventListener("scroll", function () {
+    // Показывает/убирает следы на странице информации о карафоне
+    document.querySelectorAll('[window-elem="footsteps_karathon_page"] img').forEach(element => showStepOrHide(element))
+  })
 }

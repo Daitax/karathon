@@ -1,7 +1,21 @@
 {% extends 'core/base.html' %}
+{% load static %}
+{% load get_outlink %}
+{% load first_champs %}
 
+{% block title %}{{ karathon }}{% endblock %}
 {% block content %}
-<div class="container">
-    <h1>{{ karathon }}</h1>
+
+
+
+<div class="content_wrapper">
+  {% include 'core/includes/first_screen_karathon.html' %}
+  {% include 'core/includes/about_karathon_description.html' %}
+{% endblock %}
+{% block content_second %}
+{% first_champs %}
+  <div class="container">
+  {% include 'core/includes/about_karathon.html' %}
+  </div>
 </div>
 {% endblock %}

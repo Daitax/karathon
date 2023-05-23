@@ -5,27 +5,7 @@
 {% load first_champs %}
 
 <div class="content_wrapper">
-  <div class="first-screen_wrapper">
-    <div class="first-screen container" window-elem="first-screen">
-      <div class="first-screen_text">
-        <h1>Карафон &mdash; это по любви</h1>
-        <div class="first-screen_text_collab">Прими участие!</div>
-        <div class="first-screen_button_wrapper">
-          {% if user.is_authenticated %}
-          <a class="blue_button" href="/participate/"><span>Участовать</span></a>
-          {% else %}
-          <a class="blue_button" href="javascript:void(0)" button-action="open-auth-form"><span>Войти</span></a>
-          {% endif %}
-          <div class="button_text_cost">{% get_outlink 'COST_OF_PARTICIPATION' %}</div>
-        </div>
-      </div>
-      <div class="first-screen_photo">
-        <img src="{% static 'core/img/photo_anna.svg' %}" alt="Anna_Karachunskaya" window-elem="first-screen-promo">
-        {% comment %} <div class="blur"></div> {% endcomment %}
-        <p window-elem="first-screen-promo">{% get_outlink 'KARATHON_PRESENTATION_TEXT' %}</p>
-      </div>
-    </div>
-  </div>
+  {% include 'core/includes/first_screen_karathon.html' %}
   {% include 'core/includes/about_karathon_description.html' %}
 {% endblock %}
 {% block content_second %}

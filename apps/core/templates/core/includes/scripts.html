@@ -16,7 +16,24 @@
 <script>
     if (location.hash) {
         window.addEventListener("load", function () {
+            // плавный скролл до якоря при переходе на страницу
             seamless.scrollIntoView(document.getElementById(location.hash.substring(1)), {
+                behavior: 'smooth',
+                block: 'center'
+            })
+        })
+    }
+
+    const anchors = document.querySelectorAll('[window-elem="anch"]')
+
+    for (let anchor of anchors) {
+        anchor.addEventListener('click', function (e) {
+            // плавный скролл до якоря на странице
+            e.preventDefault()
+
+            const blockID = anchor.getAttribute('href').substr(1)
+
+            seamless.scrollIntoView(document.getElementById(blockID), {
                 behavior: 'smooth',
                 block: 'center'
             })
