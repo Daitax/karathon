@@ -1,9 +1,11 @@
 import json
+import os
+from django.core.files import File
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_list_or_404, render
 from django.template.loader import render_to_string
 from django.views.generic.base import TemplateView
@@ -11,6 +13,8 @@ from django.views.generic.edit import CreateView
 
 from apps.account.models import Participant
 from apps.core.models import Karathon
+
+from apps.core.yookassa import create_payment
 
 # def index(request):
 #     # champ_list = Participant.objects.annotate(Sum("steps")).order_by(
@@ -29,6 +33,7 @@ from apps.core.models import Karathon
 
 # def about_karathons(request):
 #     return render(request, "core/about_karathons.html")
+
 
 
 class ChampionsView(TemplateView):
@@ -215,9 +220,16 @@ class KarathonView(TemplateView):
 
 @login_required
 def participate(request):
+    payment_link = ''
+
     if request.method == "POST":
-        karathon_id = request.POST["karathon"]
-        request.user.participant.karathon.add(karathon_id)
+        if "karathon" in request.POST:
+            karathon_id = request.POST["karathon"]
+            karathon = Karathon.objects.get(id=karathon_id)
+            participant = request.user.participant
+            payment = create_payment(karathon, participant)
+            payment_link = payment.confirmation.confirmation_url
+            # request.user.participant.karathon.add(karathon_id)
 
     participant_date = request.user.participant.get_participant_time()
 
@@ -241,7 +253,6 @@ def participate(request):
                 free_karathon_item.finished_at,
                 participant_karathon_item.finished_at,
             )
-
             if latest_start <= earliest_end:
                 intersecting_carathons_ids.append(free_karathon_item.id)
 
@@ -252,9 +263,44 @@ def participate(request):
     context = {
         "participant_karathon_list": participant_karathon_list,
         "available_karathon_list": available_karathon_list,
+        "payment_link": payment_link,
     }
 
     return render(request, "core/participate.html", context)
+
+
+def webhooks_yookassa(request):
+    module_dir = os.path.dirname(__file__)
+    file_path = os.path.join(module_dir, 'yookassa.txt')  # full path to text.
+    my_file = open(file_path, 'w+')
+
+    my_file.write(str(request.__dict__))
+    my_file.write('\n')
+    my_file.write(str(request.POST))
+    my_file.write('\n')
+    my_file.write(str(request.GET))
+    my_file.write('\n')
+    my_file.write('1234')
+    my_file.close()
+
+    return HttpResponse()
+
+
+def webhooks_paypal(request):
+    module_dir = os.path.dirname(__file__)
+    file_path = os.path.join(module_dir, 'paypal.txt')  # full path to text.
+    my_file = open(file_path, 'w+')
+
+    my_file.write(str(request.__dict__))
+    my_file.write('\n')
+    my_file.write(str(request.POST))
+    my_file.write('\n')
+    my_file.write(str(request.GET))
+    my_file.write('\n')
+    my_file.write('1234')
+    my_file.close()
+
+    return HttpResponse()
 
 
 def csrf_failure(request, reason=""):

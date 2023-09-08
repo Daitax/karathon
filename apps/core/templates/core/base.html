@@ -7,70 +7,70 @@
 
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <title>{% block title %}Карафон{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" viewport-fit="cover" />
-    <link rel="icon" href="{%static 'core/img/favicon.png' %}" type="image">
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/img/favicon.png' %}">
-    <link rel="stylesheet" href="{% static 'core/less/style.less'|compile %}?v{% now 'u' %}" />
-    {% csrf_token %}
-  </head>
-  <body>
-    <div class="global-wrapper">
-      {% include 'core/includes/cookie.html' %}
-      {% if request.resolver_match.view_name  == 'core:site-index' %}
-        {% include 'core/includes/footsteps.html' %}
-      {% endif %}
-      {% if request.resolver_match.view_name  == 'core:karathon' %}
-        {% include 'core/includes/footsteps_karathon_page.html' %}
-      {% endif %}
-      <header class="header" window-elem="header">{% navbar %}</header>
-      {% if request.resolver_match.view_name  != 'core:site-index' and request.resolver_match.view_name != 'core:about_karachunia' and request.resolver_match.view_name != 'core:privacy_policy' and request.resolver_match.view_name != 'core:champions' and request.resolver_match.view_name != 'core:karathon' %}
-      {% include 'account/includes/first_screen.html' %}
-      <div class="content_with_menu_wrapper">
-        {% if request.user.is_authenticated %}
-        <div class="participants_account_menu">
-          {% account_menu %}
-        </div>
-        <div class="participants_account_menu mobile">
-          {% account_menu %}
-        </div>
-        {% endif %}
-      {% else %}
-      <div class="content_with_menu_wrapper">
-      {% endif %}
-        <div class="content" window-elem="content">{% block content %}{% endblock %}</div>
-        {% if request.resolver_match.view_name != 'core:privacy_policy' %}
-          {% if request.resolver_match.view_name  == 'core:site-index' %}
-          <div class="container">
-            {% steps_block %}
-          </div>
-          {% else %}
-            <div class="container">{% steps_block %}</div>
-          {% endif %}
-        {% endif %}
-        <div class="content" window-elem="content">{% block content_second %}{% endblock %}</div>
+<head>
+  <meta charset="UTF-8"/>
+  <title>{% block title %}Карафон{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" viewport-fit="cover"/>
+  <link rel="icon" href="{% static 'core/img/favicon.png' %}" type="image">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/img/favicon.png' %}">
+  <link rel="stylesheet" href="{% static 'core/less/style.less'|compile %}?v{% now 'u' %}"/>
+  {% csrf_token %}
+</head>
+<body>
+<div class="global-wrapper">
+  {% include 'core/includes/cookie.html' %}
+  {% if request.resolver_match.view_name  == 'core:site-index' %}
+    {% include 'core/includes/footsteps.html' %}
+  {% endif %}
+  {% if request.resolver_match.view_name  == 'core:karathon' %}
+    {% include 'core/includes/footsteps_karathon_page.html' %}
+  {% endif %}
+  <header class="header" window-elem="header">{% navbar %}</header>
+  {% if request.resolver_match.view_name  != 'core:site-index' and request.resolver_match.view_name != 'core:about_karachunia' and request.resolver_match.view_name != 'core:privacy_policy' and request.resolver_match.view_name != 'core:champions' and request.resolver_match.view_name != 'core:karathon' and request.resolver_match.view_name != 'core:participate' %}
+    {% include 'account/includes/first_screen.html' %}
+    <div class="content_with_menu_wrapper">
+    {% if request.user.is_authenticated %}
+      <div class="participants_account_menu">
+        {% account_menu %}
       </div>
-      {% task_today %}
-      <footer class="footer" window-elem="footer">{% include 'core/includes/footer.html' %}</footer>
-    </div>
-    <div class="overlay" popup-element="overlay">
-      {% if request.resolver_match.view_name  == 'core:site-index' %}
+      <div class="participants_account_menu mobile">
+        {% account_menu %}
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="content_with_menu_wrapper">
+  {% endif %}
+  <div class="content" window-elem="content">{% block content %}{% endblock %}</div>
+  {% if request.resolver_match.view_name != 'core:privacy_policy' %}
+    {% if request.resolver_match.view_name  == 'core:site-index' %}
+      <div class="container">
+        {% steps_block %}
+      </div>
+    {% else %}
+      <div class="container">{% steps_block %}</div>
+    {% endif %}
+  {% endif %}
+  <div class="content" window-elem="content">{% block content_second %}{% endblock %}</div>
+  </div>
+  {% task_today %}
+  <footer class="footer" window-elem="footer">{% include 'core/includes/footer.html' %}</footer>
+  </div>
+  <div class="overlay" popup-element="overlay">
+    {% if request.resolver_match.view_name  == 'core:site-index' %}
       <div class="promo_video_wrapper" popup-element="popup" popup-name="promo-video">
         {% include 'core/popups/promo_video.html' %}
       </div>
-      {% endif %}
-      {% if user.is_authenticated %}
-        <div class="report_form_wrapper" popup-element="popup" form-name="report"></div>
-        <div class="desire_form_wrapper" popup-element="popup" form-name="desire"></div>
-        <div class="confirmation_wrapper" popup-element="popup" popup-name="confirmation">
-          {% include 'teams/popups/confirmation.html' %}
-        </div>
-      {% else %}
-        <div class="authentication_form_wrapper" popup-element="popup" form-name="authentication"></div>
-      {% endif %}
-    </div>
-    {% include 'core/includes/scripts.html' %}
-  </body>
+    {% endif %}
+    {% if user.is_authenticated %}
+      <div class="report_form_wrapper" popup-element="popup" form-name="report"></div>
+      <div class="desire_form_wrapper" popup-element="popup" form-name="desire"></div>
+      <div class="confirmation_wrapper" popup-element="popup" popup-name="confirmation">
+        {% include 'teams/popups/confirmation.html' %}
+      </div>
+    {% else %}
+      <div class="authentication_form_wrapper" popup-element="popup" form-name="authentication"></div>
+    {% endif %}
+  </div>
+  {% include 'core/includes/scripts.html' %}
+</body>
 </html>

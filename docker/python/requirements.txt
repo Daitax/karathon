@@ -12,3 +12,4 @@ pytz
 redis
 opencv-python-headless==4.7.0.72
 pytesseract==0.3.10
+yookassa==2.4.0

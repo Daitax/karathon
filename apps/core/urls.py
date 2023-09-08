@@ -29,6 +29,8 @@ urlpatterns = [
         name="karathon",
     ),
     path("participate/", views.participate, name="participate"),
+    path("participate/webhooks/yookassa/", views.webhooks_yookassa, name="webhooks_yookassa"),
+    path("participate/webhooks/paypal/", views.webhooks_paypal, name="webhooks_paypal"),
     # path("participate/", views.ParticipateView.as_view(), name="participate"),
     path(
         "privacy_policy",
