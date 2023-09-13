@@ -1,0 +1,17 @@
+<div class="close" popup-element="close"></div>
+{% if window == 'type' %}
+  <h4>Выберите тип оплаты</h4>
+  <div class="payment_type"
+       popup-element="payment-type-button-wrapper"
+       karathon-id="{{ karathon_id }}"
+       karathon-number="{{ karathon_number }}">
+    <a popup-element="payment-type-button" type="card">Банковской картой</a>
+    <a popup-element="payment-type-button" type="paypal">PayPal</a>
+  </div>
+{% endif %}
+{% if window == 'link' %}
+  <h4>Ссылка для оплаты</h4>
+  <div>
+    <a href="{{ link }}" target="_blank">Оплатить</a>
+  </div>
+{% endif %}

@@ -1,11 +1,13 @@
 import json
 import os
+
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.files import File
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, Http404
 from django.shortcuts import get_list_or_404, render
 from django.template.loader import render_to_string
 from django.views.generic.base import TemplateView
@@ -14,7 +16,8 @@ from django.views.generic.edit import CreateView
 from apps.account.models import Participant
 from apps.core.models import Karathon
 
-from apps.core.yookassa import create_payment
+from apps.core.yookassa import create_payment, confirmation_payment
+
 
 # def index(request):
 #     # champ_list = Participant.objects.annotate(Sum("steps")).order_by(
@@ -218,17 +221,68 @@ class KarathonView(TemplateView):
 #         return context
 
 
+def create_payment_link(data, participant):
+    karathon_id = data['karathon_id']
+    karathon_number = data['karathon_number']
+    link = ''
+    try:
+        karathon = Karathon.objects.get(id=karathon_id, number=karathon_number)
+
+        if data['payment_type'] == 'card':
+            payment = create_payment(karathon, participant)
+            link = payment.confirmation.confirmation_url
+        elif data['payment_type'] == 'paypal':
+            pass
+
+    except ObjectDoesNotExist:
+        raise Http404
+
+    return link
+
 @login_required
 def participate(request):
-    payment_link = ''
-
     if request.method == "POST":
-        if "karathon" in request.POST:
-            karathon_id = request.POST["karathon"]
-            karathon = Karathon.objects.get(id=karathon_id)
-            participant = request.user.participant
-            payment = create_payment(karathon, participant)
-            payment_link = payment.confirmation.confirmation_url
+        data = json.loads(request.body)
+        out = {
+            "status": "error",
+        }
+
+        if 'window' in data:
+
+            if data['window'] == 'type':
+                print(data)
+                context = {
+                    "window": data['window'],
+                    "karathon_number": data['karathon_number'],
+                    "karathon_id": data['karathon_id']
+                }
+
+            if data['window'] == 'link':
+                participant = request.user.participant
+                link = create_payment_link(data, participant)
+
+                context = {
+                    "window": data['window'],
+                    "link": link,
+                }
+
+            type_window = render_to_string(
+                "core/popups/payment.html", context, request
+            )
+
+            out = {
+                "status": "ok",
+                "window": type_window,
+            }
+
+        return JsonResponse(out)
+
+        # if "karathon" in request.POST:
+            # karathon_id = request.POST["karathon"]
+            # karathon = Karathon.objects.get(id=karathon_id)
+            # participant = request.user.participant
+            # payment = create_payment(karathon, participant)
+            # payment_link = payment.confirmation.confirmation_url
             # request.user.participant.karathon.add(karathon_id)
 
     participant_date = request.user.participant.get_participant_time()
@@ -253,6 +307,7 @@ def participate(request):
                 free_karathon_item.finished_at,
                 participant_karathon_item.finished_at,
             )
+
             if latest_start <= earliest_end:
                 intersecting_carathons_ids.append(free_karathon_item.id)
 
@@ -263,27 +318,26 @@ def participate(request):
     context = {
         "participant_karathon_list": participant_karathon_list,
         "available_karathon_list": available_karathon_list,
-        "payment_link": payment_link,
     }
 
     return render(request, "core/participate.html", context)
 
 
 def webhooks_yookassa(request):
+    event_json = json.loads(request.body)
+    payment = confirmation_payment(event_json)
+
     module_dir = os.path.dirname(__file__)
     file_path = os.path.join(module_dir, 'yookassa.txt')  # full path to text.
     my_file = open(file_path, 'w+')
 
-    my_file.write(str(request.__dict__))
+    my_file.write(str(payment))
     my_file.write('\n')
-    my_file.write(str(request.POST))
-    my_file.write('\n')
-    my_file.write(str(request.GET))
-    my_file.write('\n')
+
     my_file.write('1234')
     my_file.close()
 
-    return HttpResponse()
+    return HttpResponse(status=200)
 
 
 def webhooks_paypal(request):
@@ -292,6 +346,8 @@ def webhooks_paypal(request):
     my_file = open(file_path, 'w+')
 
     my_file.write(str(request.__dict__))
+    my_file.write('\n')
+    my_file.write(str(request.body))
     my_file.write('\n')
     my_file.write(str(request.POST))
     my_file.write('\n')

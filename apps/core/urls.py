@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 
 from . import views
@@ -29,8 +30,8 @@ urlpatterns = [
         name="karathon",
     ),
     path("participate/", views.participate, name="participate"),
-    path("participate/webhooks/yookassa/", views.webhooks_yookassa, name="webhooks_yookassa"),
-    path("participate/webhooks/paypal/", views.webhooks_paypal, name="webhooks_paypal"),
+    path("participate/webhooks/yookassa/", csrf_exempt(views.webhooks_yookassa), name="webhooks_yookassa"),
+    path("participate/webhooks/paypal/", csrf_exempt(views.webhooks_paypal), name="webhooks_paypal"),
     # path("participate/", views.ParticipateView.as_view(), name="participate"),
     path(
         "privacy_policy",

@@ -8,49 +8,54 @@
   </div>
   <div class="container">
     {% if participant_karathon_list|length > 0 %}
-      <div>Вы уже принимаете участие в карафонах:</div>
-
-      {% for karathon in participant_karathon_list %}
-        <div>
-          <div>{{ karathon.number }} карафон ({{ karathon.get_type_display }})</div>
-          <div>который пройдёт c {{ karathon.starts_at|date:'d E Y' }} по {{ karathon.finished_at|date:'d E Y' }}</div>
+      <div class="participant-karathons">
+        <h3>Вы уже принимаете участие в карафонах:</h3>
+        <div class="participant-karathons_wrapper">
+          {% for karathon in participant_karathon_list %}
+            <div class="participant-karathons_item">
+              <div class="participant-karathons_item_karathon-number">
+                <div class="participant-karathons_item_number">
+                  {{ karathon.number }}
+                </div>
+                <div class="participant-karathons_item_text">
+                  карафон
+                </div>
+              </div>
+              <div class="participant-karathons_item_dates">
+                Пройдёт с {{ karathon.starts_at|date:'d E Y' }} по {{ karathon.finished_at|date:'d E Y' }}
+              </div>
+            </div>
+          {% endfor %}
         </div>
-      {% endfor %}
-    {% endif %}
-    {% if payment_link %}
-      <a href={{ payment_link }} target="_blank">Оплатить</a>
+      </div>
     {% endif %}
     {% if available_karathon_list|length > 0 %}
-      <div>Выберите карафон, в котором хотите принять участие</div>
+      <h3>Выберите карафон, в котором хотите принять участие</h3>
       <div class="available-karathons_wrapper">
         {% for karathon in available_karathon_list %}
-        <div class="available-karathons_item">
-          <div class="available-karathons_item_">
-            <div class="available-karathons_item_karathon-number">
-              <div class="available-karathons_item_number">
-                {{ karathon.number }}
+          <div class="available-karathons_item" participate-elem="karathon-wrapper" karathon-id="{{ karathon.id }}">
+            <div class="available-karathons_item_karathon">
+              <div class="available-karathons_item_karathon-number">
+                <div class="available-karathons_item_number"
+                     participate-elem="karathon-number"
+                     karathon-number="{{ karathon.number }}">
+                  {{ karathon.number }}
+                </div>
+                <div class="available-karathons_item_text">
+                  карафон
+                </div>
               </div>
-              <div class="available-karathons_item_karathon">
-                карафон
+              <div class="available-karathons_item_dates">
+                Пройдёт с {{ karathon.starts_at|date:'d E Y' }} по {{ karathon.finished_at|date:'d E Y' }}
               </div>
             </div>
-            <div class="available-karathons_item_dates">
-              Пройдёт с {{ karathon.starts_at|date:'d E Y' }} по {{ karathon.finished_at|date:'d E Y' }}
+            <div class="available-karathons_item_button_wrapper">
+              <a class="available-karathons_item_button" participate-elem="open-payment-popup-button">
+                <span>Участвовать</span>
+              </a>
             </div>
           </div>
-          <div class="available-karathons_item_button_wrapper">
-            <button class="available-karathons_item_button">Участвовать</button>
-          </div>
-        </div>
-{#          <label>#}
-{#            <div>#}
-{#              <input type="radio" name="karathon" value="{{ karathon.id }}">#}
-{#            <span>{{ karathon.number }}-й карафон ({{ karathon.get_type_display }})</span>#}
-{#            </div>#}
-{#            <div>который пройдёт c {{ karathon.starts_at|date:'d E Y' }} по {{ karathon.finished_at|date:'d E Y' }}</div>#}
-{#          </label>#}
         {% endfor %}
-{#        <input type="submit" value="Участвовать">#}
       </div>
     {% endif %}
   </div>
