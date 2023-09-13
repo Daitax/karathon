@@ -327,16 +327,6 @@ def webhooks_yookassa(request):
     event_json = json.loads(request.body)
     payment = confirmation_payment(event_json)
 
-    module_dir = os.path.dirname(__file__)
-    file_path = os.path.join(module_dir, 'yookassa.txt')  # full path to text.
-    my_file = open(file_path, 'w+')
-
-    my_file.write(str(payment))
-    my_file.write('\n')
-
-    my_file.write('1234')
-    my_file.close()
-
     return HttpResponse(status=200)
 
 
