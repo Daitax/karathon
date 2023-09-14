@@ -1,10 +1,20 @@
 <div class="close" popup-element="close"></div>
+{% if window == 'email' %}
+  <h4>Введите Email</h4>
+  <div class="payment_email"
+       karathon-id="{{ karathon_id }}"
+       karathon-number="{{ karathon_number }}">
+    <input type="text" name="email" placeholder="E-mail" popup-element="payment-email">
+    <a popup-element="payment-email-button">Далее</a>
+  </div>
+{% endif %}
 {% if window == 'type' %}
   <h4>Выберите тип оплаты</h4>
   <div class="payment_type"
        popup-element="payment-type-button-wrapper"
        karathon-id="{{ karathon_id }}"
-       karathon-number="{{ karathon_number }}">
+       karathon-number="{{ karathon_number }}"
+       email="{{ email }}">
     <a popup-element="payment-type-button" type="card">Банковской картой</a>
     <a popup-element="payment-type-button" type="paypal">PayPal</a>
   </div>

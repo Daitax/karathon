@@ -8,7 +8,7 @@ Configuration.configure(os.environ.get("YOOKASSA_TEST_ID"), os.environ.get("YOOK
 
 
 @staticmethod
-def create_payment(karathon, participant):
+def create_payment(karathon, email, participant):
     payment = Payment.create(
         {
             "amount": {
@@ -30,7 +30,7 @@ def create_payment(karathon, participant):
                     "full_name": '{last_name} {first_name} {middle_name}'.format(last_name=participant.last_name,
                                                                                  first_name=participant.first_name,
                                                                                  middle_name=participant.middle_name),
-                    "email": participant.email,
+                    "email": email,
                     "phone": participant.phone,
                 },
                 "items": [

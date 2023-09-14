@@ -224,12 +224,13 @@ class KarathonView(TemplateView):
 def create_payment_link(data, participant):
     karathon_id = data['karathon_id']
     karathon_number = data['karathon_number']
+    email = data['email']
     link = ''
     try:
         karathon = Karathon.objects.get(id=karathon_id, number=karathon_number)
 
         if data['payment_type'] == 'card':
-            payment = create_payment(karathon, participant)
+            payment = create_payment(karathon, email, participant)
             link = payment.confirmation.confirmation_url
         elif data['payment_type'] == 'paypal':
             pass
@@ -248,13 +249,19 @@ def participate(request):
         }
 
         if 'window' in data:
-
-            if data['window'] == 'type':
-                print(data)
+            if data['window'] == 'email':
                 context = {
                     "window": data['window'],
                     "karathon_number": data['karathon_number'],
                     "karathon_id": data['karathon_id']
+                }
+
+            if data['window'] == 'type':
+                context = {
+                    "window": data['window'],
+                    "karathon_number": data['karathon_number'],
+                    "karathon_id": data['karathon_id'],
+                    "email": data['email'],
                 }
 
             if data['window'] == 'link':
