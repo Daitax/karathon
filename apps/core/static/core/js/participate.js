@@ -73,40 +73,6 @@ function openPaymentTypePopup(element) {
   } else {
   //  TODO Надо сделать обработку ошибки некорректного email
   }
-
-  // let paymentType = element.getAttribute('type')
-  // let paymentPopupWrapper = element.closest('[popup-name="payment"]')
-  // let karathonId = paymentPopupWrapper.querySelector('[popup-element="payment-type-button-wrapper"]')
-  //   .getAttribute('karathon-id')
-  // let karathonNumber = paymentPopupWrapper.querySelector('[popup-element="payment-type-button-wrapper"]')
-  //   .getAttribute('karathon-number')
-  //
-  // paymentPopupWrapper.innerHTML = ''
-  // paymentPopupWrapper.classList.add('loading')
-  //
-  // let csrfToken = getCookie('csrftoken')
-  // let data = {
-  //   'window': 'link',
-  //   'payment_type': paymentType,
-  //   'karathon_id': karathonId,
-  //   'karathon_number': karathonNumber
-  // }
-  //
-  // fetch('/participate/', {
-  //   method: "POST",
-  //   body: JSON.stringify(data),
-  //   headers: {
-  //     'X-CSRFToken': csrfToken,
-  //     'Content-Type': 'application/json'
-  //   }
-  // })
-  //   .then((response) => response.json())
-  //   .then(function (data) {
-  //     if (data.status == 'ok') {
-  //       paymentPopupWrapper.classList.remove('loading')
-  //       paymentPopupWrapper.innerHTML = data.window
-  //     }
-  //   })
 }
 
 function openPaymentLinkPopup(element) {
@@ -168,17 +134,18 @@ if (openEmailPopupButton.length > 0) {
 let paymentPopupWrapper = document.querySelector('[popup-element="popup"][popup-name="payment"]')
 if (paymentPopupWrapper) {
   paymentPopupWrapper.addEventListener('click', function (event) {
+    event.preventDefault()
     let target = event.target
 
-    if (target.getAttribute('popup-element') == 'payment-email-button') {
+    if (target.closest('[popup-element]').getAttribute('popup-element') === 'payment-email-button') {
       openPaymentTypePopup(target)
     }
 
-    if (target.getAttribute('popup-element') == 'payment-type-button') {
+    if (target.closest('[popup-element]').getAttribute('popup-element') === 'payment-type-button') {
       openPaymentLinkPopup(target)
     }
 
-    if (target.getAttribute('popup-element') == 'close') {
+    if (target.closest('[popup-element]').getAttribute('popup-element') === 'close') {
       closePaymentPopup()
     }
   })

@@ -10,4 +10,85 @@
         bottom: 0;
         background: rgba(255, 255, 255, 0.8);
     }
+
+    .payment_email {
+        .payment_email_input {
+            border: 2px solid @pink;
+            width: 13.56rem;
+            padding: .88rem .75rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: .66rem;
+            letter-spacing: 0.05em;
+            -webkit-appearance: none;
+            -webkit-border-radius: 0;
+            border-radius: 0;
+            outline: none;
+            margin-top: 1rem;
+        }
+    }
+
+    .payment_button {
+        display: block;
+        align-self: baseline;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        text-align: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        position: relative;
+        padding: 0.84rem 3.05rem;
+        margin-top: 1rem;
+        background: #f648a5;
+        border: none;
+    }
+
+    .payment_button:hover {
+        text-decoration: none;
+    }
+
+    .payment_button span {
+        z-index: 1;
+        position: inherit;
+        color: #fff;
+    }
+
+    .payment_button span:hover {
+        text-decoration: none;
+    }
+
+    .payment_button::before {
+        content: "";
+        position: absolute;
+        transition: all 0.5s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        opacity: 0;
+        background-size: 175% 175%;
+    }
+
+    .payment_button:hover::before {
+        opacity: 1;
+        text-decoration: none;
+        background-size: 175% 175%;
+        animation: gradient 4s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
+    }
+
+    .payment_button::before {
+        background: linear-gradient(110.04deg, #f648a5 -4.24%, #00afeb 49.4%, #f648a5 88.96%);
+    }
+
+    .payment_button.hover_before {
+        background: linear-gradient(110.04deg, #f648a5 -4.24%, #00afeb 49.4%, #f648a5 88.96%);
+        transition: all 0.5s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+        opacity: 1;
+        text-decoration: none;
+        background-size: 175% 175%;
+        animation: gradient 4s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
+    }
+
 }

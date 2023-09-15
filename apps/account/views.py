@@ -160,82 +160,82 @@ class AuthView(TemplateView):
         return JsonResponse(out)
 
 
-class AccountView(LoginRequiredMixin, TemplateView):
-    template_name = "account/index.html"
-    login_url = "/"
+# class AccountView(LoginRequiredMixin, TemplateView):
+#     template_name = "account/index.html"
+#     login_url = "/"
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         participant_form = ParticipantForm(
+#             instance=self.request.user.participant
+#         )
+#         if self.request.method == "POST" and "personal" in self.request.POST:
+#             participant_form = ParticipantForm(
+#                 self.request.POST,
+#                 self.request.FILES,
+#                 instance=self.request.user.participant,
+#             )
+#
+#             if participant_form.is_valid():
+#                 participant_form.save()
+#                 participant_form = ParticipantForm(
+#                     instance=self.request.user.participant
+#                 )
+#
+#         context = {
+#             "participant_form": participant_form,
+#         }
+#
+#         # if Winner.is_winner_participant(request.user.participant):
+#         #     winner_questionnaire_form = WinnerQuestionnaireForm()
+#         #
+#         #     if request.method == 'POST' and 'winner' in request.POST:
+#         #         winner_questionnaire_form = WinnerQuestionnaireForm(request.POST)
+#         #
+#         #         if winner_questionnaire_form.is_valid():
+#         #             pass
+#         #
+#         #     context = {
+#         #         'participant_form': participant_form,
+#         #         'winner_questionnaire_form': winner_questionnaire_form
+#         #     }
+#
+#         return context
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+
+@login_required
+def index(request):
+    participant_form = ParticipantForm(instance=request.user.participant)
+    if request.method == "POST" and "personal" in request.POST:
         participant_form = ParticipantForm(
-            instance=self.request.user.participant
+            request.POST, request.FILES, instance=request.user.participant
         )
-        if self.request.method == "POST" and "personal" in self.request.POST:
+
+        if participant_form.is_valid():
+            participant_form.save()
             participant_form = ParticipantForm(
-                self.request.POST,
-                self.request.FILES,
-                instance=self.request.user.participant,
+                instance=request.user.participant
             )
 
-            if participant_form.is_valid():
-                participant_form.save()
-                participant_form = ParticipantForm(
-                    instance=self.request.user.participant
-                )
+    context = {
+        "participant_form": participant_form,
+    }
 
-        context = {
-            "participant_form": participant_form,
-        }
+    # if Winner.is_winner_participant(request.user.participant):
+    #     winner_questionnaire_form = WinnerQuestionnaireForm()
+    #
+    #     if request.method == 'POST' and 'winner' in request.POST:
+    #         winner_questionnaire_form = WinnerQuestionnaireForm(request.POST)
+    #
+    #         if winner_questionnaire_form.is_valid():
+    #             pass
+    #
+    #     context = {
+    #         'participant_form': participant_form,
+    #         'winner_questionnaire_form': winner_questionnaire_form
+    #     }
 
-        # if Winner.is_winner_participant(request.user.participant):
-        #     winner_questionnaire_form = WinnerQuestionnaireForm()
-        #
-        #     if request.method == 'POST' and 'winner' in request.POST:
-        #         winner_questionnaire_form = WinnerQuestionnaireForm(request.POST)
-        #
-        #         if winner_questionnaire_form.is_valid():
-        #             pass
-        #
-        #     context = {
-        #         'participant_form': participant_form,
-        #         'winner_questionnaire_form': winner_questionnaire_form
-        #     }
-
-        return context
-
-
-# @login_required
-# def index(request):
-#     participant_form = ParticipantForm(instance=request.user.participant)
-#     if request.method == "POST" and "personal" in request.POST:
-#         participant_form = ParticipantForm(
-#             request.POST, request.FILES, instance=request.user.participant
-#         )
-
-#         if participant_form.is_valid():
-#             participant_form.save()
-#             participant_form = ParticipantForm(
-#                 instance=request.user.participant
-#             )
-
-#     context = {
-#         "participant_form": participant_form,
-#     }
-
-#     # if Winner.is_winner_participant(request.user.participant):
-#     #     winner_questionnaire_form = WinnerQuestionnaireForm()
-#     #
-#     #     if request.method == 'POST' and 'winner' in request.POST:
-#     #         winner_questionnaire_form = WinnerQuestionnaireForm(request.POST)
-#     #
-#     #         if winner_questionnaire_form.is_valid():
-#     #             pass
-#     #
-#     #     context = {
-#     #         'participant_form': participant_form,
-#     #         'winner_questionnaire_form': winner_questionnaire_form
-#     #     }
-
-#     return render(request, "account/index.html", context)
+    return render(request, "account/index.html", context)
 
 
 @login_required(login_url="core:site-index")

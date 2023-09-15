@@ -30,32 +30,34 @@
       </div>
     {% endif %}
     {% if available_karathon_list|length > 0 %}
-      <h3>Выберите карафон, в котором хотите принять участие</h3>
-      <div class="available-karathons_wrapper">
-        {% for karathon in available_karathon_list %}
-          <div class="available-karathons_item" participate-elem="karathon-wrapper" karathon-id="{{ karathon.id }}">
-            <div class="available-karathons_item_karathon">
-              <div class="available-karathons_item_karathon-number">
-                <div class="available-karathons_item_number"
-                     participate-elem="karathon-number"
-                     karathon-number="{{ karathon.number }}">
-                  {{ karathon.number }}
+      <div class="available-karathons">
+        <div class="available-karathons_header">Выберите карафон, в котором хотите принять участие</div>
+        <div class="available-karathons_wrapper">
+          {% for karathon in available_karathon_list %}
+            <div class="available-karathons_item" participate-elem="karathon-wrapper" karathon-id="{{ karathon.id }}">
+              <div class="available-karathons_item_karathon">
+                <div class="available-karathons_item_karathon-number">
+                  <div class="available-karathons_item_number"
+                       participate-elem="karathon-number"
+                       karathon-number="{{ karathon.number }}">
+                    {{ karathon.number }}
+                  </div>
+                  <div class="available-karathons_item_text">
+                    карафон
+                  </div>
                 </div>
-                <div class="available-karathons_item_text">
-                  карафон
+                <div class="available-karathons_item_dates">
+                  Пройдёт с {{ karathon.starts_at|date:'d E Y' }} по {{ karathon.finished_at|date:'d E Y' }}
                 </div>
               </div>
-              <div class="available-karathons_item_dates">
-                Пройдёт с {{ karathon.starts_at|date:'d E Y' }} по {{ karathon.finished_at|date:'d E Y' }}
+              <div class="available-karathons_item_button_wrapper">
+                <a class="available-karathons_item_button" participate-elem="open-email-popup-button">
+                  <span>Участвовать</span>
+                </a>
               </div>
             </div>
-            <div class="available-karathons_item_button_wrapper">
-              <a class="available-karathons_item_button" participate-elem="open-email-popup-button">
-                <span>Участвовать</span>
-              </a>
-            </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+        </div>
       </div>
     {% endif %}
   </div>

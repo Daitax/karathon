@@ -8,7 +8,7 @@ app_name = "account"
 
 urlpatterns = [
     # path("", views.index, name="account-index"),
-    path("", views.AccountView.as_view(), name="account-index"),
+    path("", views.index, name="account-index"),
     path("messages/", views.messages, name="account-messages"),
     path("results/", views.ResultsView.as_view(), name="account-results"),
     path("team/", include("apps.teams.urls", namespace="teams")),
