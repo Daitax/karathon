@@ -82,22 +82,8 @@ class Notification(models.Model):
         )
 
     @staticmethod
-    def link_to_instagram(participant):
-        template = NotificationTemplate.objects.get(key="link_to_instagram")
-
-        header = template.header
-        text = template.text
-
-        Notification.objects.create(
-            participant=participant,
-            template=template,
-            header=header,
-            text=text,
-        )
-
-    @staticmethod
-    def link_to_email(participant):
-        template = NotificationTemplate.objects.get(key="link_to_email")
+    def notification_from_template(participant, key):
+        template = NotificationTemplate.objects.get(key=key)
 
         header = template.header
         text = template.text

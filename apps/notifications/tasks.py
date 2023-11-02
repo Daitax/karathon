@@ -16,9 +16,13 @@ def send_task_for_participant():
 
 def send_notification_add_instagram(participant):
     from apps.notifications.models import Notification
-    Notification.link_to_instagram(participant)
+    Notification.notification_from_template(participant, "link_to_instagram")
 
 
-def send_notification_add_email(participant):
+# def send_notification_add_email(participant):
+#     from apps.notifications.models import Notification
+#     Notification.notification_from_template(participant, "link_to_email")
+
+def send_notification_add_phone(participant):
     from apps.notifications.models import Notification
-    Notification.link_to_email(participant)
+    Notification.notification_from_template(participant, "link_to_phone")
