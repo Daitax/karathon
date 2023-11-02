@@ -5,6 +5,7 @@ import pytz
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 from django.db import models
 from django.db.models import signals
 from phonenumber_field.modelfields import PhoneNumberField
@@ -78,7 +79,7 @@ class Participant(User):
         User, parent_link=True, on_delete=models.CASCADE
     )
     middle_name = models.CharField("Отчество", max_length=20, blank=True)
-    phone = PhoneNumberField("Номер телефона", unique=True)
+    phone = PhoneNumberField("Номер телефона", blank=True, unique=False)
     photo = models.ImageField(
         "Аватарка", blank=True, upload_to=get_participant_photo_path
     )
@@ -202,7 +203,7 @@ if not settings.IS_TESTING:
     )
 
 
-class Sms(models.Model):
+class EmailCode(models.Model):
     @staticmethod
     def check_code(request, code):
         cookie_code = request.COOKIES["code"]
@@ -214,15 +215,49 @@ class Sms(models.Model):
             return False
 
     @staticmethod
-    def send_code(phone, code):
-        response = {"status": "OK"}
+    def login_attempts(request):
+        cookie_attempts = request.COOKIES["attempts"]
+        hash_attempts_3 = hashlib.md5('attempt-3'.encode())
+        hash_attempts_2 = hashlib.md5('attempt-2'.encode())
+        hash_attempts_1 = hashlib.md5('attempt-1'.encode())
+
+        if cookie_attempts == hash_attempts_3.hexdigest():
+            return 3
+        if cookie_attempts == hash_attempts_2.hexdigest():
+            return 2
+        if cookie_attempts == hash_attempts_1.hexdigest():
+            return 1
+
+    @staticmethod
+    def send_code(email, code):
+        # TODO Реализовать отправку email через SMTP, а не в консоль
+        send_result = send_mail(
+            "Вход в личный кабинет на сайте karathon",
+            "Код для входа: " + str(code),
+            "admin@karathon.ru",
+            [email,],
+            fail_silently=False,
+        )
+
+        if send_result == 1:
+            response = {"status": "ok"}
+        else:
+            response = {"status": "error"}
+
         return response
 
     @staticmethod
+    def set_cookie_attempts(response, attempt):
+        format_text_attempt = 'attempt-{}'.format(attempt)
+        attempts_hash = hashlib.md5(format_text_attempt.encode())
+        response.set_cookie("attempts", attempts_hash.hexdigest())
+        return response
+
+
+    @staticmethod
     def set_cookie_code(response, code):
-        expires = datetime.datetime.now() + datetime.timedelta(minutes=1)
         code_hash = hashlib.md5(bytes(code))
-        response.set_cookie("code", code_hash.hexdigest(), expires=expires)
+        response.set_cookie("code", code_hash.hexdigest())
         return response
 
 

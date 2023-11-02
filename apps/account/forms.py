@@ -1,21 +1,24 @@
 from django import forms
+
 from .models import Participant, WinnerQuestionnaire
 
-from phonenumber_field.formfields import PhoneNumberField
 
-
-class AuthPhoneForm(forms.Form):
-    phone = PhoneNumberField(
-        error_messages={
-            # 'invalid': 'Введите корректный номер телефона',
-            'invalid': 'Введен неверный номер',
-            'required': 'Введите номер телефона'
+class AuthEmailForm(forms.Form):
+    email = forms.EmailField(error_messages={
+            'invalid': 'Введен неверный email',
+            'required': 'Введите email'
         })
+
+    error_messages = {
+        'email': {
+            'error_send': "Ошибка отправки сообщения",
+        },
+    }
 
 
 class AuthCodeForm(forms.Form):
+    email = forms.EmailField()
     code = forms.IntegerField()
-    phone = PhoneNumberField()
 
 
 class ParticipantForm(forms.ModelForm):

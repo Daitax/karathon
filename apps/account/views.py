@@ -1,4 +1,5 @@
 import json
+from random import randint
 
 from django.conf import settings
 from django.contrib.auth import login
@@ -7,10 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
 from django.http import JsonResponse
-from django.shortcuts import get_list_or_404, get_object_or_404, render
+from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
-from django.utils.decorators import method_decorator
-from django.views.decorators.http import require_http_methods
 from django.views.generic.base import TemplateView
 
 from apps.core.utils import ending_numbers
@@ -19,11 +18,11 @@ from apps.steps.models import Step
 
 from .forms import (
     AuthCodeForm,
-    AuthPhoneForm,
+    AuthEmailForm,
     ParticipantForm,
     WinnerQuestionnaireForm,
 )
-from .models import Participant, Sms, Winner
+from .models import Participant, EmailCode, Winner, User
 
 
 class AuthView(TemplateView):
@@ -33,14 +32,14 @@ class AuthView(TemplateView):
         if request.method == "POST" and "window" in request.POST:
             if request.POST["window"] == "open":
                 return self.open_popup(request)
-            if request.POST["window"] == "phone":
+            if request.POST["window"] == "email":
                 return self.auth_phone(request)
             if request.POST["window"] == "code":
                 return self.auth_code(request)
 
     def open_popup(self, request):
         context = {
-            "window": "phone",
+            "window": "email",
         }
         auth_window = render_to_string(
             "account/popups/authentication.html", context, request
@@ -53,21 +52,20 @@ class AuthView(TemplateView):
         return JsonResponse(out)
 
     def auth_phone(self, request):
-        form = AuthPhoneForm(request.POST)
+        form = AuthEmailForm(request.POST)
 
         if form.is_valid():
-            phone = str(form.cleaned_data["phone"])
-            # code = randint(1000, 9999)
+            email = form.cleaned_data["email"]
 
-            # TODO Раскомментировать проверку куков
-            code = 1122
-            # if not request.COOKIES.get('code'):
-            sms_sending_response = Sms.send_code(phone, code)
-            if sms_sending_response["status"] == "OK":
+            code = randint(1000, 9990)
+            sending_code = EmailCode.send_code(email, code)
+
+            if sending_code["status"] == "ok":
                 context = {
                     "window": "code",
-                    "phone": phone,
+                    "email": email
                 }
+
                 auth_window = render_to_string(
                     "account/popups/authentication.html", context, request
                 )
@@ -79,24 +77,24 @@ class AuthView(TemplateView):
                 }
 
                 response = JsonResponse(out)
-                Sms.set_cookie_code(response, code)
+                EmailCode.set_cookie_code(response, code)
+                EmailCode.set_cookie_attempts(response, 3)
                 return response
             else:
+                form.add_error('email', 'Ошибка отправки сообщения')
+
                 context = {
-                    "window": "phone",
-                    "phone": phone,
-                    "errors": {"code": "Ошибка отправки СМС"},
+                    "window": "email",
+                    "email": email,
+                    "errors": form.errors,
                 }
-            # else:
-            #     context = {
-            #         'window': 'phone',
-            #         'phone': phone,
-            #         'errors': {
-            #             'code': 'Повторная отправка СМС доступна через 1 минуту'
-            #         }
-            #     }
         else:
-            context = {"window": "phone", "errors": form.errors}
+            email_input = form['email'].value()
+            context = {
+                "window": "email",
+                "email": email_input,
+                "errors": form.errors
+            }
 
         auth_window = render_to_string(
             "account/popups/authentication.html", context, request
@@ -111,16 +109,20 @@ class AuthView(TemplateView):
         return JsonResponse(out)
 
     def auth_code(self, request):
+        if not "attempts" in request.COOKIES:
+            return self.open_popup(request)
+
         form = AuthCodeForm(request.POST)
 
         if form.is_valid():
-            phone = str(form.cleaned_data["phone"])
+            email = form.cleaned_data["email"]
             code = form.cleaned_data["code"]
 
-            is_code_correct = Sms.check_code(request, code)
+            is_code_correct = EmailCode.check_code(request, code)
+
             if is_code_correct:
                 try:
-                    participant = Participant.objects.get(phone=phone)
+                    participant = Participant.objects.get(email=email)
                     login(request, participant)
 
                     out = {
@@ -131,19 +133,43 @@ class AuthView(TemplateView):
                     return JsonResponse(out)
                 except ObjectDoesNotExist:
                     new_participant = Participant.objects.create_user(
-                        username=phone,
-                        phone=phone,
+                        username=email,
+                        email=email,
                     )
+
                     login(request, new_participant)
 
                     context = {"window": "enter", "reload_overlay": True}
             else:
-                context = {
-                    "window": "code",
-                    "phone": phone,
-                    "code": code,
-                    "errors": {"code": "* Введён неправильный СМС код"},
-                }
+                attempts = EmailCode.login_attempts(request)
+
+                if attempts == 1:
+                    return self.open_popup(request)
+                else:
+                    form.add_error('code', 'Неверный код. Осталось попыток {} '.format(attempts - 1))
+
+                    context = {
+                        "window": "code",
+                        "email": email,
+                        "code": code,
+                        "errors": form.errors,
+                    }
+
+                    auth_window = render_to_string(
+                        "account/popups/authentication.html", context, request
+                    )
+
+                    out = {
+                        "status": "ok",
+                        "action": "window",
+                        "window": auth_window,
+                    }
+                    response = JsonResponse(out)
+
+                    EmailCode.set_cookie_attempts(response, attempts - 1)
+
+                    return response
+
         else:
             context = {"window": "code", "errors": form.errors}
 

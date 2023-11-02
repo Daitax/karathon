@@ -234,3 +234,5 @@ CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"
 FILE_UPLOAD_HANDLERS = (
     "django.core.files.uploadhandler.TemporaryFileUploadHandler",
 )
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

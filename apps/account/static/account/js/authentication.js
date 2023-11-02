@@ -18,16 +18,14 @@ function openAuthenticationForm() {
   })
     .then((response) => response.json())
     .then(function (data) {
+      // console.log(data)
       if (data.status == 'ok') {
         if (data.action == 'window') {
           authenticationFormWrapper.innerHTML = data.window
+          let email = document.querySelector('[auth-form-elem="email"]')
+          email.focus()
         }
       }
-    })
-    .then(function () {
-      let ph = document.querySelector('[auth-form-elem="phone"]')
-      ph.focus()
-      ph.click()
     })
 }
 
@@ -56,6 +54,7 @@ function submitAuthenticationForm(button) {
   })
     .then((response) => response.json())
     .then(function (data) {
+      console.log(data)
       if (data.status == 'ok') {
         if (data.action == 'window') {
           authenticationFormWrapper.innerHTML = data.window
@@ -72,13 +71,8 @@ function submitAuthenticationForm(button) {
 }
 
 let openFormAuthenticationButtons = document.querySelectorAll('[button-action="open-auth-form"]')
-openFormAuthenticationButtons.forEach(element => element.addEventListener('click', openAuthenticationForm)
+  openFormAuthenticationButtons.forEach(element => element.addEventListener('click', openAuthenticationForm)
 )
-// if (openFormAuthenticationButton) {
-//   openFormAuthenticationButton.addEventListener('click', openAuthenticationForm)
-// }
-
-
 
 let authenticationFormWrapper = document.querySelector('[popup-element="popup"][form-name="authentication"]')
 if (authenticationFormWrapper) {
@@ -89,9 +83,7 @@ if (authenticationFormWrapper) {
 
   authenticationFormWrapper.addEventListener('click', function (event) {
     let target = event.target
-    if (target.getAttribute('auth-form-elem') == 'button') {
-      submitAuthenticationForm(target)
-    }
+
     if (target.getAttribute('auth-form-elem') == 'later') {
       closeAuthenticationForm()
       window.location.reload()

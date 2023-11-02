@@ -1,35 +1,39 @@
 <div class="close" popup-element="close"></div>
 <h4>Авторизация</h4>
-{% if window == 'phone' or window == 'code' %}
+{% if window == 'email' or window == 'code' %}
   <form class="form" auth-form-elem="form">
     <input type="hidden" name="window" value="{{ window }}" auth-form-elem="window">
-    <label class="label" auth-form-elem="phone-wrapper">
-      <div class="text">Укажи номер телефона для авторизации:</div>
-      <input class="input" data-tel-input type="tel" maxlength="18" name="phone" value="{{ phone }}" auth-form-elem="phone"
+    <label class="label" auth-form-elem="email-wrapper">
+      <div class="text">Укажи email для авторизации:</div>
+      <input class="input"
+             type=text"
+             name="email"
+             value="{{ email }}"
+             auth-form-elem="email"
              {% if window == 'code' %}readonly{% endif %}>
-      <div class="error">{{ errors.phone.as_text }}</div>
+      <div class="error">{{ errors.email.as_text }}</div>
     </label>
-    {% if window == 'code' %}
-      <label class="label" auth-form-elem="code-wrapper">
-        <input class="input" type="text" name="code" value="" auth-form-elem="code" autocomplete="off">
-        <div class="text">{{ errors.code }}</div>
-        <div class="text">введи код из SMS, которую мы отправили на указанный номер</div>
-      </label>
-    {% endif %}
-    {% if window == 'phone' %}
-      <button class="button pink_button" auth-form-elem="button">
-        <span auth-form-elem="button">Подтвердить</span>
-      </button>
-      <p>нажимая на кнопку, ты даешь согласие на <a href="{% url 'core:privacy_policy' %}" target="_blank">обработку и хранение персональных
-        данных</a>
-      </p>
-    {% endif %}
+  {% if window == 'code' %}
+    <label class="label" auth-form-elem="code-wrapper">
+      <input class="input" type="text" name="code" value="" auth-form-elem="code" autocomplete="off">
+      <div class="text">{{ errors.code.as_text }}</div>
+      <div class="text">введи код из сообщения, которую мы отправили на указанный email</div>
+    </label>
+  {% endif %}
+  {% if window == 'email' %}
+    <button class="button pink_button" auth-form-elem="button">
+      <span auth-form-elem="button">Подтвердить</span>
+    </button>
+    <p>нажимая на кнопку, ты даешь согласие на
+      <a href="{% url 'core:privacy_policy' %}" target="_blank">обработку и хранение персональных данных</a>
+    </p>
+  {% endif %}
   </form>
 {% endif %}
 {% if window == 'enter' %}
   <div auth-form-elem="enter" reload="{{ reload_overlay }}">
-  <div class="text">Не забудь заполнить анкету в личном кабинете</div>
-  <a class="button pink_button" href="{% url 'account:account-index' %}"><span>Заполнить</span></a>
-  <button class="white_button button" auth-form-elem="later">Позже</button>
+    <div class="text">Не забудь заполнить анкету в личном кабинете</div>
+    <a class="button pink_button" href="{% url 'account:account-index' %}"><span>Заполнить</span></a>
+    <button class="white_button button" auth-form-elem="later">Позже</button>
+  </div>
 {% endif %}
-</div>
