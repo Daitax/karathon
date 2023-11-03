@@ -25,5 +25,4 @@ def check_steps_from_screenshot(step_id):
                     steps.steps, screenshot_steps, steps.photo
                 )
             )
-    print(steps.amount_matches_screenshot(steps.steps, str(steps.photo)))
     Notification.success_message(steps.participant)
