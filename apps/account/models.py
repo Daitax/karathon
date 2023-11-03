@@ -157,13 +157,13 @@ class Participant(User):
             return None
 
     def get_participant_time(self):
+        time_offset = int(self.timezone_offset)
         participant_offset = datetime.timedelta(
-            hours=int(self.timezone_offset)
+            hours=time_offset
         )
         participant_timezone = datetime.timezone(participant_offset)
+
         return datetime.datetime.now(participant_timezone)
-        # participant_timezone = pytz.timezone(self.timezone)
-        # return datetime.datetime.now(participant_timezone)
 
     def is_today_report(self):
         try:

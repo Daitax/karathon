@@ -72,13 +72,14 @@ class Notification(models.Model):
         header = template.header.format(format_date=format_date)
 
         addition = task.addition if task.addition else ""
-        text = template.text.format(task=task.task, addition=addition)
+        text = task.text_individual_task(participant)
+        format_text = template.text.format(task=text, addition=addition)
 
         Notification.objects.create(
             participant=participant,
             template=template,
             header=header,
-            text=text,
+            text=format_text,
         )
 
     @staticmethod
