@@ -7,11 +7,7 @@ from . import views
 app_name = "core"
 
 urlpatterns = [
-    path(
-        "",
-        TemplateView.as_view(template_name="core/index.html"),
-        name="site-index",
-    ),
+    path("", views.index, name="site-index"),
     path(
         "about_karachunia",
         TemplateView.as_view(template_name="core/about_karachunia.html"),

@@ -13,7 +13,7 @@ class CharityCategoryAdmin(admin.ModelAdmin):
 
 
 class KarathonAdmin(admin.ModelAdmin):
-    list_display = ('number', 'starts_at', 'finished_at', 'type',)
+    list_display = ('number', 'starts_at', 'finished_at', 'type', 'is_presentation',)
 
 
 admin.site.register(Category, CategoryAdmin)

@@ -1,8 +1,10 @@
 <div class="close" popup-element="close"></div>
-{% load get_outlink %}
-
-<h4>добро пожаловать в 19-й карафон</h4>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/HsSTGZ6vfsY" title="YouTube video player"
+{#<h4>добро пожаловать в {{ presentation_karathon.number }}-й карафон</h4>#}
+{% if presentation_karathon.video_presentation_link %}
+  <iframe width="560" height="315" src="{{ presentation_karathon.video_presentation_link }}?enablejsapi=1&version=3&playerapiid=ytplayer"
+          title="YouTube video player"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen></iframe>
+{#  TODO добавить параметр origin=домен#}
+{% endif %}

@@ -19,6 +19,13 @@ from apps.core.models import Karathon
 from apps.core.yookassa import create_payment, confirmation_payment
 
 
+def index(request):
+    presentation_karathon = Karathon.objects.get(is_presentation=True)
+
+    context = {"presentation_karathon": presentation_karathon}
+
+    return render(request, "core/index.html", context)
+
 # def index(request):
 #     # champ_list = Participant.objects.annotate(Sum("steps")).order_by(
 #     #     "steps__sum"

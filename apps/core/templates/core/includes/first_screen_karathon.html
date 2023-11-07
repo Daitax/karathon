@@ -2,39 +2,40 @@
 {% load get_outlink %}
 
 {% with request.resolver_match.view_name as view_name %}
-<div class="first-screen_wrapper">
+  <div class="first-screen_wrapper">
     <div class="first-screen container" window-elem="first-screen">
-        <div class="first-screen_text">
-            {% if view_name == 'core:site-index' %}
-            <h1>Карафон &mdash; это по любви</h1>
-            {% else %}
-            <h1>
-                <p>{{ karathon.number }}-й</p>
-                <p>карафон</p>
-            </h1>
-            <div class="karathon_type">{{ karathon.get_type_display }}</div>
-            <div class="karathon_date">с {{ karathon.starts_at|date:"d E" }} по
-                {{ karathon.finished_at|date:"d E" }}</div>
-            {% endif %}
-            <div class="first-screen_text_collab">Прими участие!</div>
-            <div class="first-screen_button_wrapper">
-                {% if user.is_authenticated %}
-                <a class="blue_button" href="/participate/"><span>Участовать</span></a>
-                {% else %}
-                <a class="blue_button" href="javascript:void(0)" button-action="open-auth-form"><span>Войти</span></a>
-                {% endif %}
-                <div class="button_text_cost">{% get_outlink 'COST_OF_PARTICIPATION' %}</div>
-            </div>
+      <div class="first-screen_text">
+        {% if view_name == 'core:site-index' %}
+          <h1>Карафон &mdash; это по любви</h1>
+        {% else %}
+          <h1>
+            <p>{{ karathon.number }}-й</p>
+            <p>карафон</p>
+          </h1>
+          <div class="karathon_type">{{ karathon.get_type_display }}</div>
+          <div class="karathon_date">с {{ karathon.starts_at|date:"d E" }} по
+            {{ karathon.finished_at|date:"d E" }}</div>
+        {% endif %}
+        <div class="first-screen_text_collab">Прими участие!</div>
+        <div class="first-screen_button_wrapper">
+          {% if user.is_authenticated %}
+            <a class="blue_button" href="/participate/"><span>Участовать</span></a>
+          {% else %}
+            <a class="blue_button" href="javascript:void(0)" button-action="open-auth-form"><span>Войти</span></a>
+          {% endif %}
+          <div class="button_text_cost">{% get_outlink 'COST_OF_PARTICIPATION' %}</div>
         </div>
-        <div class="first-screen_photo">
-            <img src="{% static 'core/img/photo_anna.svg' %}" alt="Anna_Karachunskaya" {% if view_name == 'core:site-index' %}window-elem="first-screen-promo"{% endif %}>
-            {% comment %} <div class="blur"></div> {% endcomment %}
-            {% if view_name == 'core:site-index' %}
-            <p window-elem="first-screen-promo">{% get_outlink 'KARATHON_PRESENTATION_TEXT' %}</p>
-            {% else %}
-            <a href="#promo_video" window-elem="anch"><p>презентация нового {{ karathon.number }}-го карафона</p></a>
-            {% endif %}
-        </div>
+      </div>
+      <div class="first-screen_photo">
+        <img src="{% static 'core/img/photo_anna.svg' %}" alt="Anna_Karachunskaya"
+             {% if view_name == 'core:site-index' %}window-elem="first-screen-promo"{% endif %}>
+        {% comment %} <div class="blur"></div> {% endcomment %}
+        {% if view_name == 'core:site-index' %}
+          <p window-elem="first-screen-promo">Презентация нового {{ presentation_karathon.number }}-го карафона</p>
+        {% else %}
+          <a href="#promo_video" window-elem="anch"><p>презентация {{ karathon.number }}-го карафона</p></a>
+        {% endif %}
+      </div>
     </div>
-</div>
+  </div>
 {% endwith %}

@@ -43,7 +43,7 @@
         <input type="text" name="phone" data-tel-input value="{{ participant_form.phone.value }}" placeholder="Телефон">
         <div>{{ participant_form.phone.errors }}</div>
       </div>
-      <p>твой номер телефона для авторизации на сайте</p>
+      <p>твой номер телефона</p>
     </label>
     <label class="account_content_info_instagram blur_input">
       <div >
@@ -57,7 +57,7 @@
         <input type="email" name="email" value="{{ participant_form.email.value|default_if_none:'' }}" placeholder="E-mail">
         <div>{{ participant_form.email.errors }}</div>
       </div>
-      <p>твой email для наших оповещений</p>
+      <p>твой email для авторизации на сайте</p>
     </label>
     <label class="account_content_info_timezone">
       <div>

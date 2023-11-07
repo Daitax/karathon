@@ -2,7 +2,7 @@ import datetime
 
 import pytz
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.db import models
+from django.db import models, transaction
 from django.urls import reverse
 
 from apps.core.utils import get_choice_value
@@ -41,6 +41,14 @@ class Karathon(models.Model):
     starts_at = models.DateField('Дата начала', blank=False, validators=[not_earlier_today])
     finished_at = models.DateField('Дата окончания', blank=False, validators=[not_earlier_today])
     type = models.CharField('Тип', choices=TYPE, max_length=10)
+    video_presentation_link = models.CharField('Ссылка на видеопрезентацию на youtube',
+                                               max_length=70,
+                                               help_text="Введите ссылку на видеопрезентацию на youtube, "
+                                                         "если она есть, в формате "
+                                                         "\"https://www.youtube.com/embed/XxXxXxX\"",
+                                               blank=True,
+                                               null=True)
+    is_presentation = models.BooleanField('Отображать видеопрезентацию', default=False)
 
     class Meta:
         verbose_name = 'Карафон'
@@ -48,6 +56,15 @@ class Karathon(models.Model):
 
     def __str__(self):
         return str(self.number) + ' карафон' + ' (' + self.get_karathon_type_value() + ')'
+
+    def save(self, *args, **kwargs):
+        if not self.is_presentation:
+            return super(Karathon, self).save(*args, **kwargs)
+        with transaction.atomic():
+            Karathon.objects.filter(
+                is_presentation=True).update(is_presentation=False)
+            return super(Karathon, self).save(*args, **kwargs)
+
 
     @staticmethod
     def not_finished_karathons(current_datetime=datetime.datetime.now()):
