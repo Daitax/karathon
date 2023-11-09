@@ -234,16 +234,19 @@ class KarathonView(TemplateView):
 def create_payment_link(data, participant):
     karathon_id = data['karathon_id']
     karathon_number = data['karathon_number']
-    email = data['email']
+    # email = data['email']
+    email = participant.email
     link = ''
     try:
         karathon = Karathon.objects.get(id=karathon_id, number=karathon_number)
 
-        if data['payment_type'] == 'card':
-            payment = create_payment(karathon, email, participant)
-            link = payment.confirmation.confirmation_url
-        elif data['payment_type'] == 'paypal':
-            pass
+        # if data['payment_type'] == 'card':
+        #     payment = create_payment(karathon, email, participant)
+        #     link = payment.confirmation.confirmation_url
+        # elif data['payment_type'] == 'paypal':
+        #     pass
+        payment = create_payment(karathon, email, participant)
+        link = payment.confirmation.confirmation_url
 
     except ObjectDoesNotExist:
         raise Http404
