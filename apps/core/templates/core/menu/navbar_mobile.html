@@ -6,55 +6,106 @@
 {% url 'core:champions' as champions_url %}
 
 <div class="header_navbar_menu_mobile_buttons">
-    <div window-elem="mobile_menu_button">
-        Меню
-    </div>
-    <div class="header_navbar_menu_mobile_background" window-elem="mobile_menu">
-        <div class="header_navbar_menu_mobile_wrapper">
-            <li>
-                <a {% if view_name  == 'core:site-index' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="/" {% endif %}>
-                    Главная
-                </a>
-            </li>
-            {% if karathons|length == 0 %}
-            <li><a href="{{ about_karathons_url }}">О карафонах</a></li>
-            {% elif karathons|length == 1 %}
-            {% with karathon=karathons|first %}
-                <li><a href="{{ karathon.karathon_url }}">{{ karathon.number }} карафон</a></li>
-            {% endwith %}
-            {% else %}
-            <li><span>Карафоны</span>
-                <div class="navbar_karathon_list_wrapper">
-                {% for karathon in karathons %}
-                    <div><a href="{{ karathon.karathon_url }}">{{ karathon.number }} карафон</a></div>
-                {% endfor %}
-                </div>
-            </li>
-            {% endif %}
-            <li><a{% if view_name  == 'core:champions' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ champions_url }}" {% endif %}>Рекордсмены</a></li>
-            <li><a {% if view_name  == 'core:about_karachunia' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ about_karachunia_url }}" {% endif %}>О Карачуне</a></li>
-            <li><a href="javascript:void(0)">Прошедшие карафоны</a></li>
-            {% comment %} <li><a href="javascript:void(0)">Благотворительность</a></li> {% endcomment %}
-            <li><a href="{% get_outlink 'TELEGRAM_URL' %}" target="_blank">Telegram</a></li>
-        </div>
-    </div>
-    {% if not user.is_authenticated %}
-    <div>
-        <a href="javascript:void(0)" button-action="open-auth-form">Вход</a>
-    </div>
-    {% endif %}
-    {% if user.is_authenticated %}
-        {% if account_url not in request_url %}
-            <div class="header_navbar_menu_photo" navbar-elem="user_avatar">
-                {% if user.participant.photo %}
-                <img src="{{user.participant.photo.url}}">
-                {%else%}
-                <img class="no_avatar" src="{% static 'core/img/no_avatar.png' %}">
-                {% endif %}
-            </div>
-            <div class="participants_account_menu" window-elem="account_menu">
-            {% account_menu %}
-            </div>
+  <div window-elem="mobile_menu_button">
+    Меню
+  </div>
+  <div class="header_navbar_menu_mobile_background" window-elem="mobile_menu">
+    <div class="header_navbar_menu_mobile_wrapper" menu-elem="menu_mobile_wrapper">
+      <li class="mobile_navbar_menu_item">
+        {% if view_name  == 'core:site-index' %}
+          <span class="mobile_navbar_menu_item_text active">
+            Главная
+          </span>
+        {% else %}
+          <a class="mobile_navbar_menu_item_link" href="/">
+            Главная
+          </a>
         {% endif %}
+      </li>
+      {% if karathons|length == 0 %}
+        <li class="mobile_navbar_menu_item">
+          {% if view_name  == 'core:about_karathons' %}
+            <span class="mobile_navbar_menu_item_text active">
+              О карафонах
+            </span>
+          {% else %}
+            <a class="mobile_navbar_menu_item_link" href="{{ about_karathons_url }}">
+              О карафонах
+            </a>
+          {% endif %}
+        </li>
+      {% elif karathons|length == 1 %}
+        {% with karathon=karathons|first %}
+          <li class="mobile_navbar_menu_item">
+          {% if view_name  == 'core:karathon' %}
+            <span class="mobile_navbar_menu_item_text active">
+              {{ karathon.number }} карафон
+            </span>
+          {% else %}
+            <a class="mobile_navbar_menu_item_link" href="{{ karathon.karathon_url }}">{{ karathon.number }} карафон</a>
+          {% endif %}
+          </li>
+{#          <li><a href="{{ karathon.karathon_url }}">{{ karathon.number }} карафон</a></li>#}
+        {% endwith %}
+      {% else %}
+        <li class="mobile_navbar_menu_item">
+          <span class="mobile_navbar_menu_item_text{% if view_name  == 'core:karathon' %} active{% endif %}"
+                menu-elem="mobile_karathons">Карафоны</span>
+          <div class="mobile_navbar_menu_karathon_list_wrapper" menu-elem="mobile_karathons_list">
+            {% for karathon in karathons %}
+              <div>
+                {% if karathon.karathon_url in request_url %}
+                  <span class="mobile_navbar_menu_item_text active">{{ karathon.number }} карафон</span>
+                {% else %}
+                  <a class="mobile_navbar_menu_item_link" href="{{ karathon.karathon_url }}">{{ karathon.number }} карафон</a>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </li>
+      {% endif %}
+      <li class="mobile_navbar_menu_item">
+        {% if view_name  == 'core:champions' %}
+          <span class="mobile_navbar_menu_item_text active">
+            Рекордсмены
+          </span>
+        {% else %}
+          <a class="mobile_navbar_menu_item_link" href="{{ champions_url }}">Рекордсмены</a>
+        {% endif %}
+      </li>
+      <li class="mobile_navbar_menu_item">
+        {% if view_name  == 'core:about_karachunia' %}
+          <span class="mobile_navbar_menu_item_text active">О Карачуне</span>
+        {% else %}
+          <a class="mobile_navbar_menu_item_link" href="{{ about_karachunia_url }}">О Карачуне</a>
+        {% endif %}
+      </li>
+      <li class="mobile_navbar_menu_item">
+        <a class="mobile_navbar_menu_item_link" href="javascript:void(0)">Прошедшие карафоны</a>
+      </li>
+      {% comment %} <li><a href="javascript:void(0)">Благотворительность</a></li> {% endcomment %}
+      <li class="mobile_navbar_menu_item">
+        <a class="mobile_navbar_menu_item_link" href="{% get_outlink 'TELEGRAM_URL' %}" target="_blank">Telegram</a>
+      </li>
+    </div>
+  </div>
+  {% if not user.is_authenticated %}
+    <div>
+      <a href="javascript:void(0)" button-action="open-auth-form">Вход</a>
+    </div>
+  {% endif %}
+  {% if user.is_authenticated %}
+    {% if account_url not in request_url %}
+      <div class="header_navbar_menu_photo" navbar-elem="user_avatar">
+        {% if user.participant.photo %}
+          <img src="{{ user.participant.photo.url }}">
+        {% else %}
+          <img class="no_avatar" src="{% static 'core/img/no_avatar.png' %}">
+        {% endif %}
+      </div>
+      <div class="participants_account_menu" window-elem="account_menu">
+        {% account_menu %}
+      </div>
     {% endif %}
+  {% endif %}
 </div>

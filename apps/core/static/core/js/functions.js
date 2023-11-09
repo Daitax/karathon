@@ -5,6 +5,7 @@ let stickyAccMenu = document.querySelector('[window-elem="sticky_navbar"] > [win
 let mobStickyAccMenu = document.querySelectorAll('.header_navbar_menu_mobile_buttons > [window-elem="account_menu"]')[1]
 let mobMenues = document.querySelectorAll('[window-elem="mobile_menu"]')
 var footerTop = footer.offsetTop
+
 window.addEventListener("load", function () {
   window.addEventListener("scroll", function () {
     // Убирает/показывает главное меню при скролле ниже/выше первого экрана
@@ -22,7 +23,12 @@ window.addEventListener("load", function () {
         mobStickyAccMenu.classList.remove("show")
       }
       if (mobMenues) {
-        mobMenues.forEach(element => element.classList.remove("show"))
+        mobMenues.forEach(
+          function (element) {
+            element.classList.remove("show")
+            element.querySelector('[menu-elem="mobile_karathons_list"]').classList.remove('open')
+          }
+        )
       }
     }
   })
@@ -119,6 +125,20 @@ mobileMenuButtons.forEach(element => element.addEventListener("click", function 
   let mobileMenu = element.nextElementSibling
   mobileMenu.classList.toggle("show")
 }))
+
+let mobileMenuKarathonsListButton = document.querySelectorAll('[menu-elem="mobile_karathons"]')
+
+if (mobileMenuKarathonsListButton) {
+  mobileMenuKarathonsListButton.forEach(element => {
+    element.addEventListener('click', function(ev) {
+      let mobileMenuWrapper = element.closest('[menu-elem="menu_mobile_wrapper"]')
+
+      let mobileMenuKarathonsList = mobileMenuWrapper.querySelector('[menu-elem="mobile_karathons_list"]')
+
+      mobileMenuKarathonsList.classList.toggle('open')
+    })
+  })
+}
 
 let content = document.querySelector('[window-elem="content"]')
 content.addEventListener("click", function () {

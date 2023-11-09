@@ -178,7 +178,10 @@ class KarathonView(TemplateView):
         context = super().get_context_data(**kwargs)
         karathon_number = kwargs["karathon_number"]
         karathon = Karathon.objects.get(number=karathon_number)
-        context = {"karathon": karathon}
+        context = {
+            "karathon": karathon,
+            "request_url": self.request.path
+        }
         return context
 
 
