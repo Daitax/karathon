@@ -76,6 +76,11 @@ class Karathon(models.Model):
     def get_karathon_type_value(self):
         return get_choice_value(self.TYPE, self.type)
 
+    @classmethod
+    def last_karathon(cls):
+        return cls.objects.filter(finished_at__lt=datetime.datetime.today()).order_by('finished_at').last()
+
+
     def karathon_url(self):
         return reverse('core:karathon', args=[self.number])
 

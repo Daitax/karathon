@@ -33,15 +33,19 @@
         </li>
         {% comment %} <li><a href="javascript:void(0)">Онлайн</a></li> {% endcomment %}
         {% comment %} {% if active_karathon_participant %} {% endcomment %}
+          {% if user.participant.get_active_karathon is not null %}
             {% if is_today_report %}
                 <li class="sent">Отчёт сдан</li>
             {% else %}
-            <li localtime="{{ localtime|date:"H i s" }}" countdown="" menu-elem="participant_localtime">
-                <a href="javascript:void(0)" button-action="open-report-form">
-                    Сдать отчёт
-                </a>
-            </li>
+              <li localtime="{{ localtime|date:"H i s" }}" countdown="" menu-elem="participant_localtime">
+                  <a href="javascript:void(0)" button-action="open-report-form">
+                      Сдать отчёт
+                  </a>
+              </li>
             {% endif %}
+          {% else %}
+            <li><a href="{% url 'core:participate' %}">Принять участие</a></li>
+          {% endif %}
         {% comment %} {% endif %} {% endcomment %}
         <li><a href="{{ logout_url }}" menu-elem="logout">Выйти</a></li>
     </nav>

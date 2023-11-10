@@ -8,18 +8,22 @@ register = template.Library()
 def steps_block(context):
     words = ["шаг", "шага", "шагов"]
     verbs = ["пройден", "пройдено", "пройдено"]
-    steps = Step().total()
-    total_steps = [value for value in steps.values()][0]
+    total_steps = Step.total()['steps__sum']
     if not total_steps:
         total_steps = 0
-    steps_today = Step().total_today()
-    total_steps_today = [value for value in steps_today.values()][0]
+    last_karathon_steps = Step.total_last_karathon()['steps__sum']
+    if not last_karathon_steps:
+        last_karathon_steps = 0
+    total_steps_today = Step.total_today()['steps__sum']
     if not total_steps_today:
         total_steps_today = 0
     return {
         "total_steps": total_steps,
         "total_steps_word": ending_numbers(total_steps, words),
         "total_steps_verb": ending_numbers(total_steps, verbs),
+        "total_steps_last": last_karathon_steps,
+        "total_steps_last_word": ending_numbers(last_karathon_steps, words),
+        "total_steps_last_verb": ending_numbers(last_karathon_steps, verbs),
         "total_steps_today": total_steps_today,
         "total_steps_today_word": ending_numbers(total_steps_today, words),
         "total_steps_today_verb": ending_numbers(total_steps_today, verbs),

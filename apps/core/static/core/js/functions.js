@@ -219,7 +219,6 @@ if (window.location.pathname == "/") {
   }
 }
 
-
 if (window.location.pathname.includes("-karathon")) {
   window.addEventListener("scroll", function () {
     // Показывает/убирает следы на странице информации о карафоне

@@ -1,10 +1,11 @@
 import datetime
 
 from django.db import models
-from django.db.models import Sum, signals
+from django.db.models import Sum, signals, Q
 from django.utils.safestring import mark_safe
 
 from apps.account.models import Participant
+from apps.core.models import Karathon
 from apps.core.utils import checking, get_report_image_path
 from apps.steps.signals import check_individual_task_complete, check_screenshot
 
@@ -57,13 +58,25 @@ class Step(models.Model):
         min_thresh = 10
         return checking(scale_coef, min_thresh, photo, steps)
 
-    def total(self):
-        return Step.objects.aggregate(Sum("steps"))
+    @classmethod
+    def total(cls):
+        return cls.objects.aggregate(Sum("steps"))
 
-    def total_today(self):
-        return Step.objects.filter(date=datetime.date.today()).aggregate(
+    @classmethod
+    def total_today(cls):
+        return cls.objects.filter(date=datetime.date.today()).aggregate(
             Sum("steps")
         )
+
+    @classmethod
+    def total_last_karathon(cls):
+        last_karathon = Karathon.last_karathon()
+
+        participants_karathon = Participant.objects.filter(karathon=last_karathon)
+        steps = cls.objects.filter(participant__in=participants_karathon).filter(
+            Q(date__gte=last_karathon.starts_at) & Q(date__lte=last_karathon.finished_at)).aggregate(Sum("steps"))
+
+        return steps
 
     photo_preview.short_description = "Фотоотчёт"
     photo_preview_in_list.short_description = "Фотоотчёт"
