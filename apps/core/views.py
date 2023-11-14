@@ -17,6 +17,7 @@ from apps.account.models import Participant
 from apps.core.models import Karathon
 
 from apps.core.yookassa import create_payment, confirmation_payment
+from apps.steps.models import Step
 
 
 def index(request):
@@ -56,28 +57,20 @@ class ChampionsView(TemplateView):
     def add_champs_list(self, request):
         data = json.loads(request.body)
         champs_showed = data.pop("amount_champs")
-        more_champs = get_list_or_404(Participant)
-        more_champs_list = []
-        i = 0
-        for ch in more_champs:
-            more_champs_list.append([ch, i + 1])
-            i += 1
-        champs_to_show = (
-            champs_showed
-            + settings.CHAMPS_ON_FIRST_SCREEN
-            + settings.CHAMPS_ADDITION
-        )
+        champ_list = Step.get_champs_list()
+        next_champs_exist = True
+
+        champs_to_show = champs_showed + 3 + 4
+
         champs_block = render_to_string(
             "core/includes/champs_page_block.html",
             {
-                "champs_rest": more_champs_list[
-                    settings.CHAMPS_ON_FIRST_SCREEN : champs_to_show
-                ]
+                "other_champs": champ_list[3:champs_to_show]
             },
             request,
         )
-        next_champs_exist = True
-        if champs_to_show >= len(more_champs):
+
+        if champs_to_show >= len(champ_list):
             next_champs_exist = False
         out = {
             "status": "ok",
@@ -85,48 +78,22 @@ class ChampionsView(TemplateView):
             "champs_block": champs_block,
             "next_champs_exist": next_champs_exist,
         }
+
         return JsonResponse(out)
 
     def champions(self, request):
-        champs = get_list_or_404(Participant)
-        list_ch = []
-        i = 0
-        for champ in champs:
-            # if champ.photo:
-            list_ch.append([champ, i + 1])
-            i += 1
-        champs = list_ch[: settings.CHAMPS_ON_FIRST_SCREEN]
-        champs_rest = list_ch[
-            settings.CHAMPS_ON_FIRST_SCREEN : settings.CHAMPS_ON_FIRST_SCREEN
-            + settings.CHAMPS_ON_PAGE
-        ]
-        return render(
-            request,
-            "core/champions.html",
-            {"champs": champs, "champs_rest": champs_rest},
-        )
+        champ_list = Step.get_champs_list()
 
+        top_champs = champ_list[:3]
 
-# def champions(request):
-#     if request.method == "GET_CHAMPS_LIST":
-#         return add_champs_list(request)
-#     champs = get_list_or_404(Participant)
-#     list_ch = []
-#     i = 0
-#     for champ in champs:
-#         # if champ.photo:
-#         list_ch.append([champ, i + 1])
-#         i += 1
-#     champs = list_ch[: settings.CHAMPS_ON_FIRST_SCREEN]
-#     champs_rest = list_ch[
-#         settings.CHAMPS_ON_FIRST_SCREEN : settings.CHAMPS_ON_FIRST_SCREEN
-#         + settings.CHAMPS_ON_PAGE
-#     ]
-#     return render(
-#         request,
-#         "core/champions.html",
-#         {"champs": champs, "champs_rest": champs_rest},
-#     )
+        other_champs = champ_list[3:7]
+
+        context = {
+            'top_champs': top_champs,
+            'other_champs': other_champs
+        }
+
+        return render(request, "core/champions.html", context)
 
 
 def add_champs_list(request):

@@ -1,36 +1,35 @@
 {% load static %}
+{% load ru_ending %}
 {% url 'core:champions' as champions_url %}
 
 <div
     class="{% if request.resolver_match.view_name  == 'core:champions' %}first_champs_block first_screen_first_champs{% else %}first_champs_block{% endif %}">
-    <div
-        class="{% if request.resolver_match.view_name  == 'core:champions' %}wrapper first_screen_first_champs_wrapper{% else %}wrapper{% endif %}">
-        <ol>
-            {% for ch in champs %}
-            <li>
-                <div class="champ_photo">
-                    <img class=""
-                        src="{% if ch.0.photo %}{{ch.0.photo.url}}{% else %}{% static 'core/img/no_avatar.png' %}{% endif %}"
-                        alt="champ_photo">
-                </div>
-                <div class="champ_nameplate">
-                    <p>
-                        {{ch.1}} место
-                    </p>
-                    <p>
-                        {{ch.0.first_name}} {{ch.0.last_name}}
-                    </p>
-                    <p>
-                        23 карафон &mdash; 177 123 шагов
-                    </p>
-                </div>
-            </li>
-            {% endfor %}
-        </ol>
-        {% if view_name == 'core:site-index' or view_name == 'core:karathon' %}
-        <div class="first_champs_block_link">
-            <a href="{{ champions_url }}">все рекорды</a>
-        </div>
-        {% endif %}
-    </div>
+  <div
+      class="{% if request.resolver_match.view_name  == 'core:champions' %}wrapper first_screen_first_champs_wrapper{% else %}wrapper{% endif %}">
+    <ol>
+      {% for champ in top_champs %}
+        <li>
+          <div class="champ_photo">
+            <img src="{% if champ.participant__photo %}
+                        media/{{ champ.participant__photo }}
+                      {% else %}
+                        {% static 'core/img/no_avatar.png' %}
+                      {% endif %}"
+                 alt="{{ champ.participant__last_name }} {{ champ.participant__first_name }}">
+          </div>
+          <div class="champ_nameplate">
+            <p>{{ forloop.counter }} место</p>
+            <p>{{ champ.participant__last_name }} {{ champ.participant__first_name }}</p>
+            <p>{{ champ.karathon__number }}-й карафон &mdash; {{ champ.karathon_steps }}
+              {{ champ.karathon_steps|ru_plural:"шаг, шага, шагов" }}</p>
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+    {% if view_name == 'core:site-index' or view_name == 'core:karathon' %}
+      <div class="first_champs_block_link">
+        <a href="{{ champions_url }}">все рекорды</a>
+      </div>
+    {% endif %}
+  </div>
 </div>

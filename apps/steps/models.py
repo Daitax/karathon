@@ -22,6 +22,12 @@ class Step(models.Model):
     photo = models.ImageField(
         "Фотоподтверждение", upload_to=get_report_image_path
     )
+    karathon = models.ForeignKey(
+        Karathon,
+        verbose_name="Карафон",
+        related_name="steps",
+        on_delete=models.CASCADE,
+    )
     is_completed = models.BooleanField("Задание дня выполнено?", default=False)
     bonus = models.PositiveIntegerField(
         "Дополнительный бонус", blank=True, null=True
@@ -34,6 +40,24 @@ class Step(models.Model):
 
     def __str__(self):
         return "Отчёт от {participant}".format(participant=self.participant)
+
+    def amount_matches_screenshot(self, steps, photo):
+        # image_url = "karathon/media/" + get_report_image_path(
+        #     participant, photo
+        # )
+        # image_url = str(photo.temporary_file_path())
+        scale_coef = [0.25, 0.5, 1, 2, 3, 4, 5, 6]
+        min_thresh = 10
+        return checking(scale_coef, min_thresh, photo, steps)
+
+    @classmethod
+    def get_champs_list(cls):
+        return cls.objects.filter(karathon__finished_at__lt=datetime.date.today()).values(
+            'participant__first_name',
+            'participant__last_name',
+            'participant__photo',
+            'karathon__number',
+        ).annotate(karathon_steps=Sum('steps')).order_by('-karathon_steps')
 
     def photo_preview(self):
         if self.photo:
@@ -49,31 +73,19 @@ class Step(models.Model):
             )
         return ""
 
-    def amount_matches_screenshot(self, steps, photo):
-        # image_url = "karathon/media/" + get_report_image_path(
-        #     participant, photo
-        # )
-        # image_url = str(photo.temporary_file_path())
-        scale_coef = [0.25, 0.5, 1, 2, 3, 4, 5, 6]
-        min_thresh = 10
-        return checking(scale_coef, min_thresh, photo, steps)
-
     @classmethod
     def total(cls):
         return cls.objects.aggregate(Sum("steps"))
 
     @classmethod
     def total_today(cls):
-        return cls.objects.filter(date=datetime.date.today()).aggregate(
-            Sum("steps")
-        )
+        return cls.objects.filter(date=datetime.date.today()).aggregate(Sum("steps"))
 
     @classmethod
     def total_last_karathon(cls):
         last_karathon = Karathon.last_karathon()
 
-        participants_karathon = Participant.objects.filter(karathon=last_karathon)
-        steps = cls.objects.filter(participant__in=participants_karathon).filter(
+        steps = cls.objects.filter(karathon=last_karathon).filter(
             Q(date__gte=last_karathon.starts_at) & Q(date__lte=last_karathon.finished_at)).aggregate(Sum("steps"))
 
         return steps

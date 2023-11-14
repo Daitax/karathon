@@ -1,43 +1,51 @@
 {% load static %}
+{% load ru_ending %}
 
-
-{% for champ_rest in champs_rest %}
-<div class="desktop">
+{% for champ in other_champs %}
+  <div class="desktop">
     <div class="champions_item" window-elem="champions_item">
+      <div class="place">
+        {{ forloop.counter|add:"3" }} место
+      </div>
+      <div class="photo">
+        <img src="{% if champ.participant__photo %}
+                        media/{{ champ.participant__photo }}
+                      {% else %}
+                        {% static 'core/img/no_avatar.png' %}
+                      {% endif %}"
+             alt="{{ champ.participant__last_name }} {{ champ.participant__first_name }}">
+      </div>
+      <div class="information">
+        <p>{{ champ.participant__last_name }} {{ champ.participant__first_name }}</p>
+      </div>
+      <div class="steps">
+        {{ champ.karathon__number }}-й карафон &mdash; {{ champ.karathon_steps }}
+        {{ champ.karathon_steps|ru_plural:"шаг, шага, шагов" }}
+      </div>
+    </div>
+  </div>
+  <div class="mobile">
+    <div class="champions_item" window-elem="champions_item">
+      <div class="photo">
+        <img src="{% if champ.participant__photo %}
+                        media/{{ champ.participant__photo }}
+                      {% else %}
+                        {% static 'core/img/no_avatar.png' %}
+                      {% endif %}"
+             alt="{{ champ.participant_last_name }} {{ champ.participant_first_name }}">
+      </div>
+      <div class="mobile_champ_info">
         <div class="place">
-            {{champ_rest.1}} место
-        </div>
-        <div class="photo">
-            <img src="{% if champ_rest.0.photo %}{{champ_rest.0.photo.url}}{% else %}{% static 'core/img/no_avatar.png' %}{% endif %}"
-                alt="">
+          {{ forloop.counter|add:"3" }} место
         </div>
         <div class="information">
-            <p>{{champ_rest.0.first_name}} {{champ_rest.0.last_name}}</p>
-            <span>{% if champ_rest.0.instagram %}@account{% endif %}</span>
+          <p>{{ champ.participant_last_name }} {{ champ.participant_first_name }}</p>
         </div>
         <div class="steps">
-            {{20|add:champ_rest.1}} карафон &mdash; 999 999 шагов
+          {{ champ.karathon__number }}-й карафон &mdash; {{ champ.karathon_steps }}
+          {{ champ.karathon_steps|ru_plural:"шаг, шага, шагов" }}
         </div>
+      </div>
     </div>
-</div>
-<div class="mobile">
-    <div class="champions_item" window-elem="champions_item">
-        <div class="photo">
-            <img src="{% if champ_rest.0.photo %}{{champ_rest.0.photo.url}}{% else %}{% static 'core/img/no_avatar.png' %}{% endif %}"
-                alt="">
-        </div>
-        <div class="mobile_champ_info">
-            <div class="place">
-                {{champ_rest.1}} место
-            </div>
-            <div class="information">
-                <p>{{champ_rest.0.first_name}} {{champ_rest.0.last_name}}</p>
-                <p>{% if champ_rest.0.instagram %}@account{% endif %}</p>
-            </div>
-            <div class="steps">
-                {{20|add:champ_rest.1}} карафон &mdash; 999 999 шагов
-            </div>
-        </div>
-    </div>
-</div>
+  </div>
 {% endfor %}
