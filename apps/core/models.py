@@ -65,7 +65,6 @@ class Karathon(models.Model):
                 is_presentation=True).update(is_presentation=False)
             return super(Karathon, self).save(*args, **kwargs)
 
-
     @staticmethod
     def not_finished_karathons(current_datetime=datetime.datetime.now()):
         karathons = Karathon.objects.filter(
@@ -80,42 +79,67 @@ class Karathon(models.Model):
     def last_karathon(cls):
         return cls.objects.filter(finished_at__lt=datetime.datetime.today()).order_by('finished_at').last()
 
-
     def karathon_url(self):
         return reverse('core:karathon', args=[self.number])
 
     def is_ended_karathon(self):
-        from apps.account.models import Participant
-        karathon_participants = Participant.objects.filter(karathon=self)
+        late_time_offset = -12
 
-        early_timezone = pytz.timezone('Asia/Kamchatka')
-        early_datetime_tz = datetime.datetime.now(early_timezone)
-        early_datetime = datetime.datetime(
-            year=early_datetime_tz.year,
-            month=early_datetime_tz.month,
-            day=early_datetime_tz.day,
-            hour=early_datetime_tz.hour,
+        offset = datetime.timedelta(hours=late_time_offset)
+        late_timezone = datetime.timezone(offset)
+        late_datetime_tz = datetime.datetime.now(late_timezone)
+        late_datetime = datetime.datetime(
+            year=late_datetime_tz.year,
+            month=late_datetime_tz.month,
+            day=late_datetime_tz.day,
+            hour=late_datetime_tz.hour,
         )
 
-        for participant in karathon_participants:
-            participant_datetime_tz = participant.get_participant_time()
-            participant_datetime = datetime.datetime(
-                year=participant_datetime_tz.year,
-                month=participant_datetime_tz.month,
-                day=participant_datetime_tz.day,
-                hour=participant_datetime_tz.hour
-            )
-
-            if early_datetime > participant_datetime:
-                early_datetime = participant_datetime
+        late_date = datetime.date(late_datetime.year, late_datetime.month, late_datetime.day)
 
         next_day_after_finished = self.finished_at + datetime.timedelta(days=1)
-        early_date = datetime.date(early_datetime.year, early_datetime.month, early_datetime.day)
 
-        if early_date == next_day_after_finished and early_datetime.hour == 0:
+        if next_day_after_finished == late_date and late_datetime.hour == 0:
             return True
 
         return False
+        # from apps.account.models import Participant
+        # karathon_participants = Participant.objects.filter(karathon=self)
+        #
+        # early_timezone = pytz.timezone('Asia/Kamchatka')
+        # early_datetime_tz = datetime.datetime.now(early_timezone)
+        # early_datetime = datetime.datetime(
+        #     year=early_datetime_tz.year,
+        #     month=early_datetime_tz.month,
+        #     day=early_datetime_tz.day,
+        #     hour=early_datetime_tz.hour,
+        # )
+        #
+        # for participant in karathon_participants:
+        #     # print(participant.get_participant_time())
+        #     participant_datetime_tz = participant.get_participant_time()
+        #     participant_datetime = datetime.datetime(
+        #         year=participant_datetime_tz.year,
+        #         month=participant_datetime_tz.month,
+        #         day=participant_datetime_tz.day,
+        #         hour=participant_datetime_tz.hour
+        #     )
+        #
+        #     if early_datetime > participant_datetime:
+        #         early_datetime = participant_datetime
+        #
+        # next_day_after_finished = self.finished_at + datetime.timedelta(days=1)
+        # early_date = datetime.date(early_datetime.year, early_datetime.month, early_datetime.day)
+        #
+        # # print(6777)
+        # # print(early_date == next_day_after_finished)
+        # # print(early_datetime.hour == 0)
+        # # print(77788)
+        #
+        # if early_date == next_day_after_finished and early_datetime.hour == 0:
+        #     return True
+        #
+        # return False
 
 
 # class Task(models.Model):

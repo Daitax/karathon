@@ -26,7 +26,10 @@ window.addEventListener("load", function () {
         mobMenues.forEach(
           function (element) {
             element.classList.remove("show")
-            element.querySelector('[menu-elem="mobile_karathons_list"]').classList.remove('open')
+            let mobileKarathonsList = element.querySelector('[menu-elem="mobile_karathons_list"]')
+            if (mobileKarathonsList) {
+              mobileKarathonsList.classList.remove('open')
+            }
           }
         )
       }

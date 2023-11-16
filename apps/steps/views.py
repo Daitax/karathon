@@ -44,6 +44,7 @@ def send_report_form(request):
         photo = form.cleaned_data["photo"]
 
         date = request.user.participant.get_participant_time()
+        karathon = request.user.participant.get_active_karathon()
 
         is_today_report = request.user.participant.is_today_report()
 
@@ -94,6 +95,7 @@ def send_report_form(request):
                 participant=request.user,
                 steps=steps,
                 photo=photo,
+                karathon=karathon,
             )
 
             context = {"window": "successful", "reload_overlay": True}

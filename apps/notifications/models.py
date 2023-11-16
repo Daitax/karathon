@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db import models
 from django.shortcuts import get_object_or_404
 
-from apps.account.models import Participant
+from apps.account.models import Participant, Winner
 from apps.core.utils import print_month_ru
 
 
@@ -54,6 +54,39 @@ class Notification(models.Model):
         )
 
         return format_datetime
+
+    @classmethod
+    def finished_individual_karathon(cls, karathon, winner):
+        template = NotificationTemplate.objects.get(key="finished_individual_karathon")
+        header = template.header.format(karathon_number=karathon.number)
+        text = template.text.format(winner=winner)
+
+        create_notification_list = list()
+        karathon_participants = Participant.objects.filter(karathon=karathon).exclude(id=winner.participant.id)
+
+        for participant in karathon_participants:
+            instance = cls(
+                participant=participant,
+                template=template,
+                header=header,
+                text=text,
+            )
+            create_notification_list.append(instance)
+
+        cls.objects.bulk_create(create_notification_list, 1000)
+
+    @classmethod
+    def winner_individual_karathon(cls, karathon, winner):
+        template = NotificationTemplate.objects.get(key="winner_individual_karathon")
+        text = template.text.format(karathon_number=karathon.number)
+
+        cls.objects.create(
+            participant=winner.participant,
+            template=template,
+            header=template.header,
+            text=text
+        )
+
 
     @staticmethod
     def task_today(participant, date, task):

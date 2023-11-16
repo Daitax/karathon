@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
 from django.db import models
-from django.db.models import signals
+from django.db.models import signals, Sum
 from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.account.signals import send_new_participant_notifications
@@ -173,6 +173,7 @@ class Participant(User):
                 participant=self, date=self.get_participant_time()
             )
             return True
+
         except ObjectDoesNotExist:
             return False
 
@@ -269,7 +270,7 @@ class Winner(models.Model):
         null=True,
         blank=False,
     )
-    participant = participant = models.ForeignKey(
+    participant = models.ForeignKey(
         Participant, verbose_name="Участник", on_delete=models.CASCADE
     )
 
@@ -278,17 +279,24 @@ class Winner(models.Model):
         verbose_name_plural = "Победители"
 
     def __str__(self):
-        return self.participant
+        return "{} {}".format(self.participant.last_name, self.participant.first_name)
 
     def is_winner_participant(self):
         return Winner.objects.filter(participant=self.participant).exists()
 
     @staticmethod
     def set_individual_karathon_winner(karathon):
-        print(1)
-        print("Устанавливаем победителя индивидуального карафона:")
-        print(karathon)
-        print(2)
+        from apps.steps.models import Step
+        winner_steps = Step.objects.filter(karathon=karathon).values('participant').annotate(
+            result=(Sum('steps') + Sum('bonus'))
+        ).order_by('-result').first()
+
+        winner = Winner.objects.create(
+            karathon=karathon,
+            participant_id=winner_steps['participant']
+        )
+
+        return winner
 
     @staticmethod
     def set_team_karathon_winners(karathon):

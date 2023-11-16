@@ -10,7 +10,7 @@ if (showChampsButton) {
     showChampsButton.classList.toggle("click_opacity")
 
     data["amount_champs"] = document.querySelectorAll('[window-elem="champions_item"]').length / 2 // делим на 2 так как отображаюся и мобильные, и десктопные чемпионы
-    console.log(data)
+
     let csrfToken = getCookie('csrftoken')
 
     fetch('/champions', {
