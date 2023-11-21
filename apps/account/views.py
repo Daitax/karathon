@@ -22,7 +22,7 @@ from .forms import (
     ParticipantForm,
     WinnerQuestionnaireForm,
 )
-from .models import Participant, EmailCode, Winner, User
+from .models import Participant, EmailCode, Winner, WinnerQuestionnaire
 
 
 class AuthView(TemplateView):
@@ -247,19 +247,23 @@ def index(request):
         "participant_form": participant_form,
     }
 
-    # if Winner.is_winner_participant(request.user.participant):
-    #     winner_questionnaire_form = WinnerQuestionnaireForm()
-    #
-    #     if request.method == 'POST' and 'winner' in request.POST:
-    #         winner_questionnaire_form = WinnerQuestionnaireForm(request.POST)
-    #
-    #         if winner_questionnaire_form.is_valid():
-    #             pass
-    #
-    #     context = {
-    #         'participant_form': participant_form,
-    #         'winner_questionnaire_form': winner_questionnaire_form
-    #     }
+    if Winner.is_participant_winner(request.user.participant):
+        winner_questionnaire = WinnerQuestionnaire.objects.get(is_displayed=True,
+                                                               winner__participant=request.user.participant)
+        winner_questionnaire_form = WinnerQuestionnaireForm(instance=winner_questionnaire)
+
+        if request.method == 'POST' and 'winner' in request.POST:
+            winner_questionnaire_form = WinnerQuestionnaireForm(
+                request.POST, instance=winner_questionnaire
+            )
+            if winner_questionnaire_form.is_valid():
+                winner_questionnaire_form.save()
+                winner_questionnaire_form = WinnerQuestionnaireForm(instance=winner_questionnaire)
+
+        context = {
+            'participant_form': participant_form,
+            'winner_questionnaire_form': winner_questionnaire_form
+        }
 
     return render(request, "account/index.html", context)
 

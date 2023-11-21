@@ -31,4 +31,4 @@ class ParticipantForm(forms.ModelForm):
 class WinnerQuestionnaireForm(forms.ModelForm):
     class Meta:
         model = WinnerQuestionnaire
-        fields = ['postcode', 'country', 'city', 'address', 'shirt_size', 'сharity_сategory']
+        fields = ['postcode', 'country', 'city', 'address', 'shirt_size', 'charity_category']

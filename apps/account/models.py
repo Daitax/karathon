@@ -281,20 +281,35 @@ class Winner(models.Model):
     def __str__(self):
         return "{} {}".format(self.participant.last_name, self.participant.first_name)
 
+    @classmethod
+    def create_winner(cls, karathon, participant_id):
+        winner, created = cls.objects.get_or_create(
+            karathon=karathon,
+            participant_id=participant_id
+        )
+
+        return winner
+
+    @classmethod
+    def is_participant_winner(cls, participant):
+        try:
+            cls.objects.get(winnerquestionnaire__is_displayed=True, participant=participant)
+            return True
+        except ObjectDoesNotExist:
+            return False
+
     def is_winner_participant(self):
         return Winner.objects.filter(participant=self.participant).exists()
 
-    @staticmethod
-    def set_individual_karathon_winner(karathon):
+    @classmethod
+    def set_individual_karathon_winner(cls, karathon):
         from apps.steps.models import Step
         winner_steps = Step.objects.filter(karathon=karathon).values('participant').annotate(
             result=(Sum('steps') + Sum('bonus'))
         ).order_by('-result').first()
 
-        winner = Winner.objects.create(
-            karathon=karathon,
-            participant_id=winner_steps['participant']
-        )
+        winner = cls.create_winner(karathon, winner_steps['participant'])
+        WinnerQuestionnaire.create_winner_questionnaire(winner)
 
         return winner
 
@@ -319,27 +334,35 @@ class WinnerQuestionnaire(models.Model):
         ("4xl", "4xl"),
     )
 
-    participant = models.ForeignKey(
-        Participant, verbose_name="Участник", on_delete=models.CASCADE
+    winner = models.ForeignKey(
+        Winner, verbose_name="Победитель", on_delete=models.CASCADE
     )
-    postcode = models.CharField("Почтовый индекс", max_length=10)
-    country = models.CharField("Страна", max_length=100)
-    city = models.CharField("Населенный пункт", max_length=100)
-    address = models.CharField("Населенный пункт", max_length=200)
+    postcode = models.CharField("Почтовый индекс", max_length=10, null=True, blank=True,)
+    country = models.CharField("Страна", max_length=100, null=True, blank=True,)
+    city = models.CharField("Населенный пункт", max_length=100, null=True, blank=True,)
+    address = models.CharField("Адрес", max_length=200, null=True, blank=True,)
     shirt_size = models.CharField(
-        "размер футболки", max_length=5, choices=SIZES, default="Europe/Moscow"
+        "размер футболки", max_length=5, choices=SIZES, default="l"
     )
-    сharity_сategory = models.ForeignKey(
+    charity_category = models.ForeignKey(
         CharityCategory,
         verbose_name="Категория благотворительности",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
     )
+    is_displayed = models.BooleanField("Форма отображается", default=False)
 
     class Meta:
-        verbose_name = "Категория"
-        verbose_name_plural = "Категории"
+        verbose_name = "Победитель"
+        verbose_name_plural = "Победители"
 
     def __str__(self):
-        return self.name
+        return self.participant
+
+    @classmethod
+    def create_winner_questionnaire(cls, winner):
+        cls.objects.update_or_create(
+            winner=winner,
+            defaults={"is_displayed": True}
+        )

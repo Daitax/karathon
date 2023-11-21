@@ -83,7 +83,7 @@ class Karathon(models.Model):
         return reverse('core:karathon', args=[self.number])
 
     def is_ended_karathon(self):
-        late_time_offset = -12
+        late_time_offset = -11
 
         offset = datetime.timedelta(hours=late_time_offset)
         late_timezone = datetime.timezone(offset)

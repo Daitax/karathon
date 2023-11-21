@@ -87,7 +87,6 @@ class Notification(models.Model):
             text=text
         )
 
-
     @staticmethod
     def task_today(participant, date, task):
         template = NotificationTemplate.objects.get(key="task_today")

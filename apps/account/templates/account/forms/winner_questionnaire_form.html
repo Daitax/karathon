@@ -30,7 +30,7 @@
     </select>
   </label>
   <label class="account_input blur_input">
-    <select name="shirt_size">
+    <select name="charity_category">
       {% for value,name in winner_questionnaire_form.fields.charity_category.choices %}
         <option value="{{ value }}"
             {% if winner_questionnaire_form.charity_category.value == value %} selected{% endif %}
@@ -45,8 +45,8 @@
   </label>
   <div class="account_content_winner_button">
     <button class="pink_button" type="submit" name="winner"><span>Сохранить</span></button>
-    <p>нажимая на кнопку, ты даешь согласие на <a href="javascript:void(0)" target="_blank">обработку и хранение персональных
-      данных</a>
+    <p>нажимая на кнопку, ты даешь согласие на <a href="{% url 'core:privacy_policy' %}" target="_blank">
+      обработку и хранение персональных данных</a>
     </p>
   </div>
 </form>
