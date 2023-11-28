@@ -2,8 +2,13 @@
 
 {% block title %}О карафонах{% endblock %}
 {% block content %}
+  <div class="first-screen_wrapper">
+    <div class="first-screen container" window-elem="first-screen">
+      <h1>О карафонах</h1>
+    </div>
+  </div>
 <div class="container">
-    <div>1</div>
+    {% include 'core/includes/about_karathon_description.html' %}
 </div>
 
 {% endblock %}

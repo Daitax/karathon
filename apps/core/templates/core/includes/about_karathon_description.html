@@ -2,7 +2,7 @@
 
 {% with request.resolver_match.view_name as view_name %}
 <div class="container">
-    {% if view_name == 'core:site-index' %}
+    {% if view_name == 'core:site-index' or view_name == 'core:about_karathons' %}
     <div class="about_karathon">
     <h2>что такое<br>карафон?</h2>
     <div class="about_karathon_description">
@@ -21,7 +21,7 @@
     {% endif %}
     <div class="about_karathon_list {% if view_name == 'core:karathon' %} karathon_page {% endif %}">
       <ol class="about_karathon_list_wrapper">
-        {% if view_name == 'core:site-index' %}
+        {% if view_name == 'core:site-index' or view_name == 'core:about_karathons' %}
         <li>карафон длится<br>13 дней</li>
         {% else %}
         <li>{{karathon.number}}-й карафон продлится<br>с {{ karathon.starts_at|date:"d E" }} по {{ karathon.finished_at|date:"d E" }}</li>

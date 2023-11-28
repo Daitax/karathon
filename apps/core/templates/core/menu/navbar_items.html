@@ -7,6 +7,7 @@
 {% url 'core:about_karathons' as about_karathons_url %}
 {% url 'core:account-logout' as logout_url %}
 {% url 'core:champions' as champions_url %}
+{% url 'core:past_karathons' as past_karathons_url %}
 
 <li class="navbar_menu_item">
     {% if view_name  == 'core:site-index' %}
@@ -75,9 +76,11 @@
   {% endif %}
 </li>
 <li class="navbar_menu_item">
-  <a class="navbar_menu_item_link" href="javascript:void(0)">
-    Прошедшие карафоны
-  </a>
+  {% if view_name  == 'core:past_karathons' %}
+    <span class="navbar_menu_item_text active">Прошедшие карафоны</span>
+  {% else %}
+    <a class="navbar_menu_item_link" href="{{ past_karathons_url }}">Прошедшие карафоны</a>
+  {% endif %}
 </li>
 {% comment %} <li><a href="javascript:void(0)">Благотворительность</a></li> {% endcomment %}
 <li class="navbar_menu_item">

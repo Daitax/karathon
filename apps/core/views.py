@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 
@@ -151,6 +152,20 @@ class KarathonView(TemplateView):
         }
         return context
 
+
+class PastKarathonsView(TemplateView):
+    template_name = "core/past_karathons.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        past_karathons = Karathon.objects.filter(
+            finished_at__lt=datetime.datetime.now() + datetime.timedelta(days=1)
+        ).order_by('-finished_at')
+
+        context = {
+            "past_karathons": past_karathons,
+        }
+        return context
 
 # class ParticipateView(LoginRequiredMixin, TemplateView, CreateView):
 #     template_name = "core/participate.html"

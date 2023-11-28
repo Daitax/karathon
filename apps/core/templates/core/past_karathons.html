@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+
+{% block title %}Прошедшие карафоны{% endblock %}
+
+{% block content %}
+  <div class="first-screen_wrapper">
+    <div class="first-screen container" window-elem="first-screen">
+      <h1>Прошедшие карафоны</h1>
+    </div>
+  </div>
+  <div class="container">
+    <div class="past-karathons_wrapper">
+      {% for past_karathon in past_karathons %}
+        <div class="past-karathons_item">
+          <div class="past-karathons_item_karathon-number">
+            <div class="past-karathons_item_number">
+              {{ past_karathon.number }}
+            </div>
+            <div class="past-karathons_item_text">карафон</div>
+          </div>
+          <div class="past-karathons_item_dates">
+            Прошедший с {{ past_karathon.starts_at|date:'d E Y' }} по {{ past_karathon.finished_at|date:'d E Y' }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
