@@ -4,11 +4,11 @@
   <form class="form" desire-form-elem="form">
     <input class="input" type="hidden" name="window" value="{{ window }}" desire-form-elem="window">
     <label class="label">
-      <div class="text">Укажи номер телефона друга:</div>
-      <input class="input" type="text" data-tel-input name="phone" value="{{ phone }}" desire-form-elem="phone">
+      <div class="text">Укажи email друга:</div>
+      <input class="input" type="text" data-tel-input name="email" value="{{ email }}" desire-form-elem="email">
       <div class="text" desire-form-elem="error">
-         {% if errors.phone %}
-         {{ errors.phone.as_text }}
+         {% if errors.email %}
+         {{ errors.email.as_text }}
          {% else %}
          {{ errors }}
          {% endif %}

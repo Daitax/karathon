@@ -4,15 +4,15 @@ from django.contrib import admin
 
 # Register your models here.
 from apps.account.models import Participant
-from apps.tasks.models import IndividualTask
+from apps.tasks.models import Task
 
 
-class IndividualTaskAdmin(admin.ModelAdmin):
+class TaskAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "karathon":
             from apps.core.models import Karathon
-            kwargs["queryset"] = Karathon.objects.filter(type='individual', finished_at__gte=datetime.datetime.now())
+            kwargs["queryset"] = Karathon.objects.filter(finished_at__gte=datetime.datetime.now())
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     # def save_model(self, request, obj, form, change):
@@ -32,4 +32,4 @@ class IndividualTaskAdmin(admin.ModelAdmin):
         #     IndividualTaskParticipant.objects.bulk_create(bulk_data)
 
 
-admin.site.register(IndividualTask, IndividualTaskAdmin)
+admin.site.register(Task, TaskAdmin)

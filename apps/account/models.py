@@ -100,11 +100,11 @@ class Participant(User):
         verbose_name_plural = "Участники"
 
     def __str__(self):
-        return "{last} {first} {middle} ({phone})".format(
+        return "{last} {first} {middle} ({email})".format(
             last=self.last_name,
             first=self.first_name,
             middle=self.middle_name,
-            phone=self.phone,
+            email=self.email,
         )
 
     def best_steps_all(self):
@@ -180,21 +180,17 @@ class Participant(User):
     def today_task(self):
         karathon = self.get_active_karathon()
         if karathon:
-            if karathon.type == "individual":
-                try:
-                    from apps.tasks.models import IndividualTask
+            try:
+                from apps.tasks.models import Task
 
-                    today_task = IndividualTask.objects.get(
-                        karathon=karathon,
-                        category=self.category,
-                        date=self.get_participant_time(),
-                    )
-                    return today_task
-                except ObjectDoesNotExist:
-                    return None
-
-            elif karathon.type == "team":
-                pass
+                today_task = Task.objects.get(
+                    karathon=karathon,
+                    category=self.category,
+                    date=self.get_participant_time(),
+                )
+                return today_task
+            except ObjectDoesNotExist:
+                return None
         return None
 
 
@@ -236,7 +232,7 @@ class EmailCode(models.Model):
             "Вход в личный кабинет на сайте karathon",
             "Код для входа: " + str(code),
             "admin@karathon.ru",
-            [email,],
+            [email, ],
             fail_silently=False,
         )
 
@@ -253,7 +249,6 @@ class EmailCode(models.Model):
         attempts_hash = hashlib.md5(format_text_attempt.encode())
         response.set_cookie("attempts", attempts_hash.hexdigest())
         return response
-
 
     @staticmethod
     def set_cookie_code(response, code):
@@ -337,10 +332,10 @@ class WinnerQuestionnaire(models.Model):
     winner = models.ForeignKey(
         Winner, verbose_name="Победитель", on_delete=models.CASCADE
     )
-    postcode = models.CharField("Почтовый индекс", max_length=10, null=True, blank=True,)
-    country = models.CharField("Страна", max_length=100, null=True, blank=True,)
-    city = models.CharField("Населенный пункт", max_length=100, null=True, blank=True,)
-    address = models.CharField("Адрес", max_length=200, null=True, blank=True,)
+    postcode = models.CharField("Почтовый индекс", max_length=10, null=True, blank=True, )
+    country = models.CharField("Страна", max_length=100, null=True, blank=True, )
+    city = models.CharField("Населенный пункт", max_length=100, null=True, blank=True, )
+    address = models.CharField("Адрес", max_length=200, null=True, blank=True, )
     shirt_size = models.CharField(
         "размер футболки", max_length=5, choices=SIZES, default="l"
     )

@@ -25,9 +25,9 @@ function openAddDesireForm() {
       }
     })
     .then(function () {
-      let ph = document.querySelector('[desire-form-elem="phone"]')
-      ph.focus()
-      ph.click()
+      let email = document.querySelector('[desire-form-elem="email"]')
+      email.focus()
+      email.click()
     })
 }
 

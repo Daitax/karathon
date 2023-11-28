@@ -44,10 +44,11 @@ def send_add_desire_form(request):
     form = AddDesireForm(request.POST)
 
     if form.is_valid():
-        phone = form.cleaned_data["phone"]
+        email = form.cleaned_data["email"]
 
         try:
-            desired_participant = get_object_or_404(Participant, phone=phone)
+            desired_participant = Participant.objects.get(email=email)
+
             if request.user.participant == desired_participant:
                 context = {
                     "window": "form",
@@ -97,9 +98,11 @@ def send_add_desire_form(request):
             )
 
         except ObjectDoesNotExist:
+            form.add_error("email", "Участника с таким email не найдено")
             context = {
                 "window": "form",
-                "errors": {"phone": "Участника с таким телефоном не найдено"},
+                "email": email,
+                "errors": form.errors,
             }
 
             add_desire_window = render_to_string(

@@ -9,7 +9,7 @@ from apps.core.utils import ending_numbers
 from apps.core.validators import not_earlier_today
 
 
-class IndividualTask(models.Model):
+class Task(models.Model):
     TYPE = (
         ("walk_steps", "Пройти S шагов"),
         ("double_best", "Удвоить лучший результат или S шагов"),
@@ -40,13 +40,13 @@ class IndividualTask(models.Model):
     bonus = models.PositiveIntegerField('Бонус за выполнение задания')
 
     class Meta:
-        verbose_name = 'Индивидуальное задание'
-        verbose_name_plural = 'Индивидуальные задания'
+        verbose_name = 'Задание'
+        verbose_name_plural = 'Задания'
 
     def __str__(self):
         return "Задание для {category} на {date}".format(category=self.category, date=self.date)
 
-    def text_individual_task(self, participant):
+    def text_task(self, participant):
         match self.type:
             case "walk_steps":
                 text = "Пройдите {} {}".format(

@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 
-def is_individual_task_completed(report):
+def is_task_completed(report):
     task = report.participant.today_task()
 
     if task:

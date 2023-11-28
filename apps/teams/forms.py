@@ -3,8 +3,7 @@ from phonenumber_field.formfields import PhoneNumberField
 
 
 class AddDesireForm(forms.Form):
-    phone = PhoneNumberField(
-        error_messages={
-            'invalid': 'Введите корректный номер телефона',
-            'required': 'Введите номер телефона'
-        })
+    email = forms.EmailField(error_messages={
+        'invalid': 'Введен неверный email',
+        'required': 'Введите email'
+    })
