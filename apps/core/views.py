@@ -22,9 +22,13 @@ from apps.steps.models import Step
 
 
 def index(request):
-    presentation_karathon = Karathon.objects.get(is_presentation=True)
+    try:
+        presentation_karathon = Karathon.objects.get(is_presentation=True)
 
-    context = {"presentation_karathon": presentation_karathon}
+        context = {"presentation_karathon": presentation_karathon}
+
+    except ObjectDoesNotExist:
+        context = {}
 
     return render(request, "core/index.html", context)
 

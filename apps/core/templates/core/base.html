@@ -56,7 +56,7 @@
   <footer class="footer" window-elem="footer">{% include 'core/includes/footer.html' %}</footer>
   </div>
   <div class="overlay" popup-element="overlay">
-    {% if request.resolver_match.view_name  == 'core:site-index' %}
+    {% if request.resolver_match.view_name  == 'core:site-index' and presentation_karathon %}
       <div class="promo_video_wrapper" popup-element="popup" popup-name="promo-video">
         {% include 'core/popups/promo_video.html' with presentation_karathon=presentation_karathon %}
       </div>

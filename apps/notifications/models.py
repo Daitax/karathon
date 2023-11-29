@@ -1,4 +1,6 @@
 import pytz
+import datetime
+
 from django.conf import settings
 from django.db import models
 from django.shortcuts import get_object_or_404
@@ -35,7 +37,10 @@ class Notification(models.Model):
         ordering = ("is_viewed", "-date")
 
     def datetime_creation(self):
-        participant_timezone = pytz.timezone(self.participant.timezone)
+        time_offset = int(self.participant.timezone_offset)
+        participant_offset = datetime.timedelta(hours=time_offset)
+        participant_timezone = datetime.timezone(participant_offset)
+
         participant_notification_datetime = self.date.astimezone(
             participant_timezone
         )
@@ -104,7 +109,7 @@ class Notification(models.Model):
         header = template.header.format(format_date=format_date)
 
         addition = task.addition if task.addition else ""
-        text = task.text_individual_task(participant)
+        text = task.text_task(participant)
         format_text = template.text.format(task=text, addition=addition)
 
         Notification.objects.create(

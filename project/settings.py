@@ -33,7 +33,7 @@ SECRET_KEY = (
 
 env = environ.Env(DEBUG=(bool, False))
 
-DEBUG = env("DEBUG")
+DEBUG = os.environ.get("DEBUG"),
 
 IS_TESTING = False
 

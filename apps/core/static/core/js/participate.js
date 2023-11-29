@@ -197,7 +197,7 @@ if (openPaymentPopupButton.length > 0) {
 let paymentPopupWrapper = document.querySelector('[popup-element="popup"][popup-name="payment"]')
 if (paymentPopupWrapper) {
   paymentPopupWrapper.addEventListener('click', function (event) {
-    event.preventDefault()
+    // event.preventDefault()
     let target = event.target
 
     if (target.closest('[popup-element]').getAttribute('popup-element') === 'close') {

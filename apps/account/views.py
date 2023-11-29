@@ -57,7 +57,8 @@ class AuthView(TemplateView):
         if form.is_valid():
             email = form.cleaned_data["email"]
 
-            code = randint(1000, 9990)
+            # code = randint(1000, 9990)
+            code = 1234
             sending_code = EmailCode.send_code(email, code)
 
             if sending_code["status"] == "ok":

@@ -1,5 +1,6 @@
 from apps.tasks.tasks import is_task_completed
 from .tasks import check_steps_from_screenshot
+from ..notifications.models import Notification
 
 
 def check_task_complete(sender, instance, created, **kwargs):
@@ -12,8 +13,12 @@ def check_task_complete(sender, instance, created, **kwargs):
                 is_completed=True, bonus=bonus
             )
 
+        Notification.success_message(instance.participant)
 
 
-def check_screenshot(sender, instance, created, *args, **kwargs):
-    if created:
-        check_steps_from_screenshot.delay(instance.id)
+
+
+#
+# def check_screenshot(sender, instance, created, *args, **kwargs):
+#     if created:
+#         check_steps_from_screenshot.delay(instance.id)

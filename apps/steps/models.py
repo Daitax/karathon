@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 from apps.account.models import Participant
 from apps.core.models import Karathon
 from apps.core.utils import checking, get_report_image_path
-from apps.steps.signals import check_task_complete, check_screenshot
+from apps.steps.signals import check_task_complete
 
 
 class Step(models.Model):
@@ -95,4 +95,4 @@ class Step(models.Model):
 
 
 signals.post_save.connect(check_task_complete, sender=Step)
-signals.post_save.connect(check_screenshot, sender=Step)
+# signals.post_save.connect(check_screenshot, sender=Step)

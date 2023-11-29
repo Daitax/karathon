@@ -54,7 +54,7 @@ function submitAuthenticationForm(button) {
   })
     .then((response) => response.json())
     .then(function (data) {
-      console.log(data)
+      // console.log(data)
       if (data.status == 'ok') {
         if (data.action == 'window') {
           authenticationFormWrapper.innerHTML = data.window

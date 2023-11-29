@@ -28,10 +28,12 @@
       </div>
       <div class="first-screen_photo">
         <img src="{% static 'core/img/photo_anna.svg' %}" alt="Anna_Karachunskaya"
-             {% if view_name == 'core:site-index' %}window-elem="first-screen-promo"{% endif %}>
+             {% if view_name == 'core:site-index' and presentation_karathon %}window-elem="first-screen-promo"{% endif %}>
         {% comment %} <div class="blur"></div> {% endcomment %}
         {% if view_name == 'core:site-index' %}
-          <p window-elem="first-screen-promo">Презентация нового {{ presentation_karathon.number }}-го карафона</p>
+          {% if presentation_karathon %}
+            <p window-elem="first-screen-promo">Презентация нового {{ presentation_karathon.number }}-го карафона</p>
+          {% endif %}
         {% else %}
           <a href="#promo_video" window-elem="anch"><p>презентация {{ karathon.number }}-го карафона</p></a>
         {% endif %}

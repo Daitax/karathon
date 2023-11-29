@@ -17,8 +17,8 @@ app.conf.beat_schedule = {
         'task': 'apps.notifications.tasks.send_task_for_participant',
         'schedule': crontab(hour='*', minute=1),
     },
-    # 'check_ending_karathons': {
-    #     'task': 'apps.core.tasks.ended_karathon',
-    #     'schedule': crontab(),
-    # }
+    'check_ending_karathons': {
+        'task': 'apps.core.tasks.ended_karathon',
+        'schedule': crontab(hour='*', minute=1),
+    }
 }

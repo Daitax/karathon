@@ -11,7 +11,7 @@
   <div class="container">
     {% if participant_karathon_list|length > 0 %}
       <div class="participant-karathons">
-        <h3>Вы уже принимаете участие в карафонах:</h3>
+        <div class="participant-karathons_header">Вы уже принимаете участие в карафонах:</div>
         <div class="participant-karathons_wrapper">
           {% for karathon in participant_karathon_list %}
             <div class="participant-karathons_item">
