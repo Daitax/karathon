@@ -2,61 +2,92 @@
 {% load get_outlink %}
 {% url 'account:account-index' as account_index_url %}
 {% url 'core:about_karachunia' as about_karachunia_url %}
+{% url 'core:about_karathons' as about_karathons_url %}
+{% url 'core:past_karathons' as past_karathons_url %}
 {% url 'core:champions' as champions_url %}
 {% url 'core:privacy_policy' as privacy_policy_url %}
 
 <div class="container">
-    {% with request.resolver_match.view_name as view_name %}
+  {% with request.resolver_match.view_name as view_name %}
     <div class="footer_nav">
-        <div class="footer_nav_logo">
-            <img src="{% static 'core/img/logo_kara.svg' %}" alt="karathon_logo">
-            <div>© {% now "Y" %} Анна Карачунская</div>
-        </div>
-        <div class="footer_nav_menu">
-            <nav class="footer_nav_menu_items">
-                <li>
-                    <a {% if view_name  == 'core:site-index' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="/" {% endif %}>
-                        Главная
-                    </a>
-                </li>
-                <li><a href="javascript:void(0)">n-й карафон</a></li>
-                <li><a{% if view_name  == 'core:champions' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ champions_url }}" {% endif %}>Рекордсмены</a></li>
-                
-            </nav>
-        </div>
-        <div class="footer_nav_menu">
-            <nav class="footer_nav_menu_items">
-                <li><a href="javascript:void(0)">
-                    Прошедшие карафоны
-                </a></li>
-                <li><a {% if view_name  == 'core:about_karachunia' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ about_karachunia_url }}" {% endif %}>
-                    О Карачуне
-                </a></li>
-                {% comment %} <li><a href="javascript:void(0)">Благотворительность</a></li> {% endcomment %}
-                {% if request.user.is_authenticated %}
-                <li><a {% if view_name  == 'account:account-index' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ account_index_url }}" {% endif %}>
-                    Личный кабинет
-                </a></li>
-                {% endif %}
-                <li><a {% if view_name  == 'core:privacy_policy' %} href="javascript:void(0)" style="cursor: default; text-decoration: none" {% else %} href="{{ privacy_policy_url }}" target="_blank" {% endif %}>
-                    Политика конфиденциальности
-                </a></li>
-            </nav>
-        </div>
-        <div class="footer_nav_social_media">
-            <nav class="footer_nav_menu_items">
-                <li>Telegram <a href="{% get_outlink 'TELEGRAM_URL' %}" target="_blank"><span>allaboutkarafon</span></a></li>
-                <li>Instagram <a href="{% get_outlink 'INSTAGRAM_URL' %}" target="_blank"><span>Karachunia</span></a></li>
-                <li>Вконтакте <a href="{% get_outlink 'VK_URL' %}" target="_blank"><span>Карачуня Трансформация</span></a></li>
-                <li>Youtube <a href="{% get_outlink 'YOUTUBE_URL' %}" target="_blank"><span>Anna Karachunskaya</span></a></li>
-            </nav>
-        </div>
+      <div class="footer_nav_logo">
+        <img src="{% static 'core/img/logo_kara.svg' %}" alt="karathon_logo">
+        <div>© {% now "Y" %} Анна Карачунская</div>
+      </div>
+      <div class="footer_nav_menu">
+        <nav class="footer_nav_menu_items">
+          <li>
+            {% if view_name  == 'core:site-index' %}
+              <span>Главная</span>
+            {% else %}
+              <a href="/">Главная</a>
+            {% endif %}
+          </li>
+          <li>
+            {% if view_name  == 'core:about_karathons' %}
+              <span>О карафонах</span>
+            {% else %}
+              <a href="{{ about_karathons_url }}">О карафонах</a>
+            {% endif %}
+          </li>
+          <li>
+            {% if view_name  == 'core:champions' %}
+              <span>Рекордсмены</span>
+            {% else %}
+              <a href="{{ champions_url }}">Рекордсмены</a>
+            {% endif %}
+          </li>
+        </nav>
+      </div>
+      <div class="footer_nav_menu">
+        <nav class="footer_nav_menu_items">
+          <li>
+            {% if view_name  == 'core:past_karathons' %}
+              <span>Прошедшие карафоны</span>
+            {% else %}
+              <a href="{{ past_karathons_url }}">Прошедшие карафоны</a>
+            {% endif %}
+          </li>
+          <li>
+            {% if view_name  == 'core:about_karachunia' %}
+              <span>О Карачуне</span>
+            {% else %}
+              <a href="{{ about_karachunia_url }}">О Карачуне</a>
+            {% endif %}
+          </li>
+          {% if request.user.is_authenticated %}
+            <li>
+              {% if view_name  == 'account:account-index' %}
+                <span>Личный кабинет</span>
+              {% else %}
+                <a href="{{ account_index_url }}">Личный кабинет</a>
+              {% endif %}
+            </li>
+          {% endif %}
+          <li>
+            {% if view_name  == 'core:privacy_policy' %}
+              <span>Политика конфиденциальности</span>
+            {% else %}
+              <a href="{{ privacy_policy_url }}" target="_blank">Политика конфиденциальности</a>
+            {% endif %}
+          </li>
+        </nav>
+      </div>
+      <div class="footer_nav_social_media">
+        <nav class="footer_nav_menu_items">
+          <li>Telegram <a href="{% get_outlink 'TELEGRAM_URL' %}" target="_blank"><span>allaboutkarafon</span></a></li>
+          <li>Instagram <a href="{% get_outlink 'INSTAGRAM_URL' %}" target="_blank"><span>Karachunia</span></a></li>
+          <li>Вконтакте <a href="{% get_outlink 'VK_URL' %}" target="_blank"><span>Карачуня Трансформация</span></a>
+          </li>
+          <li>Youtube <a href="{% get_outlink 'YOUTUBE_URL' %}" target="_blank"><span>Anna Karachunskaya</span></a></li>
+        </nav>
+      </div>
     </div>
     <div class="footer_lemur">
-        <img src="{% static 'core/img/logo_lemur.svg' %}" alt="lemur_logo">
-        <div class="footer_lemur_text">Разработка и техническая поддержка сайта<br>
-            <a href="{% get_outlink 'LEMUR_URL' %}" target="_blank"><span>Lemur Media</span></a>
-        </div>
+      <img src="{% static 'core/img/logo_lemur.svg' %}" alt="lemur_logo">
+      <div class="footer_lemur_text">Разработка и техническая поддержка сайта<br>
+        <a href="{% get_outlink 'LEMUR_URL' %}" target="_blank"><span>Lemur Media</span></a>
+      </div>
     </div>
-    {% endwith %}
+  {% endwith %}
 </div>
