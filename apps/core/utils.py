@@ -15,7 +15,7 @@ def check_media_directory_exist(base_dir, sub_dir):
 
 
 def create_name_participant_path(participant):
-    md5_str = "{}{}".format(participant.phone, participant.id)
+    md5_str = "{}{}".format(participant.email, participant.id)
     md5_hash = hashlib.md5(md5_str.encode()).hexdigest()
 
     salt_first_simbol = md5_hash[5]
@@ -23,10 +23,8 @@ def create_name_participant_path(participant):
     salt_third_simbol = md5_hash[13]
     salt_fourth_simbol = md5_hash[21]
 
-    format_phone = str(participant.phone)[-10:]
-
     name_path = "{}_{}{}{}{}".format(
-        format_phone,
+        participant.email,
         salt_first_simbol,
         salt_second_simbol,
         salt_third_simbol,
