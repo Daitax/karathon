@@ -156,7 +156,7 @@ def current_karathon_team(request):
         )
         team.team_participants = TeamParticipant.objects.filter(
             team=team
-        ).exclude(participant=request.user.participant)
+        )
         return team
     except ObjectDoesNotExist:
         return None

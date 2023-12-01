@@ -1,63 +1,96 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+{% load ru_plural %}
+
 {% block title %}Моя команда{% endblock %}
 {% block content %}
-<div class="container">
-  <div class="account_content_wrapper">
-    <div>
-      {% if current_karathon_team %}
-        <h2 id="team">Твоя команда {{ current_karathon_team.name }}</h2>
-        <div>Результаты твоей команды в {{ current_karathon_team.karathon.number }}-ом карафоне</div>
-        <div>
-          {% for team_participant in current_karathon_team.team_participants %}
-            <div>{{ team_participant.participant }}</div>
-          {% endfor %}
-        </div>
-      {% else %}
-        <div id="team">Вы пока не состоите ни в одной команде</div>
-      {% endif %}
-    </div>
-    {% if active_karathon_participant %}
-      <div class="team_content_button">
-        {% if report_sent %}
-          <div>Отчёт сдан</div>
+  <div class="container">
+    <div class="account_content_wrapper">
+      <div class="account_team_wrapper">
+        {% if current_karathon_team %}
+          <h2 id="team">Твоя команда <br>&#171;{{ current_karathon_team.name }}&#187;</h2>
+          <div>Результаты твоей команды в {{ current_karathon_team.karathon.number }}-ом карафоне</div>
+          <div class="account_team_items">
+            {% for team_participant in current_karathon_team.team_participants %}
+              {% with participant=team_participant.participant %}
+                <div class="account_team_items_item">
+                  <div class="account_team_items_item_participant">
+                    {% if team_participant.participant.photo %}
+                      <img src="{{ participant.photo.url }}" alt="">
+                    {% else %}
+                      <img class="no_avatar" src="{% static 'core/img/no_avatar.png' %}">
+                    {% endif %}
+                    <div class="account_team_items_item_participant_text">
+                      <div class="first-name">{{ participant.first_name }}</div>
+                      <div class="last-name">{{ participant.last_name }}</div>
+                      <div class="instagram">{{ participant.instagram|truncatechars:15 }}</div>
+                      <div class="category">{{ participant.category }}</div>
+                    </div>
+                  </div>
+
+                  <div class="account_team_items_item_steps">
+                    <div class="account_team_items_item_steps_sum">
+                      {{ participant }}
+                    </div>
+                    <div class="account_team_items_item_steps_yesterday">
+                      {% if participant.yesterday_steps %}
+                        вчера: {{ participant.yesterday_steps }}
+                        {{ participant.yesterday_steps|ru_plural:"шаг, шага, шагов" }}
+                      {% else %}
+                        вчера: отчёт не сдан
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              {% endwith %}
+            {% endfor %}
+          </div>
         {% else %}
-          <div class="pink_button" button-action="open-report-form"><span>Сдать отчёт</span></div>
+          <div id="team">Вы пока не состоите ни в одной команде</div>
         {% endif %}
       </div>
-    {% endif %}
-    <div class="team_wishlist_wrapper">
-      <h4>С кем ты хочешь быть в команде на следующем карафоне?</h4>
-      <div class="team_wishlist_items">
-      {% for desire_item in desire_list %}
-        <div class="team_wishlist_items_item">
-          <div class="team_wishlist_items_item_delete" user-to-delete="{{desire_item.id}}" window-elem="delete"></div>
-          {% if desire_item.desired_participant.photo %}
-          <img src="{{desire_item.desired_participant.photo.url}}">
-          {%else%}
-          <img class="no_avatar" src="{% static 'core/img/no_avatar.png' %}">
+      {% if active_karathon_participant %}
+        <div class="team_content_button">
+          {% if report_sent %}
+            <div>Отчёт сдан</div>
+          {% else %}
+            <div class="pink_button" button-action="open-report-form"><span>Сдать отчёт</span></div>
           {% endif %}
-          <div>
-            <p>{{ desire_item.desired_participant.first_name }}</p>
-            <p>{{ desire_item.desired_participant.last_name }}</p>
-            <p><span>{{ desire_item.desired_participant.instagram|truncatechars:15 }}</span></p>
-            {% if  desire_item.desired_participant.category %}
-            <p>{{ desire_item.desired_participant.category }}</p>
-            {% endif %}
-          </div>
         </div>
-        {% endfor %}
-        <div class="team_wishlist_items_add" button-action="open-add-desire-form">
-          <div class="team_wishlist_items_add_circle"></div>
-          <div class="team_wishlist_items_add_button_wrapper">
-            <button class="pink_button">
-              <span>Добавить друга</span>
-            </button>
+      {% endif %}
+      <div class="team_wishlist_wrapper">
+        <h4>С кем ты хочешь быть в команде на следующем карафоне?</h4>
+        <div class="team_wishlist_items">
+          {% for desire_item in desire_list %}
+            <div class="team_wishlist_items_item">
+              <div class="team_wishlist_items_item_delete" user-to-delete="{{ desire_item.id }}"
+                   window-elem="delete"></div>
+              {% if desire_item.desired_participant.photo %}
+                <img src="{{ desire_item.desired_participant.photo.url }}">
+              {% else %}
+                <img class="no_avatar" src="{% static 'core/img/no_avatar.png' %}">
+              {% endif %}
+              <div>
+                <p>{{ desire_item.desired_participant.first_name }}</p>
+                <p>{{ desire_item.desired_participant.last_name }}</p>
+                <p><span>{{ desire_item.desired_participant.instagram|truncatechars:15 }}</span></p>
+                {% if  desire_item.desired_participant.category %}
+                  <p>{{ desire_item.desired_participant.category }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+          <div class="team_wishlist_items_add" button-action="open-add-desire-form">
+            <div class="team_wishlist_items_add_circle"></div>
+            <div class="team_wishlist_items_add_button_wrapper">
+              <button class="pink_button">
+                <span>Добавить друга</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 {% endblock %}

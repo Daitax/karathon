@@ -12,7 +12,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.account.signals import send_new_participant_notifications
 from apps.core.models import Category, CharityCategory, Karathon
-from apps.core.utils import get_participant_photo_path
+from apps.core.utils import get_participant_photo_path, ending_numbers
 
 
 class User(AbstractUser):
@@ -21,32 +21,32 @@ class User(AbstractUser):
 
 class Participant(User):
     # TODO Удалить временные зоны с регионами
-    TIMEZONES = (
-        ("Europe/Moscow", "Мск"),
-        ("Europe/Samara", "Мск+01"),
-        ("Asia/Yekaterinburg", "Мск+02"),
-        ("Asia/Omsk", "Мск+03"),
-        ("Asia/Novosibirsk", "Мск+04"),
-        ("Asia/Irkutsk", "Мск+05"),
-        ("Asia/Yakutsk", "Мск+06"),
-        ("Asia/Vladivostok", "Мск+07"),
-        ("Asia/Sakhalin", "Мск+08"),
-        ("Asia/Kamchatka", "Мск+09"),
-        ("Europe/Kaliningrad", "Мск-01"),
-        ("Europe/London", "Мск-02"),
-        ("UTC", "Мск-03"),
-        ("Atlantic/Cape_Verde", "Мск-04"),
-        ("Atlantic/South_Georgia", "Мск-05"),
-        ("America/Buenos_Aires", "Мск-06"),
-        ("America/New_York", "Мск-07"),
-        ("America/Winnipeg", "Мск-08"),
-        ("America/Edmonton", "Мск-09"),
-        ("America/Los_Angeles", "Мск-10"),
-        ("America/Anchorage", "Мск-11"),
-        ("America/Adak", "Мск-12"),
-        ("Pacific/Honolulu", "Мск-13"),
-        ("Pacific/Midway", "Мск-14"),
-    )
+    # TIMEZONES = (
+    #     ("Europe/Moscow", "Мск"),
+    #     ("Europe/Samara", "Мск+01"),
+    #     ("Asia/Yekaterinburg", "Мск+02"),
+    #     ("Asia/Omsk", "Мск+03"),
+    #     ("Asia/Novosibirsk", "Мск+04"),
+    #     ("Asia/Irkutsk", "Мск+05"),
+    #     ("Asia/Yakutsk", "Мск+06"),
+    #     ("Asia/Vladivostok", "Мск+07"),
+    #     ("Asia/Sakhalin", "Мск+08"),
+    #     ("Asia/Kamchatka", "Мск+09"),
+    #     ("Europe/Kaliningrad", "Мск-01"),
+    #     ("Europe/London", "Мск-02"),
+    #     ("UTC", "Мск-03"),
+    #     ("Atlantic/Cape_Verde", "Мск-04"),
+    #     ("Atlantic/South_Georgia", "Мск-05"),
+    #     ("America/Buenos_Aires", "Мск-06"),
+    #     ("America/New_York", "Мск-07"),
+    #     ("America/Winnipeg", "Мск-08"),
+    #     ("America/Edmonton", "Мск-09"),
+    #     ("America/Los_Angeles", "Мск-10"),
+    #     ("America/Anchorage", "Мск-11"),
+    #     ("America/Adak", "Мск-12"),
+    #     ("Pacific/Honolulu", "Мск-13"),
+    #     ("Pacific/Midway", "Мск-14"),
+    # )
 
     TIMEZONES_OFFSET = (
         ("+3", "Мск"),
@@ -84,9 +84,9 @@ class Participant(User):
         "Аватарка", blank=True, upload_to=get_participant_photo_path
     )
     instagram = models.URLField("Ссылка на инстаграм", blank=True)
-    timezone = models.CharField(
-        max_length=30, choices=TIMEZONES, default="Europe/Moscow"
-    )
+    # timezone = models.CharField(
+    #     max_length=30, choices=TIMEZONES, default="Europe/Moscow"
+    # )
     timezone_offset = models.CharField(
         max_length=3, choices=TIMEZONES_OFFSET, default="+3"
     )
@@ -192,6 +192,14 @@ class Participant(User):
             except ObjectDoesNotExist:
                 return None
         return None
+
+    def yesterday_steps(self):
+        yesterday = self.get_participant_time() - datetime.timedelta(days=1)
+        try:
+            return self.steps.get(participant=self, date=yesterday).steps
+
+        except ObjectDoesNotExist:
+            return None
 
 
 if not settings.IS_TESTING:

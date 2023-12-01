@@ -1,3 +1,65 @@
+.account_team_items {
+    display: flex;
+    flex-direction: column;
+
+    .account_team_items_item {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1.69rem;
+
+        .account_team_items_item_participant {
+            display: flex;
+            align-items: center;
+
+            img {
+                height: 5rem;
+                width: 5rem;
+                border-radius: 50%;
+                object-fit: cover;
+                .avatar_border();
+            }
+
+            .account_team_items_item_participant_text {
+                flex: 1;
+                margin-left: 0.68rem;
+
+                .first-name {
+                    margin-bottom: 3px;
+                    font-weight: 700;
+                    font-size: 0.66rem;
+                    letter-spacing: 0.03em;
+                    text-transform: uppercase;
+                }
+
+                .last-name {
+                    margin-bottom: 3px;
+                    font-weight: 700;
+                    font-size: 0.66rem;
+                    letter-spacing: 0.03em;
+                    text-transform: uppercase;
+                }
+
+                .instagram {
+                    margin-bottom: 3px;
+                    font-weight: 700;
+                    font-size: 0.66rem;
+                    letter-spacing: 0.03em;
+                    text-transform: uppercase;
+                }
+
+                .category {
+                    font-weight: 400;
+                    font-size: .53rem;
+                }
+            }
+        }
+
+        .account_team_items_item_steps {
+
+        }
+    }
+}
+
 .team_content_button {
     margin-top: 2.54rem;
 }
@@ -78,7 +140,7 @@
         font-size: .53rem;
     }
 
-    &:hover>.team_wishlist_items_item_delete {
+    &:hover > .team_wishlist_items_item_delete {
         visibility: visible;
     }
 }
@@ -100,7 +162,7 @@
         content: "";
         position: absolute;
         left: 50%;
-        top: calc(50% - .73rem + var(--border-main)/2);
+        top: calc(50% - .73rem + var(--border-main) / 2);
         width: var(--border-main);
         height: 1.46rem;
         background: @pink;
@@ -109,7 +171,7 @@
     &::after {
         content: "";
         position: absolute;
-        left: calc(50% - .73rem + var(--border-main)/2);
+        left: calc(50% - .73rem + var(--border-main) / 2);
         top: 50%;
         width: 1.46rem;
         height: var(--border-main);
