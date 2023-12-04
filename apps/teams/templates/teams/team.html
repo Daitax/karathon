@@ -2,6 +2,7 @@
 {% load static %}
 
 {% load ru_plural %}
+{% load dividing_number_digits %}
 
 {% block title %}Моя команда{% endblock %}
 {% block content %}
@@ -22,20 +23,21 @@
                       <img class="no_avatar" src="{% static 'core/img/no_avatar.png' %}">
                     {% endif %}
                     <div class="account_team_items_item_participant_text">
-                      <div class="first-name">{{ participant.first_name }}</div>
-                      <div class="last-name">{{ participant.last_name }}</div>
-                      <div class="instagram">{{ participant.instagram|truncatechars:15 }}</div>
+                      <div class="first-name">{{ participant.first_name|truncatechars:11 }}</div>
+                      <div class="last-name">{{ participant.last_name|truncatechars:11 }}</div>
+                      <div class="instagram">{{ participant.instagram|truncatechars:11 }}</div>
                       <div class="category">{{ participant.category }}</div>
                     </div>
                   </div>
 
                   <div class="account_team_items_item_steps">
                     <div class="account_team_items_item_steps_sum">
-                      {{ participant }}
+                      {{ participant.sum_steps_in_karathon|default_if_none:"0"|dividing_number_digits }}
+                      {{ participant.sum_steps_in_karathon|default_if_none:"0"|ru_plural:"шаг, шага, шагов" }}
                     </div>
                     <div class="account_team_items_item_steps_yesterday">
                       {% if participant.yesterday_steps %}
-                        вчера: {{ participant.yesterday_steps }}
+                        вчера: {{ participant.yesterday_steps|dividing_number_digits }}
                         {{ participant.yesterday_steps|ru_plural:"шаг, шага, шагов" }}
                       {% else %}
                         вчера: отчёт не сдан

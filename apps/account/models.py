@@ -107,6 +107,12 @@ class Participant(User):
             email=self.email,
         )
 
+    def sum_steps_in_karathon(self):
+        from apps.steps.models import Step
+
+        steps = Step.objects.filter(karathon=self.get_active_karathon(), participant=self).aggregate(Sum('steps'))
+        return steps['steps__sum']
+
     def best_steps_all(self):
         from apps.steps.models import Step
 

@@ -1,5 +1,6 @@
 {% load static %}
 {% load ru_plural %}
+{% load dividing_number_digits %}
 
 {% for champ in other_champs %}
   <div class="desktop">
@@ -19,7 +20,7 @@
         <p>{{ champ.participant__last_name }} {{ champ.participant__first_name }}</p>
       </div>
       <div class="steps">
-        {{ champ.karathon__number }}-й карафон &mdash; {{ champ.karathon_steps }}
+        {{ champ.karathon__number }}-й карафон &mdash; {{ champ.karathon_steps|dividing_number_digits }}
         {{ champ.karathon_steps|ru_plural:"шаг, шага, шагов" }}
       </div>
     </div>

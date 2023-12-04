@@ -8,6 +8,7 @@
         margin-top: 1.69rem;
 
         .account_team_items_item_participant {
+            flex: 0 0 55%;
             display: flex;
             align-items: center;
 
@@ -55,7 +56,20 @@
         }
 
         .account_team_items_item_steps {
+            flex: 0 0 45%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
 
+            .account_team_items_item_steps_sum {
+                font-size: 1.4rem;
+                font-weight: 600;
+            }
+
+            .account_team_items_item_steps_yesterday {
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
         }
     }
 }

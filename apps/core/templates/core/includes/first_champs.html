@@ -1,5 +1,6 @@
 {% load static %}
 {% load ru_plural %}
+{% load dividing_number_digits %}
 {% url 'core:champions' as champions_url %}
 
 <div
@@ -20,7 +21,7 @@
           <div class="champ_nameplate">
             <p>{{ forloop.counter }} место</p>
             <p>{{ champ.participant__last_name }} {{ champ.participant__first_name }}</p>
-            <p>{{ champ.karathon__number }}-й карафон &mdash; {{ champ.karathon_steps }}
+            <p>{{ champ.karathon__number }}-й карафон &mdash; {{ champ.karathon_steps|dividing_number_digits }}
               {{ champ.karathon_steps|ru_plural:"шаг, шага, шагов" }}</p>
           </div>
         </li>
