@@ -32,8 +32,8 @@
 
                   <div class="account_team_items_item_steps">
                     <div class="account_team_items_item_steps_sum">
-                      {{ participant.sum_steps_in_karathon|default_if_none:"0"|dividing_number_digits }}
-                      {{ participant.sum_steps_in_karathon|default_if_none:"0"|ru_plural:"шаг, шага, шагов" }}
+                      {{ participant.sum_steps_in_karathon|default_if_none:0|dividing_number_digits }}
+                      {{ participant.sum_steps_in_karathon|default_if_none:0|ru_plural:"шаг, шага, шагов" }}
                     </div>
                     <div class="account_team_items_item_steps_yesterday">
                       {% if participant.yesterday_steps %}
