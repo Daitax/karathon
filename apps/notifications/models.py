@@ -37,9 +37,7 @@ class Notification(models.Model):
         ordering = ("is_viewed", "-date")
 
     def datetime_creation(self):
-        time_offset = int(self.participant.timezone_offset)
-        participant_offset = datetime.timedelta(hours=time_offset)
-        participant_timezone = datetime.timezone(participant_offset)
+        participant_timezone = self.participant.get_participant_timezone()
 
         participant_notification_datetime = self.date.astimezone(
             participant_timezone

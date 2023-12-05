@@ -16,20 +16,52 @@
             <div class="item">
               <div class="steps">
                 <span>всего</span>
-                <div results-steps="{{ total.0 }}">{{ total.0|dividing_number_digits }}</div>
+                <div>{{ total.0|dividing_number_digits }}</div>
                 <div>{{ total.1 }}</div>
+              </div>
+              <div class="team">
+                команда: {{ total.2|dividing_number_digits }} {{ total.3 }}
               </div>
             </div>
           </div>
           <div class="daily_wrapper">
             {% for step in steps %}
-              <div class="item">
-                <div class="steps">
-                  <span>{{ step.0.date|date:"d.m.Y" }}</span>
-                  <div results-steps="{{ step.0.steps }}">{{ step.0.steps|dividing_number_digits }}</div>
-                  <div>{{ step.1 }}</div>
+              {% if step.0 %}
+                <div class="item">
+                  <div class="steps">
+                    <span>{{ step.0.date|date:"d.m.Y" }}</span>
+                    <div results-steps="{{ step.0.steps }}">{{ step.0.steps|dividing_number_digits }}</div>
+                    <div>{{ step.1 }}</div>
+                  </div>
+                  {% if karathon.type == "team" %}
+                    <div class="team">
+                      команда:
+                      {% if step.2 %}
+                        {{ step.2 }} {{ step.3 }}
+                      {% else %}
+                        отчёты не сданы
+                      {% endif %}
+                    </div>
+                  {% endif %}
                 </div>
-              </div>
+              {% else %}
+                <div class="item">
+                  <div class="steps">
+                    <span>{{ step.1|date:"d.m.Y" }}</span>
+                    <div>Отчёт не сдан</div>
+                  </div>
+                  {% if karathon.type == "team" %}
+                    <div class="team">
+                      команда:
+                      {% if step.2 %}
+                        {{ step.2|dividing_number_digits }} {{ step.3 }}
+                      {% else %}
+                        отчёты не сданы
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
             {% endfor %}
           </div>
         </div>
@@ -39,41 +71,10 @@
       {% else %}
         <div>Что бы видеть результаты, ты должен участвовать в карафоне.</div>
         <div>Но мы не видим тебя среди участников</div>
-        <div><a href="{% url "core:participate" %}">Прими участие</a>, сдавай отчёты и твой результаты будут
-          опубликованы здесь</div>
+        <div><a href="{% url "core:participate" %}">Прими участие</a>, сдавай отчёты и твои результаты будут
+          опубликованы здесь
+        </div>
       {% endif %}
-      {#    <div class="results_description">#}
-      {#      Количество пройденых тобой и твоей командой шагов в 17-ом карафоне по дням:#}
-      {#    </div>#}
-
-      {#    <div class="results_block_wrapper">#}
-      {#      <div class="total_wrapper">#}
-      {#        <div class="item">#}
-      {#          <div class="steps">#}
-      {#            <span>всего</span>#}
-      {#            <div id="steps" results-steps="{{participant_steps_total.0}}">{{participant_steps_total.0}}</div>#}
-      {#            <div>{{participant_steps_total.1}}</div>#}
-      {#          </div>#}
-      {#          <div class="team">#}
-      {#            команда: 103 193 шага#}
-      {#          </div>#}
-      {#        </div>#}
-      {#      </div>#}
-      {#      <div class="daily_wrapper">#}
-      {#        {% for step in steps %}#}
-      {#        <div class="item">#}
-      {#          <div class="steps">#}
-      {#            <span>{{step.0.date|date:"d.m.Y"}}</span>#}
-      {#            <div id="steps" results-steps="{{step.0.steps}}">{{step.0.steps}}</div>#}
-      {#            <div>{{step.1}}</div>#}
-      {#          </div>#}
-      {#          <div class="team">#}
-      {#            команда: 28 486 шагов#}
-      {#          </div>#}
-      {#        </div>#}
-      {#        {% endfor %}#}
-      {#      </div>#}
-      {#    </div>#}
     </div>
   </div>
 {% endblock %}

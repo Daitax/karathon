@@ -1,3 +1,4 @@
+import datetime
 import json
 from random import randint
 
@@ -15,6 +16,7 @@ from django.views.generic.base import TemplateView
 from apps.core.utils import ending_numbers
 from apps.notifications.models import Notification
 from apps.steps.models import Step
+from apps.teams.models import Team, TeamParticipant
 
 from .forms import (
     AuthCodeForm,
@@ -283,7 +285,7 @@ def messages(request):
     if len(messages_list) <= settings.MESSAGES_PER_PAGE:
         messages_list = Notification.objects.select_related(
             "participant"
-        ).filter(participant__user=user,)[: settings.MESSAGES_PER_PAGE]
+        ).filter(participant__user=user, )[: settings.MESSAGES_PER_PAGE]
     return render(
         request,
         "account/messages.html",
@@ -303,8 +305,8 @@ def messages_add(request):
     messages_showed = list(json.loads(request.body).values())[0]
     if messages_showed + settings.MESSAGES_PER_PAGE < len(messages_list):
         messages_list = messages_list[
-            messages_showed : messages_showed + settings.MESSAGES_PER_PAGE
-        ]
+                        messages_showed: messages_showed + settings.MESSAGES_PER_PAGE
+                        ]
         next_messages_exist = True
     messages_list = messages_list[messages_showed:]
     next_messages_exist = False
@@ -357,35 +359,94 @@ class ResultsView(LoginRequiredMixin, TemplateView):
         words = ["шаг", "шага", "шагов"]
         context = super().get_context_data(**kwargs)
 
+        # Получаем активный карафон
         active_karathon = self.request.user.participant.get_active_karathon()
 
-        participant_karathon_steps = Step.objects.filter(
-            karathon=active_karathon, participant=self.request.user.participant
-        )
-        total_karathon_steps = participant_karathon_steps.aggregate(Sum("steps"))['steps__sum']
-        if not total_karathon_steps:
-            total_karathon_steps = 0
-        output_total_karathon_steps = [
-            total_karathon_steps,
-            ending_numbers(total_karathon_steps, words)
-        ]
+        if active_karathon:
+            participant_karathon_steps = []  # Список шагов по дням
+            total = 0  # Итоговое количество шагов
+            total_team = 0  # Итоговое количество шагов у команды
 
-        steps = [[item, ending_numbers(item.steps, words)] for item in participant_karathon_steps]
+            # Если тип карафона - командный
+            if active_karathon.type == "team":
+                team = Team.objects.get(
+                    teamparticipant__participant=self.request.user.participant,
+                    karathon=active_karathon
+                )
+                # Собираем ID всех участников команды
+                team_participants_id = TeamParticipant.objects.filter(team=team).values_list('participant', flat=True)
 
-        # participant_id = self.request.user.participant.id
-        # steps = Step.objects.filter(participant=participant_id)
-        # steps = [[item, ending_numbers(item.steps, words)] for item in steps]
-        # participant_steps = Step.objects.filter(
-        #     participant=participant_id
-        # ).aggregate(Sum("steps"))
-        # participant_steps_total = [
-        #     value for value in participant_steps.values()
-        # ][0]
-        # if not participant_steps_total:
-        #     participant_steps_total = 0
-        context = {
-            "karathon": active_karathon,
-            "total": output_total_karathon_steps,
-            "steps": steps,
-        }
+            # Определяем дату начала карафона
+            date_start_karathon = active_karathon.starts_at
+
+            # Определяем дату, до которой отображаем список в результатах
+            if active_karathon.is_ended_karathon():
+                date_end = active_karathon.finished_at
+            else:
+                date_end = self.request.user.participant.get_participant_time().date()
+
+            date = date_start_karathon
+
+            # Проходим цикл по каждому дню
+            while date <= date_end:
+
+                # Если в текущем дне есть отчёт по шагам
+                try:
+                    step = Step.objects.get(
+                        date=date,
+                        participant=self.request.user.participant,
+                        karathon=active_karathon
+                    )
+                    # Добавляем его и плюрализацию
+                    steps_data = [step, ending_numbers(step.steps, words)]
+
+                    # Суммируем с персональным итоговым количеством
+                    total += step.steps
+
+                except ObjectDoesNotExist:
+                    # Если нет, то передаём пустой элемент с датой
+                    steps_data = [None, date]
+
+                # Если тип карафона "Командный"
+                if active_karathon.type == "team":
+
+                    # Получаем сумму шагов всех участников за текущий день
+                    team_steps = Step.objects.filter(
+                        date=date,
+                        karathon=active_karathon,
+                        participant__in=team_participants_id
+                    ).aggregate(Sum("steps"))['steps__sum']
+
+                    # Суммируем с командным итоговым количеством
+                    total_team += team_steps if team_steps else 0
+
+                    # Добавляем в массив дня
+                    steps_data.append(team_steps)
+
+                    # Если за текущий день есть отчёты, то добавлям плюрализацию
+                    if team_steps:
+                        steps_data.append(ending_numbers(team_steps, words))
+
+                # Добавляем данные в массив вывода по дням
+                participant_karathon_steps.append(steps_data)
+                # Переходим на следующую итерацию (день)
+                date += datetime.timedelta(days=1)
+
+            # Заполняем массив вывода суммы шагов
+            output_total_karathon_steps = [
+                total,
+                ending_numbers(total, words)
+            ]
+            # Если тип карафона "Командный"
+            if active_karathon.type == "team":
+                # Добавляем массив вывода суммы шагов командными значениями
+                output_total_karathon_steps.append(total_team)
+                output_total_karathon_steps.append(ending_numbers(total_team, words))
+
+            # Выводим данные в шаблон
+            context["steps"] = reversed(participant_karathon_steps)
+            context["total"] = output_total_karathon_steps
+
+        context["karathon"] = active_karathon
+
         return context

@@ -163,13 +163,17 @@ class Participant(User):
             return None
 
     def get_participant_time(self):
+        participant_timezone = self.get_participant_timezone()
+
+        return datetime.datetime.now(participant_timezone)
+
+    def get_participant_timezone(self):
         time_offset = int(self.timezone_offset)
         participant_offset = datetime.timedelta(
             hours=time_offset
         )
-        participant_timezone = datetime.timezone(participant_offset)
 
-        return datetime.datetime.now(participant_timezone)
+        return datetime.timezone(participant_offset)
 
     def is_today_report(self):
         try:
