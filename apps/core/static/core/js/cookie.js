@@ -5,6 +5,30 @@ function getCookie(name) {
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
+function setCookie(name, value, options = {}) {
+  options = {
+    path: '/',
+    // при необходимости добавьте другие значения по умолчанию
+    ...options
+  };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
+}
+
 let cookieBlock = document.querySelector('[window-elem="cookie"]')
 let cookieBlockBtn = document.querySelector('[window-elem="cookie_button"]')
 
@@ -18,9 +42,9 @@ function openCookieBlock() {
 
 cookieBlockBtn.addEventListener("click", function () {
     closeCookieBlock()
-    sessionStorage.setItem('is_cookie_need_show', false);
+    setCookie('is_cookie_need_show', 'false')
 })
 
-if (sessionStorage.getItem('is_cookie_need_show') == 'false') closeCookieBlock()
+if (getCookie('is_cookie_need_show') == 'false') closeCookieBlock()
 
-if (!sessionStorage.getItem('is_cookie_need_show')) openCookieBlock()
+if (!getCookie('is_cookie_need_show')) openCookieBlock()
