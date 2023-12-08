@@ -304,34 +304,41 @@ class Winner(models.Model):
         return winner
 
     @classmethod
-    def is_participant_winner(cls, participant):
-        try:
-            cls.objects.get(winnerquestionnaire__is_displayed=True, participant=participant)
-            return True
-        except ObjectDoesNotExist:
-            return False
-
-    def is_winner_participant(self):
-        return Winner.objects.filter(participant=self.participant).exists()
-
-    @classmethod
     def set_individual_karathon_winner(cls, karathon):
         from apps.steps.models import Step
         winner_steps = Step.objects.filter(karathon=karathon).values('participant').annotate(
             result=(Sum('steps') + Sum('bonus'))
         ).order_by('-result').first()
 
-        winner = cls.create_winner(karathon, winner_steps['participant'])
-        WinnerQuestionnaire.create_winner_questionnaire(winner)
+        cls.create_winner(karathon, winner_steps['participant'])
+        WinnerQuestionnaire.create_winner_questionnaire(winner_steps['participant'])
 
-        return winner
+        return winner_steps['participant']
 
-    @staticmethod
-    def set_team_karathon_winners(karathon):
-        print(1)
-        print("Устанавливаем победителей командного карафона:")
-        print(karathon)
-        print(2)
+    @classmethod
+    def set_team_karathon_winners(cls, karathon):
+        from apps.steps.models import Step
+        from apps.teams.models import Team, TeamParticipant
+
+        karathon_teams = Team.objects.filter(karathon=karathon)
+        max_team_steps = 0
+        for team in karathon_teams:
+            team_participants = TeamParticipant.objects.filter(team=team).values_list('participant', flat=True)
+            team_steps = Step.objects.filter(
+                karathon=karathon,
+                participant__in=team_participants
+            ).aggregate(steps_bonus__sum=Sum('steps') + Sum('bonus'))['steps_bonus__sum']
+
+            if max_team_steps < team_steps:
+                winner_team = team
+                winners_id = team_participants
+                max_team_steps = team_steps
+
+        for participant_id in winners_id:
+            cls.create_winner(karathon, participant_id)
+            WinnerQuestionnaire.create_winner_questionnaire(participant_id)
+
+        return winner_team, winners_id
 
 
 class WinnerQuestionnaire(models.Model):
@@ -347,8 +354,8 @@ class WinnerQuestionnaire(models.Model):
         ("4xl", "4xl"),
     )
 
-    winner = models.ForeignKey(
-        Winner, verbose_name="Победитель", on_delete=models.CASCADE
+    participant = models.ForeignKey(
+         Participant, verbose_name="Участник", on_delete=models.CASCADE
     )
     postcode = models.CharField("Почтовый индекс", max_length=10, null=True, blank=True, )
     country = models.CharField("Страна", max_length=100, null=True, blank=True, )
@@ -374,8 +381,16 @@ class WinnerQuestionnaire(models.Model):
         return self.participant
 
     @classmethod
-    def create_winner_questionnaire(cls, winner):
+    def create_winner_questionnaire(cls, participant_id):
         cls.objects.update_or_create(
-            winner=winner,
+            participant_id=participant_id,
             defaults={"is_displayed": True}
         )
+
+    @classmethod
+    def is_active_questionnaire(cls, participant_id):
+        try:
+            cls.objects.get(participant_id=participant_id)
+            return True
+        except ObjectDoesNotExist:
+            return False

@@ -24,7 +24,7 @@ class NotificationTemplate(models.Model):
 
 
 class Notification(models.Model):
-    participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
+    participant = models.ForeignKey(Participant, verbose_name="Участник", on_delete=models.CASCADE)
     template = models.ForeignKey(
         NotificationTemplate, verbose_name="Шаблон", on_delete=models.CASCADE
     )
@@ -34,6 +34,8 @@ class Notification(models.Model):
     is_viewed = models.BooleanField("Прочитано", default=False)
 
     class Meta:
+        verbose_name = "Уведомление"
+        verbose_name_plural = "Уведомления"
         ordering = ("is_viewed", "-date")
 
     def datetime_creation(self):
@@ -45,27 +47,29 @@ class Notification(models.Model):
 
         # TODO разобраться с выводом месяца на русском языке методами python/django
         format_datetime = (
-            participant_notification_datetime.strftime("%d")
-            + " "
-            + print_month_ru(participant_notification_datetime.strftime("%m"))
-            + " "
-            + participant_notification_datetime.strftime("%Y")
-            + " | "
-            + participant_notification_datetime.strftime("%H")
-            + ":"
-            + participant_notification_datetime.strftime("%M")
+                participant_notification_datetime.strftime("%d")
+                + " "
+                + print_month_ru(participant_notification_datetime.strftime("%m"))
+                + " "
+                + participant_notification_datetime.strftime("%Y")
+                + " | "
+                + participant_notification_datetime.strftime("%H")
+                + ":"
+                + participant_notification_datetime.strftime("%M")
         )
 
         return format_datetime
 
     @classmethod
-    def finished_individual_karathon(cls, karathon, winner):
+    def finished_individual_karathon(cls, karathon, winner_participant_id):
         template = NotificationTemplate.objects.get(key="finished_individual_karathon")
         header = template.header.format(karathon_number=karathon.number)
-        text = template.text.format(winner=winner)
+        winner_participant = Participant.objects.get(id=winner_participant_id)
+        winner_participant_text = "{} {}".format(winner_participant.last_name, winner_participant.first_name)
+        text = template.text.format(winner=winner_participant_text)
 
         create_notification_list = list()
-        karathon_participants = Participant.objects.filter(karathon=karathon).exclude(id=winner.participant.id)
+        karathon_participants = Participant.objects.filter(karathon=karathon).exclude(id=winner_participant_id)
 
         for participant in karathon_participants:
             instance = cls(
@@ -79,16 +83,24 @@ class Notification(models.Model):
         cls.objects.bulk_create(create_notification_list, 1000)
 
     @classmethod
-    def winner_individual_karathon(cls, karathon, winner):
-        template = NotificationTemplate.objects.get(key="winner_individual_karathon")
-        text = template.text.format(karathon_number=karathon.number)
+    def finished_team_karathon(cls, karathon, winner_team, winners_id):
+        template = NotificationTemplate.objects.get(key="finished_team_karathon")
+        header = template.header.format(karathon_number=karathon.number)
+        text = template.text.format(team=winner_team.name)
 
-        cls.objects.create(
-            participant=winner.participant,
-            template=template,
-            header=template.header,
-            text=text
-        )
+        create_notification_list = list()
+        karathon_participants = Participant.objects.filter(karathon=karathon).exclude(id__in=winners_id)
+
+        for participant in karathon_participants:
+            instance = cls(
+                participant=participant,
+                template=template,
+                header=header,
+                text=text,
+            )
+            create_notification_list.append(instance)
+
+        cls.objects.bulk_create(create_notification_list, 1000)
 
     @staticmethod
     def task_today(participant, date, task):
@@ -96,12 +108,12 @@ class Notification(models.Model):
 
         # TODO разобраться с выводом месяца на русском языке методами python/django
         format_date = (
-            date.strftime("%d")
-            + " "
-            + print_month_ru(date.strftime("%m"))
-            + " "
-            + date.strftime("%Y")
-            + " г."
+                date.strftime("%d")
+                + " "
+                + print_month_ru(date.strftime("%m"))
+                + " "
+                + date.strftime("%Y")
+                + " г."
         )
 
         header = template.header.format(format_date=format_date)
@@ -161,8 +173,41 @@ class Notification(models.Model):
             participant=self.participant
         )
         if (
-            messages.count() == messages.filter(is_viewed=False).count()
-            or messages.count() <= settings.MESSAGES_PER_PAGE
+                messages.count() == messages.filter(is_viewed=False).count()
+                or messages.count() <= settings.MESSAGES_PER_PAGE
         ):
             return False
         return True
+
+    @classmethod
+    def winner_individual_karathon(cls, karathon, winner_participant_id):
+        template = NotificationTemplate.objects.get(key="winner_individual_karathon")
+        text = template.text.format(karathon_number=karathon.number)
+
+        cls.objects.create(
+            participant_id=winner_participant_id,
+            template=template,
+            header=template.header,
+            text=text
+        )
+
+    @classmethod
+    def winner_team_karathon(cls, karathon, winners_id):
+        template = NotificationTemplate.objects.get(key="winner_team_karathon")
+        text = template.text.format(karathon_number=karathon.number)
+
+        create_notification_list = list()
+        karathon_participants = Participant.objects.filter(karathon=karathon, id__in=winners_id)
+
+        for participant in karathon_participants:
+            instance = cls(
+                participant=participant,
+                template=template,
+                header=template.header,
+                text=text,
+            )
+            create_notification_list.append(instance)
+
+        cls.objects.bulk_create(create_notification_list, 1000)
+
+

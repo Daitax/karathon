@@ -189,49 +189,6 @@ class AuthView(TemplateView):
         return JsonResponse(out)
 
 
-# class AccountView(LoginRequiredMixin, TemplateView):
-#     template_name = "account/index.html"
-#     login_url = "/"
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         participant_form = ParticipantForm(
-#             instance=self.request.user.participant
-#         )
-#         if self.request.method == "POST" and "personal" in self.request.POST:
-#             participant_form = ParticipantForm(
-#                 self.request.POST,
-#                 self.request.FILES,
-#                 instance=self.request.user.participant,
-#             )
-#
-#             if participant_form.is_valid():
-#                 participant_form.save()
-#                 participant_form = ParticipantForm(
-#                     instance=self.request.user.participant
-#                 )
-#
-#         context = {
-#             "participant_form": participant_form,
-#         }
-#
-#         # if Winner.is_winner_participant(request.user.participant):
-#         #     winner_questionnaire_form = WinnerQuestionnaireForm()
-#         #
-#         #     if request.method == 'POST' and 'winner' in request.POST:
-#         #         winner_questionnaire_form = WinnerQuestionnaireForm(request.POST)
-#         #
-#         #         if winner_questionnaire_form.is_valid():
-#         #             pass
-#         #
-#         #     context = {
-#         #         'participant_form': participant_form,
-#         #         'winner_questionnaire_form': winner_questionnaire_form
-#         #     }
-#
-#         return context
-
-
 @login_required
 def index(request):
     participant_form = ParticipantForm(instance=request.user.participant)
@@ -250,9 +207,11 @@ def index(request):
         "participant_form": participant_form,
     }
 
-    if Winner.is_participant_winner(request.user.participant):
-        winner_questionnaire = WinnerQuestionnaire.objects.get(is_displayed=True,
-                                                               winner__participant=request.user.participant)
+    if WinnerQuestionnaire.is_active_questionnaire(request.user.participant):
+        winner_questionnaire = WinnerQuestionnaire.objects.get(
+            is_displayed=True,
+            participant=request.user.participant
+        )
         winner_questionnaire_form = WinnerQuestionnaireForm(instance=winner_questionnaire)
 
         if request.method == 'POST' and 'winner' in request.POST:
@@ -263,10 +222,7 @@ def index(request):
                 winner_questionnaire_form.save()
                 winner_questionnaire_form = WinnerQuestionnaireForm(instance=winner_questionnaire)
 
-        context = {
-            'participant_form': participant_form,
-            'winner_questionnaire_form': winner_questionnaire_form
-        }
+        context['winner_questionnaire_form'] = winner_questionnaire_form
 
     return render(request, "account/index.html", context)
 

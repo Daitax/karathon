@@ -15,11 +15,11 @@ def ended_karathon():
         if karathon.is_ended_karathon():
             from apps.account.models import Winner
             if karathon.type == 'individual':
-                winner = Winner.set_individual_karathon_winner(karathon)
-                Notification.finished_individual_karathon(karathon, winner)
-                Notification.winner_individual_karathon(karathon, winner)
+                winner_participant_id = Winner.set_individual_karathon_winner(karathon)
+                Notification.finished_individual_karathon(karathon, winner_participant_id)
+                Notification.winner_individual_karathon(karathon, winner_participant_id)
             elif karathon.type == 'team':
-                Winner.set_team_karathon_winners(karathon)
-
-
-
+                # Winner.set_team_karathon_winners(karathon)
+                winner_team, winners_id = Winner.set_team_karathon_winners(karathon)
+                Notification.finished_team_karathon(karathon, winner_team, winners_id)
+                Notification.winner_team_karathon(karathon, winners_id)

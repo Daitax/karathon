@@ -85,10 +85,14 @@ class Step(models.Model):
     def total_last_karathon(cls):
         last_karathon = Karathon.last_karathon()
 
-        steps = cls.objects.filter(karathon=last_karathon).filter(
-            Q(date__gte=last_karathon.starts_at) & Q(date__lte=last_karathon.finished_at)).aggregate(Sum("steps"))
+        if last_karathon:
+            steps = cls.objects.filter(karathon=last_karathon).filter(
+                Q(date__gte=last_karathon.starts_at) & Q(date__lte=last_karathon.finished_at)).aggregate(Sum("steps"))
 
-        return steps
+            return steps
+        else:
+            return {"steps__sum": 0}
+
 
     photo_preview.short_description = "Фотоотчёт"
     photo_preview_in_list.short_description = "Фотоотчёт"
