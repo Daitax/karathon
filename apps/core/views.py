@@ -3,16 +3,13 @@ import json
 import os
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.files import File
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, HttpResponse, Http404
 from django.shortcuts import get_list_or_404, render
 from django.template.loader import render_to_string
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView
 
 from apps.account.models import Participant
 from apps.core.models import Karathon
@@ -31,25 +28,6 @@ def index(request):
         context = {}
 
     return render(request, "core/index.html", context)
-
-# def index(request):
-#     # champ_list = Participant.objects.annotate(Sum("steps")).order_by(
-#     #     "steps__sum"
-#     # )
-
-#     return render(
-#         request,
-#         "core/index.html",
-#         {
-#             "user": request.user,
-#             # "champ_list": champ_list,
-#         },
-#     )
-
-
-# def about_karathons(request):
-#     return render(request, "core/about_karathons.html")
-
 
 
 class ChampionsView(TemplateView):
@@ -134,13 +112,6 @@ def add_champs_list(request):
         "next_champs_exist": next_champs_exist,
     }
     return JsonResponse(out)
-
-
-# def karathon(request, **kwargs):
-#     karathon_number = kwargs["karathon_number"]
-#     karathon = Karathon.objects.get(number=karathon_number)
-#     context = {"karathon": karathon}
-#     return render(request, "core/karathon.html", context)
 
 
 class KarathonView(TemplateView):
