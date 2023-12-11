@@ -35,7 +35,7 @@ class AuthView(TemplateView):
             if request.POST["window"] == "open":
                 return self.open_popup(request)
             if request.POST["window"] == "email":
-                return self.auth_phone(request)
+                return self.auth_email(request)
             if request.POST["window"] == "code":
                 return self.auth_code(request)
 
@@ -53,7 +53,7 @@ class AuthView(TemplateView):
         }
         return JsonResponse(out)
 
-    def auth_phone(self, request):
+    def auth_email(self, request):
         form = AuthEmailForm(request.POST)
 
         if form.is_valid():

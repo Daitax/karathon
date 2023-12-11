@@ -5,6 +5,9 @@ import re
 import cv2
 import pytesseract
 
+from django.conf import settings
+from django.core.mail import send_mail
+
 from project.settings import MEDIA_ROOT
 
 
@@ -45,6 +48,17 @@ def ending_numbers(number, words_list):
     else:
         return words_list[2]
 
+
+def format_date(date):
+    print_date = (
+            date.strftime("%d")
+            + " "
+            + print_month_ru(date.strftime("%m"))
+            + " "
+            + date.strftime("%Y")
+            + " г."
+    )
+    return print_date
 
 def get_choice_value(choices, choice_key):
     for choice in choices:
@@ -134,3 +148,17 @@ def checking(arr, val, photo, steps):
             return result
         value += delta_thresh
     return checking(arr[1::], val, photo, steps)
+
+def send_email_message(subject, message, to_email):
+    send_result = send_mail(
+        subject,
+        message,
+        settings.EMAIL_HOST_USER,
+        [to_email],
+        fail_silently=False,
+    )
+
+    if send_result == 1:
+        return True
+    else:
+        return False

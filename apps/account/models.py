@@ -12,7 +12,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.account.signals import send_new_participant_notifications
 from apps.core.models import Category, CharityCategory, Karathon
-from apps.core.utils import get_participant_photo_path, ending_numbers
+from apps.core.utils import get_participant_photo_path, ending_numbers, send_email_message
 
 
 class User(AbstractUser):
@@ -246,15 +246,13 @@ class EmailCode(models.Model):
     @staticmethod
     def send_code(email, code):
         # TODO Реализовать отправку email через SMTP, а не в консоль
-        send_result = send_mail(
+        send_result = send_email_message(
             "Вход в личный кабинет на сайте karathon",
             "Код для входа: " + str(code),
-            "admin@karathon.ru",
-            [email, ],
-            fail_silently=False,
+            email
         )
 
-        if send_result == 1:
+        if send_result:
             response = {"status": "ok"}
         else:
             response = {"status": "error"}

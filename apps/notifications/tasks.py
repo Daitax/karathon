@@ -1,3 +1,4 @@
+from apps.core.utils import send_email_message, format_date
 from project.celery import app
 
 
@@ -12,6 +13,11 @@ def send_task_for_participant():
         if task and date_time.hour == 0:
             from apps.notifications.models import Notification
             Notification.task_today(participant, date_time, task)
+            send_email_message(
+                "Новое задание на " + format_date(task.date),
+                task.text_task(participant),
+                participant.email
+            )
 
 
 def send_notification_add_instagram(participant):

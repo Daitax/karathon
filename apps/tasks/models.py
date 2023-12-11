@@ -5,7 +5,7 @@ from django.db import models
 
 from apps.account.models import Participant
 from apps.core.models import Category, Karathon
-from apps.core.utils import ending_numbers
+from apps.core.utils import ending_numbers, format_date
 from apps.core.validators import not_earlier_today
 
 
@@ -44,7 +44,7 @@ class Task(models.Model):
         verbose_name_plural = 'Задания'
 
     def __str__(self):
-        return "Задание для {category} на {date}".format(category=self.category, date=self.date)
+        return "Задание для {category} на {date}".format(category=self.category, date=format_date(self.date))
 
     def text_task(self, participant):
         match self.type:
