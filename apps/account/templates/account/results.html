@@ -9,7 +9,11 @@
       <h2 id="results">твои результаты</h2>
       {% if karathon %}
         <div class="results_description">
-          Количество пройденых тобой и твоей командой шагов в {{ karathon.number }} карафоне по дням:
+          Количество пройденых тобой
+          {% if karathon.type == "team" %}
+            и твоей командой
+          {% endif %}
+          шагов в {{ karathon.number }} карафоне по дням:
         </div>
         <div class="results_block_wrapper">
           <div class="total_wrapper">
@@ -19,9 +23,11 @@
                 <div>{{ total.0|dividing_number_digits }}</div>
                 <div>{{ total.1 }}</div>
               </div>
-              <div class="team">
-                команда: {{ total.2|dividing_number_digits }} {{ total.3 }}
-              </div>
+              {% if karathon.type == "team" %}
+                <div class="team">
+                  команда: {{ total.2|dividing_number_digits }} {{ total.3 }}
+                </div>
+              {% endif %}
             </div>
           </div>
           <div class="daily_wrapper">

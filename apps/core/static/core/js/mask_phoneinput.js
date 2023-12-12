@@ -42,7 +42,7 @@ function mobileMaskInput() {
 
         if (["7", "8", "9"].indexOf(inputNumbersValue[0]) > -1) { // для РФ, Казахстана
             if (inputNumbersValue[0] == "9") inputNumbersValue = "7" + inputNumbersValue;
-            var firstSymbols = (inputNumbersValue[0] == "8") ? "8" : "+7";
+            var firstSymbols = (inputNumbersValue[0] == "8") ? "+7" : "+7";
             formattedInputValue = input.value = firstSymbols + " ";
             if (inputNumbersValue.length > 1) {
                 formattedInputValue += '(' + inputNumbersValue.substring(1, 4);

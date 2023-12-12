@@ -97,11 +97,17 @@ if (reportFormWrapper) {
         if (this.files && this.files.length >= 1) {
           inputCustom.innerHTML = "Фото выбрано"
           inputCustom.setAttribute("style", "text-decoration: none;")
-        } else { inputCustom.innerHTML = "Прикрепи фото" }
+        } else {
+          inputCustom.innerHTML = "Прикрепи фото"
+        }
       })
     }
     if (target.getAttribute('popup-element') == 'close') {
-      closeReportForm()
+      if (reportFormWrapper.querySelector('[reload="True"]')) {
+        window.location.reload()
+      } else {
+        closeReportForm()
+      }
     }
     if (target.getAttribute('name') == 'steps') {
       let stepsField = document.querySelector('[name="steps"]')

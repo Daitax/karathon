@@ -44,9 +44,8 @@ ALLOWED_HOSTS = [
     "localhost",
     "dyugaev.beget.tech",
     "213.139.208.116",
-    "192.168.0.103",
-    "192.168.1.9",
     "testserver",
+    "karathon.yuriyzhidkov.ru",
 ]
 
 INTERNAL_IPS = ["127.0.0.1", "localhost"]

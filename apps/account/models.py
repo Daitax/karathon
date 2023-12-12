@@ -1,11 +1,9 @@
 import datetime
 import hashlib
 
-import pytz
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.mail import send_mail
 from django.db import models
 from django.db.models import signals, Sum
 from phonenumber_field.modelfields import PhoneNumberField
@@ -245,7 +243,6 @@ class EmailCode(models.Model):
 
     @staticmethod
     def send_code(email, code):
-        # TODO Реализовать отправку email через SMTP, а не в консоль
         send_result = send_email_message(
             "Вход в личный кабинет на сайте karathon",
             "Код для входа: " + str(code),

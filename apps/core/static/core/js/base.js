@@ -6,6 +6,10 @@ function closePopup(event) {
     if (overlay.querySelector('[reload="True"]')) {
       window.location.reload()
     } else {
+      if (promoVideo) {
+        toggleActionVideo('pause', promoVideo)
+      }
+
       popup.forEach(function (element) {
         element.classList.remove('show')
       })

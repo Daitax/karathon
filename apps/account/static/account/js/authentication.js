@@ -85,11 +85,14 @@ if (authenticationFormWrapper) {
     let target = event.target
 
     if (target.getAttribute('auth-form-elem') == 'later') {
-      closeAuthenticationForm()
       window.location.reload()
     }
     if (target.getAttribute('popup-element') == 'close') {
-      closeAuthenticationForm()
+      if (authenticationFormWrapper.querySelector('[reload="True"]')) {
+        window.location.reload()
+      } else {
+        closeAuthenticationForm()
+      }
     }
   })
 
