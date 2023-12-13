@@ -60,7 +60,7 @@ class Task(models.Model):
                 if best_steps:
                     double_best = best_steps * 2
 
-                    total_steps = max(double_best, self.steps)
+                    total_steps = min(double_best, self.steps)
 
                     text = "Пройди не менее {} {}".format(
                         total_steps,
@@ -78,7 +78,7 @@ class Task(models.Model):
                     day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
                     double_steps = day_steps.steps * 2
 
-                    total_steps = max(double_steps, self.steps)
+                    total_steps = min(double_steps, self.steps)
 
                     text = "Пройди не менее {} {}".format(
                         total_steps,
@@ -95,7 +95,7 @@ class Task(models.Model):
                 best_steps = participant.best_steps_karathon()
 
                 if best_steps:
-                    total_steps = max(best_steps, self.steps)
+                    total_steps = min(best_steps, self.steps)
 
                     text = "Пройди больше {} {}".format(
                         total_steps,
@@ -113,7 +113,7 @@ class Task(models.Model):
                     day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
                     steps = day_steps.steps
 
-                    total_steps = max(steps, self.steps)
+                    total_steps = min(steps, self.steps)
 
                     text = "Пройди больше {} {}".format(
                         total_steps,
@@ -184,7 +184,7 @@ class Task(models.Model):
 
                 if best_steps:
 
-                    total_steps = max(best_steps, self.steps)
+                    total_steps = min(best_steps, self.steps)
 
                     text = "Пройди больше {} {}".format(
                         total_steps,

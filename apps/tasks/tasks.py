@@ -23,7 +23,7 @@ def is_task_completed(report):
                 else:
                     steps = 0
 
-                total_steps = max(steps, task.steps)
+                total_steps = min(steps, task.steps)
 
                 if total_steps <= report.steps:
                     return True
@@ -36,7 +36,7 @@ def is_task_completed(report):
                 except ObjectDoesNotExist:
                     steps = 0
 
-                total_steps = max(steps, task.steps)
+                total_steps = min(steps, task.steps)
 
                 if total_steps <= report.steps:
                     return True
@@ -53,7 +53,7 @@ def is_task_completed(report):
                 else:
                     steps = 0
 
-                total_steps = max(steps, task.steps)
+                total_steps = min(steps, task.steps)
 
                 if total_steps < report.steps:
                     return True
@@ -65,7 +65,7 @@ def is_task_completed(report):
                 except ObjectDoesNotExist:
                     steps = 0
 
-                total_steps = max(steps, task.steps)
+                total_steps = min(steps, task.steps)
 
                 if total_steps < report.steps:
                     return True
@@ -89,7 +89,7 @@ def is_task_completed(report):
                     result_number = result_number * 10 + digit
                     copy_report_steps = int(copy_report_steps / 10)
 
-                if result_number == report.steps or task.steps < report.steps:
+                if result_number == report.steps and task.steps < report.steps:
                     return True
 
             case "steps_of_consecutive_digits":
@@ -135,7 +135,7 @@ def is_task_completed(report):
                 else:
                     steps = 0
 
-                total_steps = max(steps, task.steps)
+                total_steps = min(steps, task.steps)
 
                 if total_steps < report.steps:
                     return True
