@@ -190,12 +190,11 @@ class Task(models.Model):
                 best_steps = participant.best_steps_all()
 
                 if best_steps:
-
-                    total_steps = min(best_steps, self.steps)
-
-                    text = "Пройди больше {} {}".format(
-                        total_steps,
+                    text = "Побей свой личный рекорд ({} {}) или пройди больше {} {}".format(
+                        best_steps,
                         ending_numbers(best_steps, ['шага', 'шагов', 'шагов']),
+                        self.steps,
+                        ending_numbers(self.steps, ['шага', 'шагов', 'шагов']),
                     )
                 else:
                     text = "Пройди больше {} {}".format(
