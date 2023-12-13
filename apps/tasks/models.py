@@ -17,9 +17,9 @@ class Task(models.Model):
         ("improve_best", "Улучшить лучший результат или S шагов"),
         ("improve_result_day", "Улучшить результат дня D или S шагов"),
         ("add_steps_to_day", "Добавить S шагов ко дню D"),
-        ("palindrome", "Зеркалка"),
+        ("palindrome", "Зеркалка, но не менее S шагов"),
         ("steps_of_consecutive_digits", "Число шагов из последовательных цифр"),
-        ("steps_multiple_number", "Число шагов, кратное N"),
+        ("steps_multiple_number", "Число шагов, кратное N, но не менее S шагов"),
         ("add_steps_to_report_digit", "Добавить X-тысяч шагов, где X - цифра в отчёте дня D, занимающая позицию P"),
         ("best_personal_record", "Побить личный рекорд или S шагов"),
     )
@@ -49,7 +49,7 @@ class Task(models.Model):
     def text_task(self, participant):
         match self.type:
             case "walk_steps":
-                text = "Пройдите {} {}".format(
+                text = "Пройди {} {}".format(
                     self.steps,
                     ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                 )
@@ -60,14 +60,14 @@ class Task(models.Model):
                 if best_steps:
                     double_best = best_steps * 2
 
-                    text = "Пройдите {} {} или {} {}".format(
-                        double_best,
+                    total_steps = max(double_best, self.steps)
+
+                    text = "Пройди не менее {} {}".format(
+                        total_steps,
                         ending_numbers(double_best, ['шаг', 'шага', 'шагов']),
-                        self.steps,
-                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                     )
                 else:
-                    text = "Пройдите {} {}".format(
+                    text = "Пройди не менее {} {}".format(
                         self.steps,
                         ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                     )
@@ -78,15 +78,15 @@ class Task(models.Model):
                     day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
                     double_steps = day_steps.steps * 2
 
-                    text = "Пройдите {} {} или {} {}".format(
-                        double_steps,
+                    total_steps = max(double_steps, self.steps)
+
+                    text = "Пройди не менее {} {}".format(
+                        total_steps,
                         ending_numbers(double_steps, ['шаг', 'шага', 'шагов']),
-                        self.steps,
-                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                     )
 
                 except ObjectDoesNotExist:
-                    text = "Пройдите {} {}".format(
+                    text = "Пройди не менее {} {}".format(
                         self.steps,
                         ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                     )
@@ -95,14 +95,14 @@ class Task(models.Model):
                 best_steps = participant.best_steps_karathon()
 
                 if best_steps:
-                    text = "Пройдите больше {} {} или {} {}".format(
-                        best_steps,
+                    total_steps = max(best_steps, self.steps)
+
+                    text = "Пройди больше {} {}".format(
+                        total_steps,
                         ending_numbers(best_steps, ['шага', 'шагов', 'шагов']),
-                        self.steps,
-                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                     )
                 else:
-                    text = "Пройдите {} {}".format(
+                    text = "Пройди больше {} {}".format(
                         self.steps,
                         ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                     )
@@ -113,15 +113,15 @@ class Task(models.Model):
                     day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
                     steps = day_steps.steps
 
-                    text = "Пройдите больше {} {} или {} {}".format(
-                        steps,
+                    total_steps = max(steps, self.steps)
+
+                    text = "Пройди больше {} {}".format(
+                        total_steps,
                         ending_numbers(steps, ['шаг', 'шага', 'шагов']),
-                        self.steps,
-                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                     )
 
                 except ObjectDoesNotExist:
-                    text = "Пройдите {} {}".format(
+                    text = "Пройди больше {} {}".format(
                         self.steps,
                         ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                     )
@@ -134,19 +134,26 @@ class Task(models.Model):
                 except ObjectDoesNotExist:
                     steps = 0
 
-                text = "Пройдите {} {}".format(
+                text = "Пройди не менее {} {}".format(
                     steps + self.steps,
                     ending_numbers(steps + self.steps, ['шаг', 'шага', 'шагов'])
                 )
 
             case "palindrome":
-                text = "Пройдите зеркальное количество шагов (например 12321)"
+                text = "Пройди зеркальное количество шагов (например 12321), но не менее {} {}".format(
+                    self.steps,
+                    ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                )
 
             case "steps_of_consecutive_digits":
-                text = "Пройдите количество шагов, состоящее из последовательных цифр (например 12543)"
+                text = "Пройди количество шагов, состоящее из последовательных цифр (например 12543)"
 
             case "steps_multiple_number":
-                text = "Пройдите число шагов, кратное {}".format(self.multiple_number)
+                text = "Пройди число шагов, кратное {}, но не менее {} {}".format(
+                    self.multiple_number,
+                    self.steps,
+                    ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
+                )
 
             case "add_steps_to_report_digit":
                 from apps.steps.models import Step
@@ -167,7 +174,7 @@ class Task(models.Model):
 
                 steps = digit * 1000
 
-                text = "Пройдите {} {}".format(
+                text = "Пройди не менее {} {}".format(
                     steps,
                     ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                 )
@@ -176,14 +183,15 @@ class Task(models.Model):
                 best_steps = participant.best_steps_all()
 
                 if best_steps:
-                    text = "Пройдите больше {} {} или {} {}".format(
-                        best_steps,
+
+                    total_steps = max(best_steps, self.steps)
+
+                    text = "Пройди больше {} {}".format(
+                        total_steps,
                         ending_numbers(best_steps, ['шага', 'шагов', 'шагов']),
-                        self.steps,
-                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                     )
                 else:
-                    text = "Пройдите {} {}".format(
+                    text = "Пройди больше {} {}".format(
                         self.steps,
                         ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                     )

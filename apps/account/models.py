@@ -128,8 +128,7 @@ class Participant(User):
         best_steps = (
             Step.objects.filter(
                 participant=self,
-                date__gte=self.get_active_karathon().starts_at,
-                date__lte=self.get_active_karathon().finished_at,
+                karathon=self.get_active_karathon()
             )
             .order_by("-steps")
             .first()

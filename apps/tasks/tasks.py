@@ -8,7 +8,7 @@ def is_task_completed(report):
 
         match task.type:
             case "walk_steps":
-                if task.steps == report.steps:
+                if task.steps <= report.steps:
                     return True
 
             case "double_best":
@@ -16,15 +16,16 @@ def is_task_completed(report):
 
                 best_steps = Step.objects.filter(
                     participant=report.participant,
-                    date__gte=karathon.starts_at,
-                    date__lte=karathon.finished_at
+                    karathon=karathon
                 ).exclude(date=report.date).order_by('-steps').first()
                 if best_steps:
                     steps = best_steps.steps * 2
                 else:
                     steps = 0
 
-                if report.steps == steps or report.steps == task.steps:
+                total_steps = max(steps, task.steps)
+
+                if total_steps <= report.steps:
                     return True
 
             case "double_result_day":
@@ -35,7 +36,9 @@ def is_task_completed(report):
                 except ObjectDoesNotExist:
                     steps = 0
 
-                if report.steps == steps or report.steps == task.steps:
+                total_steps = max(steps, task.steps)
+
+                if total_steps <= report.steps:
                     return True
 
             case "improve_best":
@@ -43,15 +46,16 @@ def is_task_completed(report):
 
                 best_steps = Step.objects.filter(
                     participant=report.participant,
-                    date__gte=karathon.starts_at,
-                    date__lte=karathon.finished_at
+                    karathon=karathon
                 ).exclude(date=report.date).order_by('-steps').first()
                 if best_steps:
                     steps = best_steps.steps
                 else:
                     steps = 0
 
-                if report.steps > steps or report.steps == task.steps:
+                total_steps = max(steps, task.steps)
+
+                if total_steps < report.steps:
                     return True
 
             case "improve_result_day":
@@ -61,7 +65,9 @@ def is_task_completed(report):
                 except ObjectDoesNotExist:
                     steps = 0
 
-                if report.steps > steps or report.steps == task.steps:
+                total_steps = max(steps, task.steps)
+
+                if total_steps < report.steps:
                     return True
 
             case "add_steps_to_day":
@@ -71,7 +77,7 @@ def is_task_completed(report):
                 except ObjectDoesNotExist:
                     steps = 0
 
-                if report.steps == steps + task.steps:
+                if steps + task.steps <= report.steps:
                     return True
 
             case "palindrome":
@@ -83,7 +89,7 @@ def is_task_completed(report):
                     result_number = result_number * 10 + digit
                     copy_report_steps = int(copy_report_steps / 10)
 
-                if result_number == report.steps:
+                if result_number == report.steps or task.steps < report.steps:
                     return True
 
             case "steps_of_consecutive_digits":
@@ -96,7 +102,7 @@ def is_task_completed(report):
                 return True
 
             case "steps_multiple_number":
-                if report.steps % task.multiple_number == 0:
+                if report.steps % task.multiple_number == 0 and task.steps < report.steps:
                     return True
 
             case "add_steps_to_report_digit":
@@ -116,7 +122,7 @@ def is_task_completed(report):
 
                 steps = digit * 1000
 
-                if report.steps == steps:
+                if steps <= report.steps:
                     return True
 
             case "best_personal_record":
@@ -129,7 +135,9 @@ def is_task_completed(report):
                 else:
                     steps = 0
 
-                if report.steps > steps or report.steps == task.steps:
+                total_steps = max(steps, task.steps)
+
+                if total_steps < report.steps:
                     return True
 
     return False
