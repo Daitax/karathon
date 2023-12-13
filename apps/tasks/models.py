@@ -58,13 +58,11 @@ class Task(models.Model):
                 best_steps = participant.best_steps_karathon()
 
                 if best_steps:
-                    double_best = best_steps * 2
-
-                    total_steps = min(double_best, self.steps)
-
-                    text = "Пройди не менее {} {}".format(
-                        total_steps,
-                        ending_numbers(double_best, ['шаг', 'шага', 'шагов']),
+                    text = "Удвой свой лучший результат ({} {}) или пройди не менее {} {}".format(
+                        best_steps,
+                        ending_numbers(best_steps, ['шаг', 'шага', 'шагов']),
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов']),
                     )
                 else:
                     text = "Пройди не менее {} {}".format(
@@ -76,13 +74,13 @@ class Task(models.Model):
                 from apps.steps.models import Step
                 try:
                     day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
-                    double_steps = day_steps.steps * 2
 
-                    total_steps = min(double_steps, self.steps)
-
-                    text = "Пройди не менее {} {}".format(
-                        total_steps,
-                        ending_numbers(double_steps, ['шаг', 'шага', 'шагов']),
+                    text = "Удвой результат дня за {} ({} {}) или пройди не менее {} {}".format(
+                        format_date(self.task_date_report),
+                        day_steps.steps,
+                        ending_numbers(day_steps.steps, ['шаг', 'шага', 'шагов']),
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов']),
                     )
 
                 except ObjectDoesNotExist:
@@ -95,14 +93,14 @@ class Task(models.Model):
                 best_steps = participant.best_steps_karathon()
 
                 if best_steps:
-                    total_steps = min(best_steps, self.steps)
-
-                    text = "Пройди больше {} {}".format(
-                        total_steps,
-                        ending_numbers(best_steps, ['шага', 'шагов', 'шагов']),
+                    text = "Улучши свой лучший результат ({} {}) или пройди не менее {} {}".format(
+                        best_steps,
+                        ending_numbers(best_steps, ['шаг', 'шага', 'шагов']),
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов']),
                     )
                 else:
-                    text = "Пройди больше {} {}".format(
+                    text = "Пройди не менее {} {}".format(
                         self.steps,
                         ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                     )
@@ -113,15 +111,16 @@ class Task(models.Model):
                     day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
                     steps = day_steps.steps
 
-                    total_steps = min(steps, self.steps)
-
-                    text = "Пройди больше {} {}".format(
-                        total_steps,
-                        ending_numbers(steps, ['шаг', 'шага', 'шагов']),
+                    text = "Улучши результат дня за {} ({} {}) или пройди не менее {} {}".format(
+                        format_date(self.task_date_report),
+                        day_steps.steps,
+                        ending_numbers(day_steps.steps, ['шаг', 'шага', 'шагов']),
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов']),
                     )
 
                 except ObjectDoesNotExist:
-                    text = "Пройди больше {} {}".format(
+                    text = "Пройди не менее {} {}".format(
                         self.steps,
                         ending_numbers(self.steps, ['шаг', 'шага', 'шагов'])
                     )
@@ -131,13 +130,21 @@ class Task(models.Model):
                 try:
                     day_steps = Step.objects.get(participant=participant, date=self.task_date_report)
                     steps = day_steps.steps
+
+                    text = "Добавь {} {} к шагам {} ({} {})".format(
+                        self.steps,
+                        ending_numbers(self.steps, ['шаг', 'шага', 'шагов']),
+                        format_date(self.task_date_report),
+                        day_steps.steps,
+                        ending_numbers(steps + self.steps, ['шаг', 'шага', 'шагов']),
+                    )
                 except ObjectDoesNotExist:
                     steps = 0
 
-                text = "Пройди не менее {} {}".format(
-                    steps + self.steps,
-                    ending_numbers(steps + self.steps, ['шаг', 'шага', 'шагов'])
-                )
+                    text = "Пройди не менее {} {}".format(
+                        steps + self.steps,
+                        ending_numbers(steps + self.steps, ['шаг', 'шага', 'шагов'])
+                    )
 
             case "palindrome":
                 text = "Пройди зеркальное количество шагов (например 12321), но не менее {} {}".format(
