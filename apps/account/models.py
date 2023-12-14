@@ -91,7 +91,6 @@ class Participant(User):
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True
     )
-    karathon = models.ManyToManyField(Karathon, related_name="participant")
 
     class Meta:
         verbose_name = "Участник"
@@ -149,7 +148,8 @@ class Participant(User):
         try:
             participant_date = self.participant.get_participant_time()
             karathon = Karathon.objects.get(
-                participant=self,
+                participantskarathon__participant=self,
+                participantskarathon__is_active=True,
                 starts_at__lte=participant_date,
                 finished_at__gte=participant_date,
             )
@@ -269,6 +269,35 @@ class EmailCode(models.Model):
         return response
 
 
+class ParticipantsKarathon(models.Model):
+    karathon = models.ForeignKey(
+        Karathon,
+        verbose_name="Карафон",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+    )
+    participant = models.ForeignKey(
+        Participant,
+        verbose_name="Участник",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+    )
+    is_active = models.BooleanField("Участник участвует в карафоне", default=True)
+
+    class Meta:
+        verbose_name = 'Участник карафонов'
+        verbose_name_plural = 'Участники карафонов'
+
+    def __str__(self):
+        return 'Участник ' + str(self.karathon.number) + '-го карафона ' + self.participant.__str__()
+
+    @classmethod
+    def do_karathon_exclusion(cls, participant, karathon):
+        cls.objects.filter(participant=participant, karathon=karathon).update(is_active=False)
+
+
 class Winner(models.Model):
     karathon = models.ForeignKey(
         Karathon,
@@ -300,7 +329,12 @@ class Winner(models.Model):
     @classmethod
     def set_individual_karathon_winner(cls, karathon):
         from apps.steps.models import Step
-        winner_steps = Step.objects.filter(karathon=karathon).values('participant').annotate(
+        winner_steps = Step.objects.filter(
+            karathon=karathon,
+            karathon__participantskarathon__is_active=True
+        ).values(
+            'participant'
+        ).annotate(
             result=(Sum('steps') + Sum('bonus'))
         ).order_by('-result').first()
 
@@ -349,7 +383,7 @@ class WinnerQuestionnaire(models.Model):
     )
 
     participant = models.ForeignKey(
-         Participant, verbose_name="Участник", on_delete=models.CASCADE
+        Participant, verbose_name="Участник", on_delete=models.CASCADE
     )
     postcode = models.CharField("Почтовый индекс", max_length=10, null=True, blank=True, )
     country = models.CharField("Страна", max_length=100, null=True, blank=True, )

@@ -21,8 +21,13 @@ from apps.steps.models import Step
 def index(request):
     try:
         presentation_karathon = Karathon.objects.get(is_presentation=True)
+        # karathon_is_started = True if request.user.participant.get_participant_time().date() > \
+        #                               presentation_karathon.starts_at else False
 
-        context = {"presentation_karathon": presentation_karathon}
+        context = {
+            "presentation_karathon": presentation_karathon,
+            # "karathon_is_started": karathon_is_started
+        }
 
     except ObjectDoesNotExist:
         context = {}
@@ -142,51 +147,6 @@ class PastKarathonsView(TemplateView):
         }
         return context
 
-# class ParticipateView(LoginRequiredMixin, TemplateView, CreateView):
-#     template_name = "core/participate.html"
-#     login_url = "/"
-
-#     def dispatch(self, request, *args, **kwargs):
-#         if request.method == "POST":
-#             karathon_id = self.request.POST["karathon"]
-#             request.user.participant.karathon.add(karathon_id)
-
-#     # def create_participant_karathon(self):
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         participant_date = self.request.user.participant.get_participant_time()
-#         karathon_list = Karathon.objects.filter(
-#             starts_at__gte=participant_date
-#         )
-#         participant_karathon_list = karathon_list.filter(
-#             participant=self.request.user.participant
-#         )
-#         free_karathon_list = karathon_list.exclude(
-#             participant=self.request.user.participant
-#         )
-#         intersecting_carathons_ids = []
-#         for participant_karathon_item in participant_karathon_list:
-#             for free_karathon_item in free_karathon_list:
-#                 latest_start = max(
-#                     free_karathon_item.starts_at,
-#                     participant_karathon_item.starts_at,
-#                 )
-#                 earliest_end = min(
-#                     free_karathon_item.finished_at,
-#                     participant_karathon_item.finished_at,
-#                 )
-#                 if latest_start <= earliest_end:
-#                     intersecting_carathons_ids.append(free_karathon_item.id)
-#         available_karathon_list = free_karathon_list.exclude(
-#             id__in=intersecting_carathons_ids
-#         )
-#         context = {
-#             "participant_karathon_list": participant_karathon_list,
-#             "available_karathon_list": available_karathon_list,
-#         }
-#         return context
-
 
 def create_payment_link(data, participant):
     karathon_id = data['karathon_id']
@@ -267,10 +227,10 @@ def participate(request):
     karathon_list = Karathon.objects.filter(starts_at__gte=participant_date)
 
     participant_karathon_list = karathon_list.filter(
-        participant=request.user.participant
+        participantskarathon__participant=request.user.participant
     )
     free_karathon_list = karathon_list.exclude(
-        participant=request.user.participant
+        participantskarathon__participant=request.user.participant
     )
     intersecting_carathons_ids = []
 

@@ -1,143 +1,75 @@
+import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
 
-def is_task_completed(report):
-    task = report.participant.today_task()
+from apps.core.utils import send_email_message, format_date
+from apps.notifications.models import Notification
+from project.celery import app
 
-    if task:
-        from apps.steps.models import Step
 
-        match task.type:
-            case "walk_steps":
-                if task.steps <= report.steps:
-                    return True
+@app.task
+def uncompleted_task():
+    from apps.account.models import Participant
+    from apps.account.models import ParticipantsKarathon
+    from apps.steps.models import Step
+    from apps.tasks.models import Task
+    participants = Participant.objects.all()
 
-            case "double_best":
-                karathon = report.participant.get_active_karathon()
-
-                best_steps = Step.objects.filter(
-                    participant=report.participant,
-                    karathon=karathon
-                ).exclude(date=report.date).order_by('-steps').first()
-                if best_steps:
-                    steps = best_steps.steps * 2
-                else:
-                    steps = 0
-
-                total_steps = min(steps, task.steps)
-
-                if total_steps <= report.steps:
-                    return True
-
-            case "double_result_day":
+    for participant in participants:
+        active_karathon = participant.get_active_karathon()
+        if active_karathon:
+            date_time = participant.get_participant_time()
+            if date_time.hour == 23:
                 try:
-                    day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
+                    report = Step.objects.get(
+                        date=date_time.date(),
+                        participant=participant,
+                    )
 
-                    steps = day_steps.steps * 2
+                    if not Task.is_task_completed(report):
+                        # Тут отправляем оповещение о необходимости выполнить задание
+                        Notification.notification_from_template(participant, 'warning_task_not_completed')
+                        send_email_message(
+                            'Напоминание о задании за ' + format_date(report.date),
+                            'Твоё задание на день не выполнено. Последний час для выполнения задания!',
+                            participant.email
+                        )
+
+
                 except ObjectDoesNotExist:
-                    steps = 0
+                    # Тут отправляем оповещение о необходимости сдать отчёт и выполнить задание
+                    Notification.notification_from_template(participant, 'warning_report_not_send')
+                    send_email_message(
+                        'Напоминание о задании за ' + format_date(report.date),
+                        'Ты сегодня ещё не отправил отчёт с выполненным заданием. Поторопись! Остался час!',
+                        participant.email
+                    )
 
-                total_steps = min(steps, task.steps)
-
-                if total_steps <= report.steps:
-                    return True
-
-            case "improve_best":
-                karathon = report.participant.get_active_karathon()
-
-                best_steps = Step.objects.filter(
-                    participant=report.participant,
-                    karathon=karathon
-                ).exclude(date=report.date).order_by('-steps').first()
-                if best_steps:
-                    steps = best_steps.steps
-                else:
-                    steps = 0
-
-                total_steps = min(steps, task.steps)
-
-                if total_steps < report.steps:
-                    return True
-
-            case "improve_result_day":
+            if date_time.hour == 0:
                 try:
-                    day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
-                    steps = day_steps.steps
+                    report = Step.objects.get(
+                        date=date_time.date() - datetime.timedelta(days=1),
+                        participant=participant,
+                    )
+
+                    if not Task.is_task_completed(report):
+                        # Тут удаляем участника из карафона
+                        Notification.notification_from_template(participant, 'task_not_completed_del')
+                        send_email_message(
+                            'Исключение из карафона',
+                            'Упс, ты молодец, но для тебя задание оказалось слишком сложным. На этом твое участие'
+                            ' в этом карафоне завершено, но я жду тебя в следующем!',
+                            participant.email
+                        )
+                        ParticipantsKarathon.do_karathon_exclusion(participant, karathon=active_karathon)
+
                 except ObjectDoesNotExist:
-                    steps = 0
-
-                total_steps = min(steps, task.steps)
-
-                if total_steps < report.steps:
-                    return True
-
-            case "add_steps_to_day":
-                try:
-                    day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
-                    steps = day_steps.steps
-                except ObjectDoesNotExist:
-                    steps = 0
-
-                if steps + task.steps <= report.steps:
-                    return True
-
-            case "palindrome":
-                copy_report_steps = report.steps
-                result_number = 0
-
-                while copy_report_steps != 0:
-                    digit = copy_report_steps % 10
-                    result_number = result_number * 10 + digit
-                    copy_report_steps = int(copy_report_steps / 10)
-
-                if result_number == report.steps and task.steps < report.steps:
-                    return True
-
-            case "steps_of_consecutive_digits":
-                digit_list = sorted([int(a) for a in str(report.steps)])
-                for i in range(len(digit_list) - 1):
-                    if digit_list[i] + 1 == digit_list[i + 1]:
-                        pass
-                    else:
-                        return False
-                return True
-
-            case "steps_multiple_number":
-                if report.steps % task.multiple_number == 0 and task.steps < report.steps:
-                    return True
-
-            case "add_steps_to_report_digit":
-                try:
-                    day_steps = Step.objects.get(participant=report.participant, date=task.task_date_report)
-                    digit_list = [int(a) for a in str(day_steps.steps)]
-
-                    if task.position > len(digit_list):
-                        position = task.position % len(digit_list)
-                    else:
-                        position = task.position
-
-                    digit = int(digit_list[position - 1])
-                    digit = 5 if digit == 0 else digit
-                except ObjectDoesNotExist:
-                    digit = 5
-
-                steps = digit * 1000
-
-                if steps <= report.steps:
-                    return True
-
-            case "best_personal_record":
-                best_steps = Step.objects.filter(
-                    participant=report.participant
-                ).exclude(date=report.date).order_by('-steps').first()
-
-                if best_steps:
-                    steps = best_steps.steps
-                else:
-                    steps = 0
-
-                total_steps = min(steps, task.steps)
-
-                if total_steps < report.steps:
-                    return True
-
-    return False
+                    # Тут удаляем участника из карафона
+                    Notification.notification_from_template(participant, 'report_not_send_del')
+                    send_email_message(
+                        'Исключение из карафона',
+                        'Приветик! Я везде искала, но так и не смогла найти твой отчет за вчерашний день.'
+                        ' На этом твое участие в этом карафоне завершено, но я жду тебя в следующем!',
+                        participant.email
+                    )
+                    ParticipantsKarathon.do_karathon_exclusion(participant, karathon=active_karathon)

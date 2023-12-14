@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 from apps.account.models import Participant
 from apps.core.models import Karathon
 from apps.core.utils import checking, get_report_image_path
-from apps.steps.signals import check_task_complete
+# from apps.steps.signals import check_task_complete
 
 
 class Step(models.Model):
@@ -28,7 +28,7 @@ class Step(models.Model):
         related_name="steps",
         on_delete=models.CASCADE,
     )
-    is_completed = models.BooleanField("Задание дня выполнено?", default=False)
+    is_completed = models.BooleanField("Задание дня выполнено", default=False)
     bonus = models.PositiveIntegerField(
         "Дополнительный бонус", blank=True, null=True
     )
@@ -98,5 +98,5 @@ class Step(models.Model):
     photo_preview_in_list.short_description = "Фотоотчёт"
 
 
-signals.post_save.connect(check_task_complete, sender=Step)
+# signals.post_save.connect(check_task_complete, sender=Step)
 # signals.post_save.connect(check_screenshot, sender=Step)

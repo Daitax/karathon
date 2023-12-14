@@ -1,10 +1,11 @@
 <div class="close" popup-element="close"></div>
-{% if window == 'form' %}
-  <h4>Сдать отчёт</h4>
+{% if window == 'form-change' %}
+  <h4>Изменить отчёт</h4>
   <form enctype="multipart/form-data" report-form-elem="form">
     <input type="hidden" name="window" value="{{ window }}" report-form-elem="window">
+    <div class="text">Шаги, которые ты сдал: {{ sent_report_steps }}</div>
     <label>
-      <div class="text">Сколько прошел сегодня?</div>
+      <div class="text">Сколько шагов теперь?</div>
       <input class="input" type="text" name="steps" min="1">
       <div class="text">{{ errors.steps.as_text }}</div>
     </label>
@@ -16,14 +17,14 @@
     <div class="text">{{ errors.report }}</div>
   </form>
 {% endif %}
-{% if window == 'task_completed' %}
+{% if window == 'Task completed' %}
   <h4>Задание выполнено</h4>
   <div reload="{{ reload_overlay }}">
     Отлично!<br>
     Задание выполнено!
   </div>
 {% endif %}
-{% if window == 'task_not_completed' %}
+{% if window == 'Task not completed' %}
   <h4>Задание не выполнено</h4>
   <div reload="{{ reload_overlay }}">
     К сожалению, задание не выполнено

@@ -6,47 +6,57 @@
 {% url 'account:account-logout' as logout_url %}
 
 <div class="participants_account_menu_wrapper">
-    <div class="participants_account_menu_name">{{ user.participant.first_name }}<br>{{ user.participant.last_name }}</div>
-    {% if user.participant.instagram %}
+  <div class="participants_account_menu_name">{{ user.participant.first_name }}<br>{{ user.participant.last_name }}
+  </div>
+  {% if user.participant.instagram %}
     <div class="participants_account_menu_inst">{{ user.participant.instagram|truncatechars:25 }}</div>
+  {% endif %}
+  <nav class="participants_account_menu_info">
+    <li>
+      <a class={% if view_name  == 'account:account-index' %}"active" href="javascript:void(0)"
+         style="cursor: default" {% else %}"" href="{{ account_url }}#personal_account" {% endif %}>
+      Персональные данные
+      </a>
+    </li>
+    <li unread-mes="{{ not_viewed_notifications_amount }}">
+      <a class={% if view_name == 'account:account-messages' %}"active" href="javascript:void(0)"
+         style="cursor: default" {% else %}"" href="{{ messages_url }}#messages" {% endif %}>
+      Сообщения
+      </a>
+    </li>
+    <li>
+      <a class={% if view_name  == 'account:account-results' %}"active" href="javascript:void(0)"
+         style="cursor: default" {% else %}"" href="{{ results_url }}#results" {% endif %}>
+      Мои результаты
+      </a>
+    </li>
+    <li>
+      <a class={% if view_name  == 'account:teams:team-index' %}"active" href="javascript:void(0)"
+         style="cursor: default" {% else %}"" href="{{ team_url }}#team" {% endif %}>
+      Моя команда
+      </a>
+    </li>
+    {% comment %} <li><a href="javascript:void(0)">Онлайн</a></li> {% endcomment %}
+    {% comment %} {% if active_karathon_participant %} {% endcomment %}
+    {% if user.participant.get_active_karathon is not null %}
+      {% if is_today_report %}
+        {#                <li class="sent">Отчёт сдан</li>#}
+        <li localtime="{{ localtime|date:"H i s" }}" countdown="" menu-elem="participant_localtime">
+          <a href="javascript:void(0)" button-action="open-change-report-form">
+            Изменить отчёт
+          </a>
+        </li>
+      {% else %}
+        <li localtime="{{ localtime|date:"H i s" }}" countdown="" menu-elem="participant_localtime">
+          <a href="javascript:void(0)" button-action="open-report-form">
+            Сдать отчёт
+          </a>
+        </li>
+      {% endif %}
+    {% else %}
+      <li><a href="{% url 'core:participate' %}">Принять участие</a></li>
     {% endif %}
-    <nav class="participants_account_menu_info">
-        <li>
-            <a class={% if view_name  == 'account:account-index' %}"active" href="javascript:void(0)" style="cursor: default" {% else %}"" href="{{ account_url }}#personal_account" {% endif %}>
-                Персональные данные
-            </a>
-        </li>
-        <li unread-mes="{{not_viewed_notifications_amount}}">
-            <a class={% if view_name == 'account:account-messages' %}"active" href="javascript:void(0)" style="cursor: default" {% else %}"" href="{{ messages_url }}#messages" {% endif %}>
-                Сообщения
-            </a>
-        </li>
-        <li>
-            <a class={% if view_name  == 'account:account-results' %}"active" href="javascript:void(0)" style="cursor: default" {% else %}"" href="{{ results_url }}#results" {% endif %}>
-                Мои результаты
-            </a>
-        </li>
-        <li>
-            <a class={% if view_name  == 'account:teams:team-index' %}"active" href="javascript:void(0)" style="cursor: default" {% else %}"" href="{{ team_url }}#team" {% endif %}>
-                Моя команда
-            </a>
-        </li>
-        {% comment %} <li><a href="javascript:void(0)">Онлайн</a></li> {% endcomment %}
-        {% comment %} {% if active_karathon_participant %} {% endcomment %}
-          {% if user.participant.get_active_karathon is not null %}
-            {% if is_today_report %}
-                <li class="sent">Отчёт сдан</li>
-            {% else %}
-              <li localtime="{{ localtime|date:"H i s" }}" countdown="" menu-elem="participant_localtime">
-                  <a href="javascript:void(0)" button-action="open-report-form">
-                      Сдать отчёт
-                  </a>
-              </li>
-            {% endif %}
-          {% else %}
-            <li><a href="{% url 'core:participate' %}">Принять участие</a></li>
-          {% endif %}
-        {% comment %} {% endif %} {% endcomment %}
-        <li><a href="{{ logout_url }}" menu-elem="logout">Выйти</a></li>
-    </nav>
+    {% comment %} {% endif %} {% endcomment %}
+    <li><a href="{{ logout_url }}" menu-elem="logout">Выйти</a></li>
+  </nav>
 </div>

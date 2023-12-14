@@ -11,9 +11,9 @@ from apps.core.utils import print_month_ru
 
 class NotificationTemplate(models.Model):
     key = models.CharField("Ключ", max_length=30)
-    name = models.CharField("Название", max_length=40)
-    header = models.CharField("Заголовок", max_length=100)
-    text = models.CharField("Текст", max_length=200)
+    name = models.CharField("Название", max_length=60)
+    header = models.CharField("Заголовок", max_length=150)
+    text = models.CharField("Текст", max_length=300)
 
     class Meta:
         verbose_name = "Шаблон уведомления"
@@ -28,8 +28,8 @@ class Notification(models.Model):
     template = models.ForeignKey(
         NotificationTemplate, verbose_name="Шаблон", on_delete=models.CASCADE
     )
-    header = models.CharField("Вставка в заголовок", max_length=100)
-    text = models.CharField("Текст", max_length=200)
+    header = models.CharField("Вставка в заголовок", max_length=150)
+    text = models.CharField("Текст", max_length=300)
     date = models.DateTimeField("Дата и время", auto_now_add=True)
     is_viewed = models.BooleanField("Прочитано", default=False)
 
@@ -143,23 +143,6 @@ class Notification(models.Model):
             text=text,
         )
 
-    @staticmethod
-    def success_message(participant):
-        template = get_object_or_404(
-            NotificationTemplate, key="success_message"
-        )
-        header = template.header
-        name = (
-            participant.first_name if participant.first_name else "Карафонец"
-        )
-        text = template.text.format(name=name)
-        Notification.objects.create(
-            participant=participant,
-            template=template,
-            header=header,
-            text=text,
-        )
-
     def not_viewed_amount(self):
         not_viewed_notification_list = Notification.objects.select_related(
             "participant"
@@ -197,6 +180,7 @@ class Notification(models.Model):
         text = template.text.format(karathon_number=karathon.number)
 
         create_notification_list = list()
+        # TODO Сменить, т.к. участники карафона в другой таблице
         karathon_participants = Participant.objects.filter(karathon=karathon, id__in=winners_id)
 
         for participant in karathon_participants:

@@ -13,12 +13,16 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
+    'notification_about_uncompleted_task': {
+        'task': 'apps.tasks.tasks.uncompleted_task',
+        'schedule': crontab(hour='*', minute=0),
+    },
     'send_tasks': {
         'task': 'apps.notifications.tasks.send_task_for_participant',
-        'schedule': crontab(hour='*', minute=1),
+        'schedule': crontab(hour='*', minute=10),
     },
     'check_ending_karathons': {
         'task': 'apps.core.tasks.ended_karathon',
-        'schedule': crontab(hour='*', minute=1),
+        'schedule': crontab(hour='*', minute=10),
     }
 }
