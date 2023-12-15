@@ -52,12 +52,13 @@ class Step(models.Model):
 
     @classmethod
     def get_champs_list(cls):
-        return cls.objects.filter(karathon__finished_at__lt=datetime.date.today()).values(
+        return cls.objects.filter(steps__gte=100000).values(
+            'steps',
             'participant__first_name',
             'participant__last_name',
             'participant__photo',
             'karathon__number',
-        ).annotate(karathon_steps=Sum('steps')).filter(karathon_steps__gte=100000).order_by('-karathon_steps')
+        ).order_by('-steps')
 
     def photo_preview(self):
         if self.photo:

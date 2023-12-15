@@ -57,7 +57,7 @@ class AuthView(TemplateView):
         form = AuthEmailForm(request.POST)
 
         if form.is_valid():
-            email = form.cleaned_data["email"]
+            email = form.cleaned_data["email"].lower()
 
             code = randint(1000, 9990)
             sending_code = EmailCode.send_code(email, code)
@@ -117,7 +117,7 @@ class AuthView(TemplateView):
         form = AuthCodeForm(request.POST)
 
         if form.is_valid():
-            email = form.cleaned_data["email"]
+            email = form.cleaned_data["email"].lower()
             code = form.cleaned_data["code"]
 
             is_code_correct = EmailCode.check_code(request, code)
@@ -135,8 +135,8 @@ class AuthView(TemplateView):
                     return JsonResponse(out)
                 except ObjectDoesNotExist:
                     new_participant = Participant.objects.create_user(
-                        username=email,
-                        email=email,
+                        username=email.lower(),
+                        email=email.lower(),
                     )
 
                     login(request, new_participant)

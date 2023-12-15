@@ -19,8 +19,6 @@ class KarathonAdmin(admin.ModelAdmin):
 class ParticipantsKarathonAdmin(admin.ModelAdmin):
     list_display = ('participant', 'karathon', 'is_active')
 
-    readonly_fields = ['participant', 'karathon',]
-
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(CharityCategory, CharityCategoryAdmin)
 admin.site.register(Karathon, KarathonAdmin)
