@@ -209,7 +209,7 @@ class Task(models.Model):
 
     @staticmethod
     def is_task_completed(report):
-        task = report.participant.today_task()
+        task = report.participant.task_of_day(report.date)
 
         if task:
             from apps.steps.models import Step

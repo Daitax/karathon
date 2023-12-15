@@ -40,7 +40,7 @@ def uncompleted_task():
                     # Тут отправляем оповещение о необходимости сдать отчёт и выполнить задание
                     Notification.notification_from_template(participant, 'warning_report_not_send')
                     send_email_message(
-                        'Напоминание о задании за ' + format_date(report.date),
+                        'Напоминание о задании',
                         'Ты сегодня ещё не отправил отчёт с выполненным заданием. Поторопись! Остался час!',
                         participant.email
                     )

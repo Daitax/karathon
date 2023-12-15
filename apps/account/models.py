@@ -184,6 +184,27 @@ class Participant(User):
         except ObjectDoesNotExist:
             return False
 
+    def task_of_day(self, date):
+        from apps.tasks.models import Task
+
+        karathon = Karathon.objects.get(
+            participantskarathon__participant=self,
+            participantskarathon__is_active=True,
+            starts_at__lte=date,
+            finished_at__gte=date,
+        )
+
+        if karathon:
+            task_of_day = Task.objects.get(
+                karathon=karathon,
+                category=self.category,
+                date=date
+            )
+
+            return task_of_day
+
+        return None
+
     def today_task(self):
         karathon = self.get_active_karathon()
         if karathon:
