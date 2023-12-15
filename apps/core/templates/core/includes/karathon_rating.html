@@ -17,7 +17,8 @@
              alt="{{ participant.participant__last_name }} {{ participant.participant__first_name }}">
       </div>
       <div class="information">
-        <p>{{ participant.participant__last_name }} {{ participant.participant__first_name }}</p>
+        <div class="name">{{ participant.participant__last_name }} {{ participant.participant__first_name }}</div>
+        <div class="category">{{ participant.participant__category__name }}</div>
       </div>
       <div class="steps">
         {{ participant.karathon_steps|dividing_number_digits }}
@@ -40,7 +41,8 @@
           {{ forloop.counter }} место
         </div>
         <div class="information">
-          <p>{{ participant.participant__last_name }} {{ participant.participant__first_name }}</p>
+          <div class="name">{{ participant.participant__last_name }} {{ participant.participant__first_name }}</div>
+          <div class="category">{{ participant.participant__category__name }}</div>
         </div>
         <div class="steps">
           {{ participant.karathon_steps }}

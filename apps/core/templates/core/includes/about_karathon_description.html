@@ -16,9 +16,11 @@
         <div class="karathon_rating_wrapper" window-elem="rating_wrapper">
           {% include 'core/includes/karathon_rating.html' with karathon_rating=karathon_rating %}
         </div>
-        <div class="messages_items_next" window-elem="next_items_ratings">
-          загрузить ещё
-        </div>
+        {% if karathon_rating|length > 5 %}
+          <div class="messages_items_next" window-elem="next_items_ratings">
+            загрузить ещё
+          </div>
+        {% endif %}
       {% else %}
         <h2 window-elem="about_karathon_wrapper"><p>добро пожаловать</p>
         <p>в {{ karathon.number }}-й карафон</p></h2>

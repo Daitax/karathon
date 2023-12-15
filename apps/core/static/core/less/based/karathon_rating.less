@@ -23,6 +23,7 @@
     align-items: center;
 
     .place {
+        flex: 0 0 7.52rem;
         min-width: 7.52rem;
         font-size: 1.38rem;
         font-weight: 700;
@@ -30,6 +31,7 @@
     }
 
     .photo {
+        flex: 0 0 5.17rem;
         width: 5.17rem;
         height: 5.17rem;
 
@@ -43,12 +45,19 @@
     }
 
     .information {
+        flex: 1 1 auto;
         margin-left: 2.1rem;
 
-        p {
+        .name {
             font-size: .86rem;
             font-weight: 700;
             min-width: 16rem;
+            text-transform: uppercase;
+        }
+
+        .category {
+            font-size: .55rem;
+            font-weight: 400;
             text-transform: uppercase;
         }
 
@@ -61,6 +70,7 @@
     }
 
     .steps {
+        flex: 0 0 15%;
         font-size: .76rem;
     }
 }

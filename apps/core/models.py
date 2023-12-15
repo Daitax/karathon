@@ -114,6 +114,7 @@ class Karathon(models.Model):
             'participant__first_name',
             'participant__last_name',
             'participant__photo',
+            'participant__category__name',
             'karathon__number',
         ).annotate(karathon_steps=(Coalesce(Sum('steps'), 0) + Coalesce(Sum('bonus'), 0))).order_by('-karathon_steps')
 
