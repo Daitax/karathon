@@ -57,7 +57,7 @@ class Step(models.Model):
             'participant__last_name',
             'participant__photo',
             'karathon__number',
-        ).annotate(karathon_steps=Sum('steps')).order_by('-karathon_steps')
+        ).annotate(karathon_steps=Sum('steps')).filter(karathon_steps__gte=100000).order_by('-karathon_steps')
 
     def photo_preview(self):
         if self.photo:

@@ -108,7 +108,9 @@ class Karathon(models.Model):
     def rating_list(cls, karathon_number):
         karathon = cls.objects.get(number=karathon_number)
         from apps.steps.models import Step
-        karathon_rating_list = Step.objects.filter(karathon=karathon).values(
+        karathon_rating_list = Step.objects.filter(
+            karathon=karathon,
+        ).exclude(participant__participantskarathon__is_active=False).values(
             'participant__first_name',
             'participant__last_name',
             'participant__photo',
