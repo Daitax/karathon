@@ -5,7 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.shortcuts import get_object_or_404
 
-from apps.account.models import Participant, Winner
+from apps.account.models import Participant, Winner, ParticipantsKarathon
 from apps.core.utils import print_month_ru
 
 
@@ -69,7 +69,12 @@ class Notification(models.Model):
         text = template.text.format(winner=winner_participant_text)
 
         create_notification_list = list()
-        karathon_participants = Participant.objects.filter(karathon=karathon).exclude(id=winner_participant_id)
+        karathon_participants = Participant.objects.filter(
+            participantskarathon__karathon=karathon,
+            participantskarathon__is_active=True
+        ).exclude(
+            id=winner_participant_id
+        )
 
         for participant in karathon_participants:
             instance = cls(
