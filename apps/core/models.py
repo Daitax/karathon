@@ -1,6 +1,8 @@
 import datetime
 
 from django.db import models, transaction
+from django.db.models import Sum
+from django.db.models.functions import Coalesce
 from django.urls import reverse
 
 from apps.core.utils import get_choice_value
@@ -101,3 +103,16 @@ class Karathon(models.Model):
             return True
 
         return False
+
+    @classmethod
+    def rating_list(cls, karathon_number):
+        karathon = cls.objects.get(number=karathon_number)
+        from apps.steps.models import Step
+        karathon_rating_list = Step.objects.filter(karathon=karathon).values(
+            'participant__first_name',
+            'participant__last_name',
+            'participant__photo',
+            'karathon__number',
+        ).annotate(karathon_steps=(Coalesce(Sum('steps'), 0) + Coalesce(Sum('bonus'), 0))).order_by('-karathon_steps')
+
+        return karathon_rating_list

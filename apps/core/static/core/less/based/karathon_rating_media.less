@@ -1,0 +1,38 @@
+@media (max-width: 576px) {
+    .karathon_rating_wrapper {
+        .desktop {
+            display: none;
+        }
+
+        .mobile {
+            display: block;
+
+            .mobile_item_info {
+                margin-left: 1.5rem;
+
+                .information {
+                    margin-left: auto;
+
+                    p {
+                        min-width: auto;
+
+                        &:nth-child(2) {
+                            color: @pink;
+                            font-size: .55rem;
+                            font-weight: 700;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+
+                .steps {
+                    margin-top: .5rem;
+                }
+            }
+        }
+    }
+
+    .rating_item {
+        flex-direction: row;
+    }
+}

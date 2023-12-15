@@ -1,0 +1,52 @@
+{% load static %}
+{% load ru_plural %}
+{% load dividing_number_digits %}
+
+{% for participant in karathon_rating %}
+  <div class="desktop">
+    <div class="rating_item" window-elem="rating_item">
+      <div class="place">
+        {{ forloop.counter }} место
+      </div>
+      <div class="photo">
+        <img src="{% if participant.participant__photo %}
+                        media/{{ participant.participant__photo }}
+                      {% else %}
+                        {% static 'core/img/no_avatar.png' %}
+                      {% endif %}"
+             alt="{{ participant.participant__last_name }} {{ participant.participant__first_name }}">
+      </div>
+      <div class="information">
+        <p>{{ participant.participant__last_name }} {{ participant.participant__first_name }}</p>
+      </div>
+      <div class="steps">
+        {{ participant.karathon_steps|dividing_number_digits }}
+        {{ participant.karathon_steps|ru_plural:"шаг, шага, шагов" }}
+      </div>
+    </div>
+  </div>
+  <div class="mobile">
+    <div class="rating_item" window-elem="rating_item">
+      <div class="photo">
+        <img src="{% if participant.participant__photo %}
+                        media/{{ participant.participant__photo }}
+                      {% else %}
+                        {% static 'core/img/no_avatar.png' %}
+                      {% endif %}"
+             alt="{{ participant.participant_last_name }} {{ participant.participant_first_name }}">
+      </div>
+      <div class="mobile_item_info">
+        <div class="place">
+          {{ forloop.counter }} место
+        </div>
+        <div class="information">
+          <p>{{ participant.participant_last_name }} {{ participant.participant_first_name }}</p>
+        </div>
+        <div class="steps">
+          {{ participant.karathon_steps }}
+          {{ participant.karathon_steps|ru_plural:"шаг, шага, шагов" }}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}

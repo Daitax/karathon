@@ -11,7 +11,6 @@ from django.shortcuts import get_list_or_404, render
 from django.template.loader import render_to_string
 from django.views.generic.base import TemplateView
 
-from apps.account.models import Participant
 from apps.core.models import Karathon
 
 from apps.core.yookassa import create_payment, confirmation_payment
@@ -84,53 +83,58 @@ class ChampionsView(TemplateView):
         return render(request, "core/champions.html", context)
 
 
-def add_champs_list(request):
-    data = json.loads(request.body)
-    champs_showed = data.pop("amount_champs")
-    more_champs = get_list_or_404(Participant)
-    more_champs_list = []
-    i = 0
-    for ch in more_champs:
-        more_champs_list.append([ch, i + 1])
-        i += 1
-    champs_to_show = (
-        champs_showed
-        + settings.CHAMPS_ON_FIRST_SCREEN
-        + settings.CHAMPS_ADDITION
-    )
-    champs_block = render_to_string(
-        "core/includes/champs_page_block.html",
-        {
-            "champs_rest": more_champs_list[
-                settings.CHAMPS_ON_FIRST_SCREEN : champs_to_show
-            ]
-        },
-        request,
-    )
-    next_champs_exist = True
-    if champs_to_show >= len(more_champs):
-        next_champs_exist = False
-    out = {
-        "status": "ok",
-        "champs_showed": champs_showed,
-        "champs_block": champs_block,
-        "next_champs_exist": next_champs_exist,
-    }
-    return JsonResponse(out)
-
-
 class KarathonView(TemplateView):
-    template_name = "core/karathon.html"
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == "GET_RATING_LIST":
+            return self.add_rating_list(request, *args, **kwargs)
+        if request.method == "GET":
+            return self.karathon(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def add_rating_list(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        karathon_number = kwargs["karathon_number"]
+        rating_list_showed = data.pop("amount_list")
+        rating_list = Karathon.rating_list(karathon_number)
+        next_rating_items_exist = True
+
+        rating_list_to_show = rating_list_showed + 5
+
+        rating_list_block = render_to_string(
+            "core/includes/karathon_rating.html",
+            {
+                "karathon_rating": rating_list[:rating_list_to_show]
+            },
+            request,
+        )
+
+        if rating_list_to_show >= len(rating_list):
+            next_rating_items_exist = False
+
+        out = {
+            "status": "ok",
+            "rating_list_showed": rating_list_showed,
+            "rating_list_block": rating_list_block,
+            "next_rating_items_exist": next_rating_items_exist
+        }
+
+        return JsonResponse(out)
+
+
+    def karathon(self, request, *args, **kwargs):
         karathon_number = kwargs["karathon_number"]
         karathon = Karathon.objects.get(number=karathon_number)
+
+        karathon_is_started = True if datetime.datetime.now().date() > karathon.starts_at \
+            else False
+
         context = {
             "karathon": karathon,
-            "request_url": self.request.path
+            "karathon_is_started": karathon_is_started,
+            "karathon_rating": Karathon.rating_list(karathon_number)[:5],
+            "request_url": self.request.path,
         }
-        return context
+
+        return render(request, "core/karathon.html", context)
 
 
 class PastKarathonsView(TemplateView):

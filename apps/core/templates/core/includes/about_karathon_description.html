@@ -1,37 +1,53 @@
 {% load get_outlink %}
 
 {% with request.resolver_match.view_name as view_name %}
-<div class="container">
+  <div class="container">
     {% if view_name == 'core:site-index' or view_name == 'core:about_karathons' %}
-    <div class="about_karathon">
-    <h2>что такое<br>карафон?</h2>
-    <div class="about_karathon_description">
-      Kарафон — это интерактивный марафон по шагам, с целью повысить свою активность и сделать мир чуточку лучше. Часть
-      средств, собранных в ходе карафона, будет переведена в благотворительные организации, выбранные победителями.
-    </div>
+      <div class="about_karathon">
+      <h2>что такое<br>карафон?</h2>
+      <div class="about_karathon_description">
+        Kарафон — это интерактивный марафон по шагам, с целью повысить свою активность и сделать мир чуточку лучше.
+        Часть средств, собранных в ходе карафона, будет переведена в благотворительные организации, выбранные победителями.
+      </div>
     {% else %}
-    <div class="about_karathon_detail">
-    <h2 window-elem="about_karathon_wrapper"><p>добро пожаловать</p><p>в {{karathon.number}}-й карафон</p></h2>
-    <div id="promo_video" class="about_karathon_video">
+      <div class="about_karathon_detail">
+      {% if karathon_is_started %}
+        <h2>Рейтинг участников</h2>
+        <div class="karathon_rating_wrapper" window-elem="rating_wrapper">
+          {% include 'core/includes/karathon_rating.html' with karathon_rating=karathon_rating %}
+        </div>
+        <div class="messages_items_next" window-elem="next_items_ratings">
+          загрузить ещё
+        </div>
+      {% else %}
+        <h2 window-elem="about_karathon_wrapper"><p>добро пожаловать</p>
+        <p>в {{ karathon.number }}-й карафон</p></h2>
+      <div id="promo_video" class="about_karathon_video">
         <iframe width="100%" height="666" src="https://www.youtube.com/embed/HsSTGZ6vfsY" title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen></iframe>
-    </div>
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+      </div>
+      {% endif %}
+
     {% endif %}
     <div class="about_karathon_list {% if view_name == 'core:karathon' %} karathon_page {% endif %}">
       <ol class="about_karathon_list_wrapper">
         {% if view_name == 'core:site-index' or view_name == 'core:about_karathons' %}
-        <li>карафон длится<br>13 дней</li>
+          <li>карафон длится<br>13 дней</li>
         {% else %}
-        <li>{{karathon.number}}-й карафон продлится<br>с {{ karathon.starts_at|date:"d E" }} по {{ karathon.finished_at|date:"d E" }}</li>
+          <li>{{ karathon.number }}-й карафон продлится<br>с {{ karathon.starts_at|date:"d E" }}
+            по {{ karathon.finished_at|date:"d E" }}</li>
         {% endif %}
-        <li>каждый день участник выполняет задание </li>
-        <li>задания даются ежедневно в прямом эфире в <a href="{% get_outlink 'INSTAGRAM_URL' %}" target="_blank"><span>Instagram</span></a></li>
-        <li>каждый участник сдает отчёт до 12 ночи в личном <a href="{% url 'account:account-index' %}"><span>кабинете</span></a></li>
+        <li>каждый день участник выполняет задание</li>
+        <li>задания даются ежедневно в прямом эфире в <a href="{% get_outlink 'INSTAGRAM_URL' %}" target="_blank"><span>Instagram</span></a>
+        </li>
+        <li>каждый участник сдает отчёт до 12 ночи в личном <a
+            href="{% url 'account:account-index' %}"><span>кабинете</span></a></li>
       </ol>
     </div>
-    <div class="about_karathon_description {% if view_name == 'core:karathon' %} karathon_page {% endif %}" window-elem="about_karathon_wrapper">
+    <div class="about_karathon_description {% if view_name == 'core:karathon' %} karathon_page {% endif %}"
+         window-elem="about_karathon_wrapper">
       Шаги можно нахаживать на улице или дорожке, ходить или бегать. Участвовать может каждый, у кого есть ноги.<br><br>
       Если ты заинтересовался, хочешь попробовать свои силы, повысить активность и установить новые рекорды, то я рада
       тебя приветствовать в тринадцатом карафоне.<br><br>
@@ -40,5 +56,5 @@
     <div class="about_karathon_description_button_wrapper">
       {% include 'core/includes/pink_button.html' %}
     </div>
-  </div>
+    </div>
 {% endwith %}

@@ -1,13 +1,12 @@
 let showChampsButton = document.querySelector('[window-elem="next_champs"]')
 let champsWrapper = document.querySelector('[window-elem="champions_wrapper"]')
 
-data = {}
-
 if (showChampsButton) {
+  data = {}
   showChampsButton.addEventListener("click", function () {
     // дополняет список рекордсменов при клике на кнопку
 
-    showChampsButton.classList.toggle("click_opacity")
+    showChampsButton.classList.add("click_opacity")
 
     data["amount_champs"] = document.querySelectorAll('[window-elem="champions_item"]').length / 2 // делим на 2 так как отображаюся и мобильные, и десктопные чемпионы
 
@@ -30,6 +29,7 @@ if (showChampsButton) {
             showChampsButton.setAttribute("style", "display:none")
           }
         }
+        showChampsButton.classList.remove("click_opacity")
       })
   })
 }
