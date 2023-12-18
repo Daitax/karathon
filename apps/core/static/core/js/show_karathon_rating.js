@@ -1,5 +1,5 @@
 let showNextKarathonRatingItemsButton = document.querySelector('[window-elem="next_items_ratings"]')
-let karathonRatingWrapper = document.querySelector('[window-elem="rating_wrapper"]')
+let karathonRatingList = document.querySelector('[window-elem="rating_list"]')
 
 if (showNextKarathonRatingItemsButton){
   data = {}
@@ -11,6 +11,10 @@ if (showNextKarathonRatingItemsButton){
 
     data["amount_list"] = document.querySelectorAll('[window-elem="rating_item"]').length / 2
     // делим на 2 так как отображаюся и мобильные, и десктопные чемпионы
+    let category = (new URL(document.location)).searchParams.get("category")
+    if (category) {
+      data["category"] = category
+    }
 
     let csrfToken = getCookie('csrftoken')
     let current_path = location.pathname
@@ -27,7 +31,7 @@ if (showNextKarathonRatingItemsButton){
       .then(function (data) {
 
         if (data.status == "ok") {
-          karathonRatingWrapper.innerHTML = data.rating_list_block
+          karathonRatingList.innerHTML = data.rating_list_block
 
           if (!data.next_rating_items_exist) {
             showNextKarathonRatingItemsButton.setAttribute("style", "display:none")

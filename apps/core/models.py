@@ -105,17 +105,27 @@ class Karathon(models.Model):
         return False
 
     @classmethod
-    def rating_list(cls, karathon_number):
+    def rating_list(cls, karathon_number, category):
         karathon = cls.objects.get(number=karathon_number)
         from apps.steps.models import Step
+
         karathon_rating_list = Step.objects.filter(
-            karathon=karathon,
-        ).exclude(participant__participantskarathon__is_active=False).values(
+            karathon=karathon
+        )
+
+        if category and category != '0':
+            karathon_rating_list = karathon_rating_list.filter(
+                participant__category=category
+            )
+
+        karathon_rating_list = karathon_rating_list.values(
             'participant__first_name',
             'participant__last_name',
             'participant__photo',
             'participant__category__name',
             'karathon__number',
-        ).annotate(karathon_steps=(Coalesce(Sum('steps'), 0) + Coalesce(Sum('bonus'), 0))).order_by('-karathon_steps')
+        ).annotate(
+            karathon_steps=(Coalesce(Sum('steps'), 0) + Coalesce(Sum('bonus'), 0))
+        ).order_by('-karathon_steps')
 
         return karathon_rating_list

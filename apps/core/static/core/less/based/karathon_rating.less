@@ -1,4 +1,31 @@
-.karathon_rating_wrapper {
+.karathon_rating_filter_wrapper {
+    display: flex;
+    margin-top: 50px;
+
+    .karathon_rating_filter_header {
+        font-size: 0.84rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .karathon_rating_filter_container {
+        display: flex;
+
+        .karathon_rating_filter_item {
+            color: @pink;
+            font-size: 0.84rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-left: 40px;
+
+            .active {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.karathon_rating_list {
     margin-top: 2.76rem;
 
     .desktop {

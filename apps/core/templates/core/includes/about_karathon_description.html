@@ -7,29 +7,43 @@
       <h2>что такое<br>карафон?</h2>
       <div class="about_karathon_description">
         Kарафон — это интерактивный марафон по шагам, с целью повысить свою активность и сделать мир чуточку лучше.
-        Часть средств, собранных в ходе карафона, будет переведена в благотворительные организации, выбранные победителями.
+        Часть средств, собранных в ходе карафона, будет переведена в благотворительные организации, выбранные
+        победителями.
       </div>
     {% else %}
       <div class="about_karathon_detail">
       {% if karathon_is_started %}
         <h2>Рейтинг участников</h2>
         <div class="karathon_rating_wrapper" window-elem="rating_wrapper">
-          {% include 'core/includes/karathon_rating.html' with karathon_rating=karathon_rating %}
-        </div>
-        {% if karathon_rating|length > 5 %}
-          <div class="messages_items_next" window-elem="next_items_ratings">
-            загрузить ещё
+          <div class="karathon_rating_filter_wrapper">
+            <div class="karathon_rating_filter_header">Категория</div>
+            <div class="karathon_rating_filter_container">
+              <a href="?category=0" class="karathon_rating_filter_item">Все</a>
+              {% for category in categories %}
+                <a href="?category={{ category.id }}" class="karathon_rating_filter_item"
+                >{{ category.name }}</a>
+              {% endfor %}
+            </div>
           </div>
-        {% endif %}
+          <div class="karathon_rating_list" window-elem="rating_list">
+            {% include 'core/includes/karathon_rating.html' with karathon_rating=karathon_rating %}
+          </div>
+          {% if karathon_rating|length > 5 %}
+            <div class="messages_items_next" window-elem="next_items_ratings">
+              загрузить ещё
+            </div>
+          {% endif %}
+        </div>
+
       {% else %}
         <h2 window-elem="about_karathon_wrapper"><p>добро пожаловать</p>
-        <p>в {{ karathon.number }}-й карафон</p></h2>
-      <div id="promo_video" class="about_karathon_video">
-        <iframe width="100%" height="666" src="https://www.youtube.com/embed/HsSTGZ6vfsY" title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
-      </div>
+          <p>в {{ karathon.number }}-й карафон</p></h2>
+        <div id="promo_video" class="about_karathon_video">
+          <iframe width="100%" height="666" src="https://www.youtube.com/embed/HsSTGZ6vfsY" title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen></iframe>
+        </div>
       {% endif %}
 
     {% endif %}

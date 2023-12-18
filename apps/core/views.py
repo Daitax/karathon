@@ -11,7 +11,7 @@ from django.shortcuts import get_list_or_404, render
 from django.template.loader import render_to_string
 from django.views.generic.base import TemplateView
 
-from apps.core.models import Karathon
+from apps.core.models import Karathon, Category
 
 from apps.core.yookassa import create_payment, confirmation_payment
 from apps.steps.models import Step
@@ -93,8 +93,10 @@ class KarathonView(TemplateView):
     def add_rating_list(self, request, *args, **kwargs):
         data = json.loads(request.body)
         karathon_number = kwargs["karathon_number"]
+        rating_category = data.pop("category")
         rating_list_showed = data.pop("amount_list")
-        rating_list = Karathon.rating_list(karathon_number)
+        rating_list = Karathon.rating_list(karathon_number, rating_category)
+
         next_rating_items_exist = True
 
         rating_list_to_show = rating_list_showed + 5
@@ -124,13 +126,17 @@ class KarathonView(TemplateView):
         karathon_number = kwargs["karathon_number"]
         karathon = Karathon.objects.get(number=karathon_number)
 
+        rating_category = request.GET.get('category')
+        categories = Category.objects.all()
+
         karathon_is_started = True if datetime.datetime.now().date() > karathon.starts_at \
             else False
 
         context = {
+            "categories": categories,
             "karathon": karathon,
             "karathon_is_started": karathon_is_started,
-            "karathon_rating": Karathon.rating_list(karathon_number)[:5],
+            "karathon_rating": Karathon.rating_list(karathon_number, rating_category)[:5],
             "request_url": self.request.path,
         }
 
