@@ -24,8 +24,8 @@ class AuthCodeForm(forms.Form):
 class ParticipantForm(forms.ModelForm):
     class Meta:
         model = Participant
-        fields = ['first_name', 'last_name', 'middle_name', 'phone', 'instagram', 'email', 'timezone_offset',
-                  'category', 'photo']
+        fields = ['first_name', 'last_name', 'middle_name', 'phone', 'instagram', 'telegram', 'email',
+                  'timezone_offset', 'category', 'photo']
 
 
 class WinnerQuestionnaireForm(forms.ModelForm):

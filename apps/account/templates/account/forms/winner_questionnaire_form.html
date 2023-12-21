@@ -1,27 +1,27 @@
-<form class="account_content_winner_form" method="post">
+<form class="winner_form" method="post">
   {% csrf_token %}
 
-  <label class="account_input">
+  <label class="winner_label">
     <input type="text" name="postcode" value="{{ winner_questionnaire_form.postcode.value|default_if_none:'' }}"
            placeholder="Почтовый индекс">
     <div>{{ winner_questionnaire_form.postcode.errors }}</div>
   </label>
-  <label class="account_input">
+  <label class="winner_label">
     <input type="text" name="country" value="{{ winner_questionnaire_form.country.value|default_if_none:'' }}"
            placeholder="Страна">
     <div>{{ winner_questionnaire_form.country.errors }}</div>
   </label>
-  <label class="account_input">
+  <label class="winner_label">
     <input type="text" name="city"
            value="{{ winner_questionnaire_form.city.value|default_if_none:'' }}" placeholder="Город">
     <div>{{ winner_questionnaire_form.city.errors }}</div>
   </label>
-  <label class="account_input blur_input">
+  <label class="winner_label blur_input">
     <input type="text" name="address" value="{{ winner_questionnaire_form.address.value|default_if_none:'' }}"
            placeholder="Адрес">
     <div>{{ winner_questionnaire_form.address.errors }}</div>
   </label>
-  <label class="account_input">
+  <label class="winner_label">
     <select name="shirt_size">
       {% for value,name in winner_questionnaire_form.fields.shirt_size.choices %}
         <option value="{{ value }}"{% if winner_questionnaire_form.shirt_size.value == value %} selected{% endif %}
@@ -29,7 +29,7 @@
       {% endfor %}
     </select>
   </label>
-  <label class="account_input blur_input">
+  <label class="winner_label blur_input">
     <select name="charity_category">
       {% for value,name in winner_questionnaire_form.fields.charity_category.choices %}
         <option value="{{ value }}"
@@ -43,7 +43,7 @@
       {% endfor %}
     </select>
   </label>
-  <div class="account_content_winner_button">
+  <div class="winner_button">
     <button class="pink_button" type="submit" name="winner"><span>Сохранить</span></button>
     <p>нажимая на кнопку, ты даешь согласие на <a href="{% url 'core:privacy_policy' %}" target="_blank">
       обработку и хранение персональных данных</a>

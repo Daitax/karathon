@@ -1,0 +1,86 @@
+{% load static %}
+
+<div class="account_personal">
+  <div class="personal_full_name">
+    <div class="personal_full_name_items">
+      <div class="last_name">
+        <p>Фамилия</p>
+        {{ participant_form.last_name.value|default:'Фамилия не заполнена' }}
+      </div>
+      <div class="first_name">
+        <p>Имя</p>
+        {{ participant_form.first_name.value|default:'Имя не заполнено' }}
+      </div>
+      {% if participant_form.middle_name.value %}
+        <div class="middle_name">
+          <p>Отчество</p>
+          {{ participant_form.middle_name.value }}
+        </div>
+      {% endif %}
+    </div>
+    <div class="personal_avatar">
+      {% if user.participant.photo %}
+        <div class="personal_avatar_ex">
+          <img src="{{ user.participant.photo.url }}">
+          <div class="personal_avatar_text pink_button" window-elem="open_personal_form">
+            <span>Изменить</span>
+          </div>
+        </div>
+      {% else %}
+        <div class="personal_avatar_ex">
+          <img src="{% static 'core/img/no_avatar.png' %}">
+          <div class="personal_avatar_text pink_button" window-elem="open_personal_form">
+            <span>Изменить</span>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="personal_info">
+    {% if participant_form.phone.value %}
+      <div class="personal_info_phone">
+        <p>Телефон</p>
+        <div>{{ participant_form.phone.value }}</div>
+      </div>
+    {% endif %}
+    {% if participant_form.instagram.value %}
+      <div class="personal_info_instagram">
+        <p>Instagram*</p>
+        <div>{{ participant_form.instagram.value }}</div>
+      </div>
+    {% endif %}
+    {% if participant_form.telegram.value %}
+      <div class="personal_info_telegram">
+        <p>Telegram</p>
+        <div>{{ participant_form.telegram.value }}</div>
+      </div>
+    {% endif %}
+    <div class="personal_info_email">
+      <p>Email</p>
+      <div>{{ participant_form.email.value }}</div>
+    </div>
+    <div class="personal_info_timezone">
+      <p>Часовой пояс</p>
+      <div>
+        {% for value, name in participant_form.fields.timezone_offset.choices %}
+          {% if participant_form.timezone_offset.value == value %}
+            {{ name }}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <div class="personal_info_category">
+      <p>Категория</p>
+      <div>
+        {% for value, name in participant_form.fields.category.choices %}
+          {% if participant_form.category.value == value %}
+            {{ name }}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <div class="personal_info_button">
+      <button class="pink_button" window-elem="open_personal_form"><span>Изменить</span></button>
+    </div>
+  </div>
+</div>

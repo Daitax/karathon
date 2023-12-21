@@ -1,0 +1,172 @@
+.personal_form_wrapper {
+    .popup();
+    max-width: 30rem;
+    padding-bottom: 1rem;
+}
+
+.personal_form {
+
+    input {
+        border: 2px solid @pink;
+        width: 9rem;
+        padding: .5rem .45rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: .47rem;
+        letter-spacing: 0.03em;
+        -webkit-appearance: none;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+    }
+
+    input[name="instagram"],
+    [name="email"] {
+        padding-right: 0;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    input::placeholder {
+        font-weight: 400;
+        opacity: 1;
+    }
+
+    input::-webkit-input-placeholder {
+        font-weight: 400;
+        opacity: 1;
+        color: @black;
+    }
+
+    select {
+        border: 2px solid @pink;
+        width: 9rem;
+        padding: .5rem .45rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: .47rem;
+        letter-spacing: 0.05em;
+        -webkit-appearance: none;
+        border-radius: unset;
+        background: none;
+        color: @black;
+    }
+
+    .personal_form_full_name {
+        display: flex;
+
+        .personal_form_full_name_items {
+            label {
+                display: block;
+                margin-bottom: .5rem;
+            }
+        }
+
+        .personal_form_avatar {
+            margin-left: .5rem;
+
+            .personal_form_avatar_ex {
+                position: relative;
+                display: block;
+
+                img {
+                    position: absolute;
+                    height: 6rem;
+                    width: 6rem;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    cursor: pointer;
+                    .avatar_border();
+                }
+
+                div[window-elem="avatar_preview"] {
+                    position: absolute;
+                    height: 6rem;
+                    width: 6rem;
+                    //left: -.068rem;
+                    border-radius: 50%;
+                    border-color: @pink;
+                    object-fit: cover;
+                    cursor: pointer;
+                    display: none;
+                    .avatar_border();
+                }
+
+                .personal_form_no_avatar {
+                    position: absolute;
+                    top: 0;
+                    height: 6rem;
+                    width: 6rem;
+                    border-radius: 50%;
+                    border: 2px solid @pink;
+                    cursor: pointer;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        width: 2px;
+                        height: 1.48rem;
+                        left: 50%;
+                        top: calc(50% - 0.74rem + 1px);
+                        background: @pink;
+                    }
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        width: 1.48rem;
+                        height: 2px;
+                        top: 50%;
+                        left: calc(50% - 0.74rem + 1px);
+                        background: @pink;
+                        z-index: -1;
+                    }
+                }
+
+                .personal_form_avatar_text {
+                    margin-left: 3.05rem;
+                    margin-top: 4.3rem;
+                    width: max-content;
+                    padding: .41rem .68rem;
+                    font-size: .45rem;
+                    letter-spacing: 0.05em;
+                }
+            }
+        }
+    }
+
+    .personal_form_info {
+
+        .personal_form_info_phone,
+        .personal_form_info_instagram,
+        .personal_form_info_telegram,
+        .personal_form_info_mail,
+        .personal_form_info_timezone,
+        .personal_form_info_category,
+        .personal_form_info_button {
+            display: flex;
+            align-items: center;
+            margin-bottom: .5rem;
+
+            p {
+                flex: 1;
+                font-weight: 400;
+                font-size: 0.45rem;
+                line-height: 1.2;
+                letter-spacing: 0.03em;
+                margin-left: .5rem;
+            }
+
+            button {
+                flex: 0 9rem;
+                font-size: .5rem;
+                padding: 0.54rem 1.05rem;
+            }
+
+            a {
+                color: @pink;
+            }
+        }
+    }
+}

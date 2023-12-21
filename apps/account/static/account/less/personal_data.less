@@ -1,0 +1,105 @@
+.account_content_wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3.39rem;
+    width: 65%;
+}
+
+.account_personal {
+    margin-top: 1.02rem;
+
+    .personal_full_name {
+        display: flex;
+        align-items: center;
+
+        .personal_full_name_items {
+            width: 13.56rem;
+
+            .last_name {
+                font-weight: 700;
+
+                p {
+                    font-size: 0.68rem;
+                    font-weight: 400;
+                }
+            }
+
+            .first_name {
+                font-weight: 700;
+                margin-top: 1rem;
+
+                p {
+                    font-size: 0.68rem;
+                    font-weight: 400;
+                }
+            }
+
+            .middle_name {
+                font-weight: 700;
+                margin-top: 1rem;
+
+                p {
+                    font-size: 0.68rem;
+                    font-weight: 400;
+                }
+            }
+        }
+
+        .personal_avatar {
+            margin-left: 0.68rem;
+
+            .personal_avatar_ex {
+                position: relative;
+                height: 8.46rem;
+
+                img {
+                    position: absolute;
+                    top: 0;
+                    height: 8.33rem;
+                    width: 8.33rem;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    cursor: pointer;
+                    .avatar_border();
+                }
+
+                .personal_avatar_text {
+                    margin-left: 3.05rem;
+                    margin-top: 6.2rem;
+                    width: max-content;
+                    padding: .41rem .68rem;
+                    font-size: .66rem;
+                    letter-spacing: 0.05em;
+                }
+            }
+        }
+    }
+
+    .personal_info {
+        display: flex;
+        flex-direction: column;
+
+        .personal_info_phone,
+        .personal_info_instagram,
+        .personal_info_telegram,
+        .personal_info_email,
+        .personal_info_timezone,
+        .personal_info_category {
+            display: flex;
+            margin-top: 1rem;
+
+            p {
+                width: 13.56rem;
+            }
+
+            div {
+                flex: 1;
+                font-weight: 700;
+            }
+        }
+
+        .personal_info_button {
+            margin-top: 1rem;
+        }
+    }
+}

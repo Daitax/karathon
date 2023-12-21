@@ -167,4 +167,17 @@ if (addFormWrapper) {
     })
 }
 
+let changePersonalFormWrapper = document.querySelector('[popup-element="popup"][form-name="personal"]')
+
+if (changePersonalFormWrapper) {
+    changePersonalFormWrapper.addEventListener('click', function (event) {
+        let target = event.target
+        console.log(target)
+
+        if (target.getAttribute('name') == 'phone') {
+            mobileMaskInput()
+        }
+    })
+}
+
 window.addEventListener("load", mobileMaskInput())

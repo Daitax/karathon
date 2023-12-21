@@ -3,16 +3,18 @@
 
 {% block title %}Персональные данные{% endblock %}
 {% block content %}
-<div class="container">
-  <div class="account_content_wrapper">
-    <h2 id="personal_account">Персональные данные</h2>
-    {% include 'account/forms/personal_form.html' %}
+  <div class="container">
+    <div class="account_content_wrapper">
+      <div class="account_personal_data">
+        <h2 id="personal_account">Персональные данные</h2>
+        {% include 'account/includes/personal_data.html' %}
+      </div>
+      {% if winner_questionnaire_form %}
+        <div class="account_winner_data">
+          <h2>Анкета победителя</h2>
+          {% include 'account/forms/winner_questionnaire_form.html' %}
+        </div>
+      {% endif %}
+    </div>
   </div>
-{% if winner_questionnaire_form %}
-  <div class="account_content_wrapper">
-    <h2>Анкета победителя</h2>
-    {% include 'account/forms/winner_questionnaire_form.html' %}
-  </div>
-  {% endif %}
-</div>
 {% endblock %}

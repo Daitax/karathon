@@ -1,0 +1,81 @@
+.account_winner_data {
+    margin-top: 3.39rem;
+}
+
+.winner_form {
+    flex-wrap: wrap;
+    display: flex;
+
+    .winner_label {
+        margin-top: 1.02rem;
+    }
+
+    input {
+        border: 2px solid @pink;
+        width: 13.56rem;
+        padding: .88rem .75rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: .66rem;
+        letter-spacing: 0.05em;
+        -webkit-appearance: none;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+    }
+
+    input[name="instagram"],
+    [name="email"] {
+        padding-right: 0;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    input::placeholder {
+        font-weight: 400;
+        opacity: 1;
+    }
+
+    input::-webkit-input-placeholder {
+        font-weight: 400;
+        opacity: 1;
+        color: @black;
+    }
+
+    select {
+        border: 2px solid @pink;
+        width: 13.56rem;
+        padding: .88rem .75rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: .66rem;
+        letter-spacing: 0.05em;
+        -webkit-appearance: none;
+        border-radius: unset;
+        background: none;
+        color: @black;
+    }
+
+    label:nth-child(2n+1) {
+        margin-left: .68rem;
+    }
+
+    .blur_input {
+        position: relative;
+
+        ::after {
+            content: "";
+            position: absolute;
+            width: 2.95rem;
+            height: 2.54rem;
+            top: 2px;
+            left: 10.54rem;
+            background: linear-gradient(270deg, #FFFFFF 15.44%, rgba(255, 255, 255, 0) 66.09%);
+        }
+    }
+
+    .winner_button {
+       .account_input()
+    }
+}

@@ -42,13 +42,7 @@
   {% endif %}
   <div class="content" window-elem="content">{% block content %}{% endblock %}</div>
   {% if request.resolver_match.view_name != 'core:privacy_policy' %}
-    {% if request.resolver_match.view_name  == 'core:site-index' %}
-      <div class="container">
-        {% steps_block %}
-      </div>
-    {% else %}
-      <div class="container">{% steps_block %}</div>
-    {% endif %}
+    <div class="container">{% steps_block %}</div>
   {% endif %}
   <div class="content" window-elem="content">{% block content_second %}{% endblock %}</div>
   </div>
@@ -63,6 +57,7 @@
     {% endif %}
     {% if user.is_authenticated %}
       <div class="report_form_wrapper" popup-element="popup" form-name="report"></div>
+      <div class="personal_form_wrapper" popup-element="popup" form-name="personal"></div>
       <div class="desire_form_wrapper" popup-element="popup" form-name="desire"></div>
       <div class="confirmation_wrapper" popup-element="popup" popup-name="confirmation">
         {% include 'teams/popups/confirmation.html' %}

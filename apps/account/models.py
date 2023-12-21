@@ -10,7 +10,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.account.signals import send_new_participant_notifications
 from apps.core.models import Category, CharityCategory, Karathon
-from apps.core.utils import get_participant_photo_path, ending_numbers, send_email_message
+from apps.core.utils import get_participant_photo_path, ending_numbers, send_email_message, get_choice_value
 
 
 class User(AbstractUser):
@@ -81,10 +81,8 @@ class Participant(User):
     photo = models.ImageField(
         "Аватарка", blank=True, upload_to=get_participant_photo_path
     )
-    instagram = models.URLField("Ссылка на инстаграм", blank=True)
-    # timezone = models.CharField(
-    #     max_length=30, choices=TIMEZONES, default="Europe/Moscow"
-    # )
+    instagram = models.CharField("Ник в Instagram", max_length=25, null=True, blank=True)
+    telegram = models.CharField("Ник в Telegram", max_length=25, null=True, blank=True)
     timezone_offset = models.CharField(
         max_length=3, choices=TIMEZONES_OFFSET, default="+3"
     )
@@ -103,12 +101,6 @@ class Participant(User):
             middle=self.middle_name,
             email=self.email,
         )
-
-    def sum_steps_in_karathon(self):
-        from apps.steps.models import Step
-
-        steps = Step.objects.filter(karathon=self.get_active_karathon(), participant=self).aggregate(Sum('steps'))
-        return steps['steps__sum']
 
     def best_steps_all(self):
         from apps.steps.models import Step
@@ -220,6 +212,12 @@ class Participant(User):
             except ObjectDoesNotExist:
                 return None
         return None
+
+    def sum_steps_in_karathon(self):
+        from apps.steps.models import Step
+
+        steps = Step.objects.filter(karathon=self.get_active_karathon(), participant=self).aggregate(Sum('steps'))
+        return steps['steps__sum']
 
     def yesterday_steps(self):
         yesterday = self.get_participant_time() - datetime.timedelta(days=1)
