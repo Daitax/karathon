@@ -1,3 +1,16 @@
 .report_form_wrapper {
-    .popup()
+    .popup();
+
+    .report_form_field {
+        position: relative;
+        display: block;
+        padding-bottom: 1rem;
+
+        .error {
+            position: absolute;
+            bottom: 0;
+            color: @pink;
+            font-size: 0.5rem;
+        }
+    }
 }

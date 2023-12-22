@@ -218,14 +218,14 @@ def send_change_report_form(request):
             }
 
         report_window = render_to_string(
-            "steps/popups/report.html", context, request
+            "steps/popups/change_report.html", context, request
         )
 
     else:
-        context = {"window": "form", "errors": form.errors}
+        context = {"window": "form-change", "errors": form.errors}
 
         report_window = render_to_string(
-            "steps/popups/report.html", context, request
+            "steps/popups/change_report.html", context, request
         )
 
     out = {

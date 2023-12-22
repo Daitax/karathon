@@ -16,7 +16,7 @@
   {% if window == 'code' %}
     <label class="label" auth-form-elem="code-wrapper">
       <input class="input" type="text" name="code" value="" auth-form-elem="code" autocomplete="off">
-      <div class="text">{{ errors.code.as_text }}</div>
+      <div class="error">{{ errors.code.as_text }}</div>
       <div class="text">введи код из сообщения, которую мы отправили на указанный email</div>
     </label>
   {% endif %}
