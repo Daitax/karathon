@@ -203,11 +203,12 @@ def index(request):
 
         return JsonResponse(
             {
-                'participant_form': participant_form
+                "participant_form": participant_form
             }
         )
 
     if request.method == "POST" and "personal" in request.POST:
+
         participant_form = ParticipantForm(
             request.POST, request.FILES, instance=request.user.participant
         )
@@ -216,6 +217,27 @@ def index(request):
             participant_form.save()
             participant_form = ParticipantForm(
                 instance=request.user.participant
+            )
+
+            return JsonResponse(
+                {
+                    "status": "ok",
+                }
+            )
+        else:
+            context = {
+                "participant_form": participant_form,
+            }
+
+            participant_form = render_to_string(
+                "account/forms/personal_form.html", context, request
+            )
+
+            return JsonResponse(
+                {
+                    "status": "error",
+                    "participant_form": participant_form
+                }
             )
 
     context = {

@@ -1,20 +1,20 @@
 <div class="close" popup-element="close"></div>
-<form class="personal_form" action="/account/" method="POST" enctype="multipart/form-data">
+<form class="personal_form" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="personal_form_full_name">
     <div class="personal_form_full_name_items">
       <label class="personal_form_last_name">
         <input type="text" name="last_name" value="{{ participant_form.last_name.value }}" placeholder="Фамилия">
-        <div>{{ participant_form.last_name.errors }}</div>
+        <div class="personal_form_field-error">{{ participant_form.last_name.errors.as_text }}</div>
       </label>
       <label class="personal_form_first_name">
         <input type="text" name="first_name" value="{{ participant_form.first_name.value }}" placeholder="Имя">
-        <div>{{ participant_form.first_name.errors }}</div>
+        <div class="personal_form_field-error">{{ participant_form.first_name.errors.as_text }}</div>
       </label>
       <label class="personal_form_middle_name">
         <input type="text" name="middle_name" value="{{ participant_form.middle_name.value|default_if_none:'' }}"
                placeholder="Отчество">
-        <div>{{ participant_form.middle_name.errors }}</div>
+        <div class="personal_form_field-error">{{ participant_form.middle_name.errors.as_text }}</div>
       </label>
     </div>
     <div class="personal_form_avatar">
@@ -37,42 +37,42 @@
       {% endif %}
       <input id="account_photo" type="file" name="photo" accept="image/jpeg,image/png" style="display: none;"
              window-elem="input_avatar">
-      <div>{{ participant_form.errors.photo.as_text }}</div>
+      <div class="personal_form_field-error">{{ participant_form.errors.photo.as_text }}</div>
     </div>
   </div>
   <div class="personal_form_info">
     <label class="personal_form_info_phone">
-      <div>
+      <div class="personal_form_input">
         <input type="text" name="phone" data-tel-input value="{{ participant_form.phone.value }}" placeholder="Телефон">
-        <div>{{ participant_form.phone.errors }}</div>
+        <div class="personal_form_field-error">{{ participant_form.phone.errors.as_text }}</div>
       </div>
       <p>твой номер телефона</p>
     </label>
     <label class="personal_form_info_instagram blur_input">
-      <div>
+      <div class="personal_form_input">
         <input type="text"
                name="instagram"
                value="{{ participant_form.instagram.value|default_if_none:'' }}"
                placeholder="instagram">
-        <div>{{ participant_form.instagram.errors }}</div>
+        <div class="personal_form_field-error">{{ participant_form.instagram.errors.as_text }}</div>
       </div>
       <p>просто укажи свой ник в Instagram*</p>
     </label>
     <label class="personal_form_info_telegram blur_input">
-      <div>
+      <div class="personal_form_input">
         <input type="text"
                name="telegram"
                value="{{ participant_form.telegram.value|default_if_none:'' }}"
                placeholder="telegram">
-        <div>{{ participant_form.telegram.errors }}</div>
+        <div class="personal_form_field-error">{{ participant_form.telegram.errors.as_text }}</div>
       </div>
       <p>просто укажи свой ник в Telegram</p>
     </label>
     <label class="personal_form_info_mail blur_input">
-      <div>
+      <div class="personal_form_input">
         <input type="email" name="email" value="{{ participant_form.email.value|default_if_none:'' }}"
                placeholder="E-mail">
-        <div>{{ participant_form.email.errors }}</div>
+        <div class="personal_form_field-error">{{ participant_form.email.errors.as_text }}</div>
       </div>
       <p>твой email для отправки уведомлений</p>
     </label>
@@ -105,7 +105,8 @@
       <p>категория, по которой ты будешь получать задания</p>
     </label>
     <div class="personal_form_info_button">
-      <button class="pink_button" type="submit" value="account" name="personal"><span>Сохранить</span></button>
+      <button class="pink_button" type="submit" value="account" name="personal"
+              value="personal"><span>Сохранить</span></button>
       <p>нажимая на кнопку, ты даешь согласие на <a href="{% url 'core:privacy_policy' %}" target="_blank">обработку и
         хранение персональных
         данных</a>

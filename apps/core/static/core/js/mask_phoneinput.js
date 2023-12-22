@@ -172,7 +172,6 @@ let changePersonalFormWrapper = document.querySelector('[popup-element="popup"][
 if (changePersonalFormWrapper) {
     changePersonalFormWrapper.addEventListener('click', function (event) {
         let target = event.target
-        console.log(target)
 
         if (target.getAttribute('name') == 'phone') {
             mobileMaskInput()

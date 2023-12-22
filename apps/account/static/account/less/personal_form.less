@@ -137,6 +137,12 @@
     }
 
     .personal_form_info {
+        .personal_form_field-error {
+            position: absolute;
+            bottom: 0;
+            color: @pink;
+            font-size: 0.4rem;
+        }
 
         .personal_form_info_phone,
         .personal_form_info_instagram,
@@ -145,9 +151,10 @@
         .personal_form_info_timezone,
         .personal_form_info_category,
         .personal_form_info_button {
+            position: relative;
             display: flex;
             align-items: center;
-            margin-bottom: .5rem;
+            padding-bottom: .5rem;
 
             p {
                 flex: 1;
