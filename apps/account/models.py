@@ -440,7 +440,7 @@ class WinnerQuestionnaire(models.Model):
     @classmethod
     def is_active_questionnaire(cls, participant_id):
         try:
-            cls.objects.get(participant_id=participant_id)
+            cls.objects.get(participant_id=participant_id, is_displayed=True)
             return True
         except ObjectDoesNotExist:
             return False

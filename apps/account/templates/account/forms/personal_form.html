@@ -76,34 +76,39 @@
       </div>
       <p>твой email для отправки уведомлений</p>
     </label>
-    <label class="personal_form_info_timezone">
-      <div>
-        <select name="timezone_offset">
-          {% for value,name in participant_form.fields.timezone_offset.choices %}
-            <option value="{{ value }}"{% if participant_form.timezone_offset.value == value %}
-                    selected{% endif %}>{{ name }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <p>время, к которому будут привязаны твои задания</p>
-    </label>
-    <label class="personal_form_info_category">
-      <div>
-        <select name="category">
-          {% for value,name in participant_form.fields.category.choices %}
-            <option value="{{ value }}"
-                {% if participant_form.category.value == value %} selected{% endif %}
-                {% if value == "" %} disabled{% endif %}
-            >{% if value == "" %}
-              Выбрать категорию
-            {% else %}
-              {{ name }}
-            {% endif %}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <p>категория, по которой ты будешь получать задания</p>
-    </label>
+    {% if is_active_karathon %}
+      <input type="hidden" name="timezone_offset" value="{{ participant_form.timezone_offset.value }}">
+      <input type="hidden" name="category" value="{{ participant_form.category.value }}">
+    {% else %}
+      <label class="personal_form_info_timezone">
+        <div>
+          <select name="timezone_offset">
+            {% for value,name in participant_form.fields.timezone_offset.choices %}
+              <option value="{{ value }}"{% if participant_form.timezone_offset.value == value %}
+                      selected{% endif %}>{{ name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <p>время, к которому будут привязаны твои задания</p>
+      </label>
+      <label class="personal_form_info_category">
+        <div>
+          <select name="category">
+            {% for value,name in participant_form.fields.category.choices %}
+              <option value="{{ value }}"
+                  {% if participant_form.category.value == value %} selected{% endif %}
+                  {% if value == "" %} disabled{% endif %}
+              >{% if value == "" %}
+                Выбрать категорию
+              {% else %}
+                {{ name }}
+              {% endif %}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <p>категория, по которой ты будешь получать задания</p>
+      </label>
+    {% endif %}
     <div class="personal_form_info_button">
       <button class="pink_button" type="submit" value="account" name="personal"
               value="personal"><span>Сохранить</span></button>

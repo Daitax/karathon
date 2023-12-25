@@ -191,10 +191,13 @@ class AuthView(TemplateView):
 @login_required
 def index(request):
     participant_form = ParticipantForm(instance=request.user.participant)
+    is_active_karathon = True if request.user.participant.get_active_karathon() else False
 
     if request.method == "OPEN_FORM":
+
         context = {
             "participant_form": participant_form,
+            "is_active_karathon": is_active_karathon,
         }
 
         participant_form = render_to_string(
@@ -226,6 +229,7 @@ def index(request):
             )
         else:
             context = {
+                "is_active_karathon": is_active_karathon,
                 "participant_form": participant_form,
             }
 
@@ -241,6 +245,7 @@ def index(request):
             )
 
     context = {
+        "is_active_karathon": is_active_karathon,
         "participant_form": participant_form,
     }
 
