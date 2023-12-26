@@ -9,18 +9,18 @@
         {{ forloop.counter|add:"3" }} место
       </div>
       <div class="photo">
-        <img src="{% if champ.participant__photo %}
-                        media/{{ champ.participant__photo }}
+        <img src="{% if champ.participant_photo %}
+                        media/{{ champ.participant_photo }}
                       {% else %}
                         {% static 'core/img/no_avatar.png' %}
                       {% endif %}"
-             alt="{{ champ.participant__last_name }} {{ champ.participant__first_name }}">
+             alt="{{ champ.name }}">
       </div>
       <div class="information">
-        <p>{{ champ.participant__last_name }} {{ champ.participant__first_name }}</p>
+        <p>{{ champ.name }}</p>
       </div>
       <div class="steps">
-        {{ champ.karathon__number }}-й карафон &mdash; {{ champ.steps|dividing_number_digits }}
+        {{ champ.karathon_number }}-й карафон &mdash; {{ champ.steps|dividing_number_digits }}
         {{ champ.steps|ru_plural:"шаг, шага, шагов" }}
       </div>
     </div>
@@ -28,23 +28,23 @@
   <div class="mobile">
     <div class="champions_item" window-elem="champions_item">
       <div class="photo">
-        <img src="{% if champ.participant__photo %}
-                        media/{{ champ.participant__photo }}
+        <img src="{% if champ.participant_photo %}
+                        media/{{ champ.participant_photo }}
                       {% else %}
                         {% static 'core/img/no_avatar.png' %}
                       {% endif %}"
-             alt="{{ champ.participant_last_name }} {{ champ.participant_first_name }}">
+             alt="{{ champ.name }}">
       </div>
       <div class="mobile_champ_info">
         <div class="place">
           {{ forloop.counter|add:"3" }} место
         </div>
         <div class="information">
-          <p>{{ champ.participant_last_name }} {{ champ.participant_first_name }}</p>
+          <p>{{ champ.name }}</p>
         </div>
         <div class="steps">
-          {{ champ.karathon__number }}-й карафон &mdash; {{ champ.karathon_steps }}
-          {{ champ.karathon_steps|ru_plural:"шаг, шага, шагов" }}
+          {{ champ.karathon_number }}-й карафон &mdash; {{ champ.steps }}
+          {{ champ.steps|ru_plural:"шаг, шага, шагов" }}
         </div>
       </div>
     </div>

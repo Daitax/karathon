@@ -11,17 +11,17 @@
       {% for champ in top_champs %}
         <li>
           <div class="champ_photo">
-            <img src="{% if champ.participant__photo %}
-                        media/{{ champ.participant__photo }}
+            <img src="{% if champ.participant_photo %}
+                        media/{{ champ.participant_photo }}
                       {% else %}
                         {% static 'core/img/no_avatar.png' %}
                       {% endif %}"
-                 alt="{{ champ.participant__last_name }} {{ champ.participant__first_name }}">
+                 alt="{{ champ.name }}">
           </div>
           <div class="champ_nameplate">
             <p>{{ forloop.counter }} место</p>
-            <p>{{ champ.participant__last_name }} {{ champ.participant__first_name }}</p>
-            <p>{{ champ.karathon__number }}-й карафон &mdash; {{ champ.steps|dividing_number_digits }}
+            <p>{{ champ.name }}</p>
+            <p>{{ champ.karathon_number }}-й карафон &mdash; {{ champ.steps|dividing_number_digits }}
               {{ champ.steps|ru_plural:"шаг, шага, шагов" }}</p>
           </div>
         </li>

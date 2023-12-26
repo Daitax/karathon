@@ -1,11 +1,12 @@
 import datetime
 
 from django.db import models
-from django.db.models import Sum, signals, Q
+from django.db.models import Sum, signals, Q, F, Value
+from django.db.models.functions import Concat
 from django.utils.safestring import mark_safe
 
 from apps.account.models import Participant
-from apps.core.models import Karathon
+from apps.core.models import Karathon, CustomRecordsmans
 from apps.core.utils import checking, get_report_image_path
 # from apps.steps.signals import check_task_complete
 
@@ -52,13 +53,19 @@ class Step(models.Model):
 
     @classmethod
     def get_champs_list(cls):
-        return cls.objects.filter(steps__gte=100000).values(
-            'steps',
-            'participant__first_name',
-            'participant__last_name',
-            'participant__photo',
-            'karathon__number',
-        ).order_by('-steps')
+        site_champs = cls.objects.filter(steps__gte=100000).annotate(
+            name=Concat(F('participant__first_name'), Value(' '), F('participant__last_name'))
+        ).annotate(
+            participant_photo=F('participant__photo')
+        ).annotate(
+            karathon_number=F('karathon__number')
+        ).values('name', 'participant_photo', 'steps', 'karathon_number')
+
+        custom_recordsmans = CustomRecordsmans.objects.all()
+
+        union_queryset = site_champs.union(custom_recordsmans).order_by('-steps')
+
+        return union_queryset
 
     def photo_preview(self):
         if self.photo:

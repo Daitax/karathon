@@ -31,6 +31,22 @@ class CharityCategory(models.Model):
         return self.name
 
 
+class CustomRecordsmans(models.Model):
+    name = models.CharField('Имя рекордсмена', max_length=150, blank=False)
+    participant_photo = models.ImageField(
+        "Фото рекордсмена", blank=False, upload_to="recordsmans"
+    )
+    steps = models.PositiveIntegerField("Количество шагов")
+    karathon_number = models.PositiveIntegerField('Номер карафона', blank=False)
+
+    class Meta:
+        verbose_name = 'Добавленный рекордсмен'
+        verbose_name_plural = 'Добавленные рекордсмены'
+
+    def __str__(self):
+        return self.name
+
+
 class Karathon(models.Model):
     TYPE = (
         ('individual', 'Индивидуальный'),
