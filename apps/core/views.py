@@ -120,8 +120,7 @@ class KarathonView(TemplateView):
         }
 
         return JsonResponse(out)
-
-
+    # TODO сделать редирект на страницу карафона в зависимости закончился карафон или нет
     def karathon(self, request, *args, **kwargs):
         karathon_number = kwargs["karathon_number"]
         karathon = Karathon.objects.get(number=karathon_number)

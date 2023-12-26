@@ -25,9 +25,15 @@ urlpatterns = [
         views.KarathonView.as_view(),
         name="karathon",
     ),
-    path("past_karathons",
-         views.PastKarathonsView.as_view(),
-         name="past_karathons"
+    path(
+        "past_karathons/",
+        views.PastKarathonsView.as_view(),
+        name="past_karathons",
+    ),
+    path(
+        "past_karathons/<int:karathon_number>-karathon/",
+        views.KarathonView.as_view(),
+        name="past_karathon",
     ),
     path("participate/", views.participate, name="participate"),
     path("participate/webhooks/yookassa/", csrf_exempt(views.webhooks_yookassa), name="webhooks_yookassa"),

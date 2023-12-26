@@ -16,15 +16,17 @@
           <div class="karathon_date">с {{ karathon.starts_at|date:"d E" }} по
             {{ karathon.finished_at|date:"d E" }}</div>
         {% endif %}
-        <div class="first-screen_text_collab">Прими участие!</div>
-        <div class="first-screen_button_wrapper">
-          {% if user.is_authenticated %}
-            <a class="blue_button" href="/participate/"><span>Участовать</span></a>
-          {% else %}
-            <a class="blue_button" href="javascript:void(0)" button-action="open-auth-form"><span>Войти</span></a>
-          {% endif %}
-          <div class="button_text_cost">{% get_outlink 'COST_OF_PARTICIPATION' %}</div>
-        </div>
+        {% if not karathon_is_started %}
+          <div class="first-screen_text_collab">Прими участие!</div>
+          <div class="first-screen_button_wrapper">
+            {% if user.is_authenticated %}
+              <a class="blue_button" href="/participate/"><span>Участовать</span></a>
+            {% else %}
+              <a class="blue_button" href="javascript:void(0)" button-action="open-auth-form"><span>Войти</span></a>
+            {% endif %}
+            <div class="button_text_cost">{% get_outlink 'COST_OF_PARTICIPATION' %}</div>
+          </div>
+        {% endif %}
       </div>
       <div class="first-screen_photo">
         <img src="{% static 'core/img/photo_anna.svg' %}" alt="Anna_Karachunskaya"

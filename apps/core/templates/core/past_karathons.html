@@ -12,7 +12,7 @@
   <div class="container">
     <div class="past-karathons_wrapper">
       {% for past_karathon in past_karathons %}
-        <div class="past-karathons_item">
+        <a href="{% url 'core:past_karathon' karathon_number=past_karathon.number %}" class="past-karathons_item">
           <div class="past-karathons_item_karathon-number">
             <div class="past-karathons_item_number">
               {{ past_karathon.number }}
@@ -22,7 +22,7 @@
           <div class="past-karathons_item_dates">
             Прошедший с {{ past_karathon.starts_at|date:'d E Y' }} по {{ past_karathon.finished_at|date:'d E Y' }}
           </div>
-        </div>
+        </a>
       {% endfor %}
     </div>
   </div>
