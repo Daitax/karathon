@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import signals, Sum
+from django.db.models import signals, Sum, Q
 from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.account.signals import send_new_participant_notifications
@@ -185,13 +185,13 @@ class Participant(User):
                 starts_at__lte=date,
                 finished_at__gte=date,
             )
-
             if karathon:
-                task_of_day = Task.objects.get(
+                task_of_day = Task.objects.filter(
                     karathon=karathon,
-                    category=self.category,
                     date=date
-                )
+                ).filter(
+                    Q(category=self.category) | Q(category_id=1)
+                ).first()
 
                 return task_of_day
 
@@ -206,11 +206,13 @@ class Participant(User):
             try:
                 from apps.tasks.models import Task
 
-                today_task = Task.objects.get(
+                today_task = Task.objects.filter(
                     karathon=karathon,
-                    category=self.category,
                     date=self.get_participant_time(),
-                )
+                ).filter(
+                    Q(category=self.category) | Q(category_id=1)
+                ).first()
+
                 return today_task
             except ObjectDoesNotExist:
                 return None

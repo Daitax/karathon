@@ -126,7 +126,7 @@ class KarathonView(TemplateView):
         karathon = Karathon.objects.get(number=karathon_number)
 
         rating_category = request.GET.get('category')
-        categories = Category.objects.all()
+        categories = Category.objects.all().exclude(id=1)
 
         karathon_is_started = True if datetime.datetime.now().date() > karathon.starts_at \
             else False

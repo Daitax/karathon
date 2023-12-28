@@ -95,14 +95,17 @@
         <div>
           <select name="category">
             {% for value,name in participant_form.fields.category.choices %}
-              <option value="{{ value }}"
-                  {% if participant_form.category.value == value %} selected{% endif %}
-                  {% if value == "" %} disabled{% endif %}
-              >{% if value == "" %}
-                Выбрать категорию
-              {% else %}
-                {{ name }}
-              {% endif %}</option>
+              {% if name != "Все категории" %}
+                <option value="{{ value }}"
+                    {% if participant_form.category.value == value %} selected{% endif %}
+                    {% if value == "" %} disabled{% endif %}
+                >{% if value == "" %}
+                  Выбрать категорию
+                {% else %}
+                  {{ name }}
+                {% endif %}
+                </option>
+              {% endif %}
             {% endfor %}
           </select>
         </div>

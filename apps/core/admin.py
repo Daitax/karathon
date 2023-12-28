@@ -9,6 +9,11 @@ from apps.core.models import Category, CharityCategory, CustomRecordsmans, Karat
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
+    def get_queryset(self, request):
+        # Специально скрываем категорию с ID = 1, что бы с админки никак с ней не взаимодействовать
+        qs = super().get_queryset(request).exclude(id=1)
+        return qs
+
 
 class CharityCategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
