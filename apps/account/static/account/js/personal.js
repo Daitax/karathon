@@ -12,8 +12,10 @@ function openPersonalForm() {
   let overlay = document.querySelector('[popup-element="overlay"]')
   let personalFormWrapper = overlay.querySelector('[form-name="personal"]')
 
+  personalFormWrapper.innerHTML = ''
   overlay.classList.add('show')
   personalFormWrapper.classList.add('show')
+  personalFormWrapper.classList.add('loading')
 
   let csrfToken = getCookie('csrftoken')
 
@@ -25,6 +27,7 @@ function openPersonalForm() {
   })
     .then((response) => response.json())
     .then(function (data) {
+      personalFormWrapper.classList.remove('loading')
       personalFormWrapper.innerHTML = data.participant_form
     })
 }

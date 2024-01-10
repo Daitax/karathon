@@ -4,6 +4,7 @@ function openAuthenticationForm() {
 
   overlay.classList.add('show')
   authenticationFormWrapper.classList.add('show')
+  authenticationFormWrapper.classList.add('loading')
 
   let csrfToken = getCookie('csrftoken')
   let data = new FormData()
@@ -21,6 +22,7 @@ function openAuthenticationForm() {
       // console.log(data)
       if (data.status == 'ok') {
         if (data.action == 'window') {
+          authenticationFormWrapper.classList.remove('loading')
           authenticationFormWrapper.innerHTML = data.window
           let email = document.querySelector('[auth-form-elem="email"]')
           email.focus()
@@ -57,6 +59,7 @@ function submitAuthenticationForm(button) {
       // console.log(data)
       if (data.status == 'ok') {
         if (data.action == 'window') {
+          authenticationFormWrapper.classList.remove('loading')
           authenticationFormWrapper.innerHTML = data.window
           let smsCode = document.querySelector('[auth-form-elem="code"]')
           if (smsCode) {

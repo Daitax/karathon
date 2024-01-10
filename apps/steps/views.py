@@ -222,7 +222,21 @@ def send_change_report_form(request):
         )
 
     else:
-        context = {"window": "form-change", "errors": form.errors}
+        participant = request.user.participant
+        participant_date = participant.get_participant_time().date()
+        karathon = request.user.participant.get_active_karathon()
+
+        sent_report = Step.objects.get(
+            date=participant_date,
+            participant=participant,
+            karathon=karathon,
+        )
+
+        context = {
+            "window": "form-change",
+            "errors": form.errors,
+            "sent_report_steps": sent_report.steps,
+        }
 
         report_window = render_to_string(
             "steps/popups/change_report.html", context, request

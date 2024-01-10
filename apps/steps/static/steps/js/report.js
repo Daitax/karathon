@@ -2,8 +2,10 @@ function openReportForm() {
   let overlay = document.querySelector('[popup-element="overlay"]')
   let reportFormWrapper = overlay.querySelector('[form-name="report"]')
 
+  reportFormWrapper.innerHTML = ''
   overlay.classList.add('show')
   reportFormWrapper.classList.add('show')
+  reportFormWrapper.classList.add('loading')
 
   let csrfToken = getCookie('csrftoken')
   let data = new FormData()
@@ -18,6 +20,7 @@ function openReportForm() {
   })
     .then((response) => response.json())
     .then(function (data) {
+      reportFormWrapper.classList.remove('loading')
       if (data.status == 'ok') {
         if (data.action == 'window') {
           reportFormWrapper.innerHTML = data.window
@@ -56,7 +59,7 @@ function submitReportForm(button) {
 
   data.set("steps", steps)
 
-  document.querySelector('[report-form-elem="button"] > span').classList.add("click_opacity")
+  reportForm.querySelector('[report-form-elem="button"] > span').classList.add("click_opacity")
 
   fetch('/steps/addreport/', {
     method: "POST",
@@ -79,8 +82,10 @@ function openChangeReportForm() {
   let overlay = document.querySelector('[popup-element="overlay"]')
   let reportFormWrapper = overlay.querySelector('[form-name="report"]')
 
+  reportFormWrapper.innerHTML = ''
   overlay.classList.add('show')
   reportFormWrapper.classList.add('show')
+  reportFormWrapper.classList.add('loading')
 
   let csrfToken = getCookie('csrftoken')
   let data = new FormData()
@@ -95,7 +100,7 @@ function openChangeReportForm() {
   })
     .then((response) => response.json())
     .then(function (data) {
-      console.log(data)
+      reportFormWrapper.classList.remove('loading')
       if (data.status == 'ok') {
         if (data.action == 'window') {
           reportFormWrapper.innerHTML = data.window
