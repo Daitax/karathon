@@ -28,7 +28,7 @@
       {% endfor %}
     </ol>
     {% if view_name == 'core:site-index' or view_name == 'core:karathon' %}
-      {% if top_champs|length > 3 %}
+      {% if champ_list_length > 3 %}
         <div class="first_champs_block_link">
           <a href="{{ champions_url }}">все рекорды</a>
         </div>

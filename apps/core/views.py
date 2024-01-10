@@ -77,7 +77,8 @@ class ChampionsView(TemplateView):
 
         context = {
             'top_champs': top_champs,
-            'other_champs': other_champs
+            'other_champs': other_champs,
+            'champ_list_length': champ_list.count(),
         }
 
         return render(request, "core/champions.html", context)

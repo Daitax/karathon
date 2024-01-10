@@ -12,5 +12,6 @@ def first_champs(context):
 
     return {
         "top_champs": top_champs,
+        'champ_list_length': champ_list.count(),
         "view_name": context.request.resolver_match.view_name,
     }
