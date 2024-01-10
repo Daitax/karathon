@@ -81,6 +81,12 @@ class Step(models.Model):
             )
         return ""
 
+    def show_text_task(self):
+        if self.participant.task_of_day(self.date):
+            return self.participant.task_of_day(self.date).text_task(self.participant)
+        else:
+            return 'Задания нет'
+
     @classmethod
     def total(cls):
         return cls.objects.aggregate(Sum("steps"))
@@ -104,6 +110,7 @@ class Step(models.Model):
 
     photo_preview.short_description = "Фотоотчёт"
     photo_preview_in_list.short_description = "Фотоотчёт"
+    show_text_task.short_description = "Задание"
 
 
 # signals.post_save.connect(check_task_complete, sender=Step)
